@@ -2,7 +2,7 @@ from jaydebeapi import Error
 from typing import List
 from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
 from src.modelo.conexion.conexionJava import Conexion
-from src.modelo.dao.TrabajadorInterface import TrabajadorInterface
+from src.modelo.dao.PlantillaTrabajadorInterface import TrabajadorInterface
 
 class TrabajadorDao(TrabajadorInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias

@@ -7,7 +7,7 @@ Created on Fri May  3 13:34:50 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.Personal import Personal
+from src.modelo.vo.PersonalVO import Personal
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.PersonalInterface import PersonalInterface
 

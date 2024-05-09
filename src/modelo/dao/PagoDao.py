@@ -7,7 +7,7 @@ Created on Fri May  3 13:26:32 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.Pago import Pago
+from src.modelo.vo.PagoVO import Pago
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.PagoInterface import PagoInterface
 

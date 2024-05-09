@@ -7,7 +7,7 @@ Created on Fri May  3 13:25:16 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.JefeZona import JefeZona
+from src.modelo.vo.JefeZonaVO import JefeZona
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.JefeZonaInterface import JefeZonaInterface
 

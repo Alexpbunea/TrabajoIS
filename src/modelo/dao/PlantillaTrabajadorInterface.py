@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu May  9 13:25:41 2024
+Created on Thu May  9 13:48:35 2024
 
 @author: ricar
 """
 
 from typing import List
 from abc import ABC, abstractmethod
-from src.modelo.vo.ConcesionarioVO import Concesionario
+from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
 
 """ La interface permite acceder a distintos tipos de fuentes de datos. """
-class ConcesionarioInterface(ABC):
+class TrabajadorInterface(ABC):
     @abstractmethod
-    def getConcesionarios(self) -> List[Concesionario]:
+    def getTrabajadores(self) -> List[PlantillaTrabajadorVO]:
         raise NotImplementedError("Método getUsuarios no implementado")
     
     @abstractmethod
-    def insertConcesionario(self, almacen: Concesionario):
+    def insertTrabajador(self, almacen: PlantillaTrabajadorVO):
         raise NotImplementedError("Método insertUsuario no implementado")

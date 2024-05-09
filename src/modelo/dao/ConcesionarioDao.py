@@ -7,7 +7,7 @@ Created on Fri May  3 13:20:55 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.Concesionario import Concesionario
+from src.modelo.vo.ConcesionarioVO import Concesionario
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.ConcesionarioInterface import ConcesionarioInterface
 
