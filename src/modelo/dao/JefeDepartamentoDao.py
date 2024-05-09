@@ -7,7 +7,7 @@ Created on Fri May  3 13:22:26 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.JefeDepartamento import JefeDepartamento
+from src.modelo.vo.JefeDepartamentoVO import JefeDepartamento
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.JefeDepartamentoInterface import JefeDepartamentoInterface
 

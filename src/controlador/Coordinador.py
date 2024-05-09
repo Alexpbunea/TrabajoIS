@@ -1,5 +1,5 @@
-from src.modelo.vo.UserVO import UserVO
-from src.vista.RegistroUsuarioVentana import RegistroUsuarioVentana
+from src.modelo.vo.ClienteVO import Cliente
+from src.vista.RegistroClienteVentana import RegistroClienteVentana
 
 class Coordinador:
     def __init__(self):
@@ -22,5 +22,5 @@ class Coordinador:
     
     ##############################################
 
-    def registrarUsuario(self, usuario: UserVO) -> None:
+    def registrarUsuario(self, usuario: Cliente) -> None:
        self._model.validar_registro(usuario)

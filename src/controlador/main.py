@@ -4,17 +4,17 @@
 # Arriba a la derecha borramos todo menos el central widget
 # guardamos la ventana en la carpeta vista
 import sys
-ruta_modulo = r'ruta'
+ruta_modulo = r'C:\Users\Dell XPS 9510\Desktop\Ingenieria del software\TrabajoFinal'
 sys.path.append(ruta_modulo)
 
-from src.vista.RegistroUsuarioVentana import RegistroUsuarioVentana
+from src.vista.RegistroClienteVentana import RegistroClienteVentana
 from src.controlador.Coordinador import Coordinador
 from src.modelo.Logica import Logica
 
 
 if __name__ == "__main__":
     #root = tk.Tk()
-    ventanaRegistro = RegistroUsuarioVentana()
+    ventanaRegistro = RegistroClienteVentana()
     logica = Logica()
     controlador = Coordinador()
 

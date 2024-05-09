@@ -1,6 +1,6 @@
 
 import tkinter as tk
-from src.modelo.vo.UserVO import UserVO
+from UserVO import UserVO
 from tkinter import messagebox
 
 

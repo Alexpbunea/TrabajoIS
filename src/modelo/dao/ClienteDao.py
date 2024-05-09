@@ -7,7 +7,7 @@ Created on Thu Apr 25 13:05:03 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.Cliente import Cliente
+from src.modelo.vo.ClienteVO import Cliente
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.ClienteInterface import ClienteInterface
 
