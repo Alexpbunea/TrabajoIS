@@ -20,8 +20,8 @@ class Conexion:
     def getConnection():
         try:
             # Cargar el driver JDBC de MySQL
-            jdbc_driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-            jar_file = "lib/mssql-jdbc-12.6.1.jre11.jar"
+            jdbc_driver = "com.mysql.cj.jdbc.Driver"
+            jar_file = "./lib/mysql-connector-j-8.3.0.jar"
             return jaydebeapi.connect(jdbc_driver, f"jdbc:mysql://{Conexion.host}/{Conexion.database}", [Conexion.user, Conexion.password], jar_file)
         except Exception as e:
             print(e)
