@@ -4,7 +4,7 @@
 # Arriba a la derecha borramos todo menos el central widget
 # guardamos la ventana en la carpeta vista
 import sys
-ruta_modulo = r'ruta'
+ruta_modulo = r'C:\Users\ricar\Desktop\git\TrabajoIS' #ruta donde esta guardado
 sys.path.append(ruta_modulo)
 
 from src.vista.RegistroUsuarioVentana import RegistroUsuarioVentana

@@ -11,7 +11,7 @@ class Conexion:
 
     # Especifica los detalles de la conexión
     host = 'localhost'
-    database = 'datacars'
+    database = 'DatosCoferMotor'
     user = 'root'
     password = 'changeme'
 
@@ -39,7 +39,3 @@ class Conexion:
 a = Conexion.getConnection()
 print(a)
 Conexion.close(a)
-
-
-
-
