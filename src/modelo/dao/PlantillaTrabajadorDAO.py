@@ -6,8 +6,8 @@ from src.modelo.dao.TrabajadorInterface import TrabajadorInterface
 
 class TrabajadorDao(TrabajadorInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Concesionario FROM Trabajadores"
-    SQL_INSERT = "INSERT INTO Trabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Concesionario) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    SQL_SELECT = "SELECT IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario FROM Trabajadores"
+    SQL_INSERT = "INSERT INTO Trabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 
     def getTrabajadores(self) -> List[PlantillaTrabajadorVO]:
         conexion = self.getConnection()
@@ -28,7 +28,7 @@ class TrabajadorDao(TrabajadorInterface, Conexion):
             rows = cursor.fetchall()
             # Itera sobre todas las filas
             for row in rows:
-                IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Concesionario = row
+                IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario = row
                 # Crea un objeto PlantillaTrabajadorVO para cada fila
                 trabajador = PlantillaTrabajadorVO()
                 trabajador.setIDtrabajador(IDtrabajador)
@@ -37,6 +37,7 @@ class TrabajadorDao(TrabajadorInterface, Conexion):
                 trabajador.setApellido1(Apellido1)
                 trabajador.setApellido2(Apellido2)
                 trabajador.setSueldo(Sueldo)
+                trabajador.setRol(Rol)
                 trabajador.setConcesionario(Concesionario)
                 trabajadores.append(trabajador)
 
@@ -65,7 +66,7 @@ class TrabajadorDao(TrabajadorInterface, Conexion):
             else:
                 print("La base de datos no esta disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_INSERT, (trabajador.getIDtrabajador(), trabajador.getContraseña(), trabajador.getNombre(), trabajador.getApellido1(), trabajador.getApellido2(), trabajador.getSueldo(), trabajador.getConcesionario()))
+            cursor.execute(self.SQL_INSERT, (trabajador.getIDtrabajador(), trabajador.getContraseña(), trabajador.getNombre(), trabajador.getApellido1(), trabajador.getApellido2(), trabajador.getSueldo(), trabajador.getRol(), trabajador.getConcesionario()))
             
             # Asegurarse de que esos cambios se hagan permanentes: conn.commit(). 
             # Si conn.autocommit = True no es necesario llamar explicitamente a conn.commit() despues de cada insercion, 

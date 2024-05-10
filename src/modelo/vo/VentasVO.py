@@ -6,11 +6,12 @@ Created on Thu May  2 21:01:48 2024
 """
 
 class Venta:
-    def __init__(self, IDventa=None, FechaVenta=None, IDvehiculo=None, IDcliente=None, Concesionario=None):
+    def __init__(self, IDventa=None, FechaVenta=None, IDvehiculo=None, IDcliente=None, Concesionario=None, piezas = None):
         self.IDventa = IDventa
         self.FechaVenta = FechaVenta
         self.IDvehiculo = IDvehiculo
         self.IDcliente = IDcliente
+        self.piezas = piezas
         self.Concesionario = Concesionario
 
     def getIDventa(self):
@@ -37,6 +38,12 @@ class Venta:
     def setIDcliente(self, ID):
         self.IDcliente = ID
 
+    def getPiezas(self):
+        return self.piezas
+    
+    def setPiezas(self, pieza):
+        self.piezas = pieza
+
     def getConcesionario(self):
         return self.Concesionario
 
@@ -44,7 +51,7 @@ class Venta:
         self.Concesionario = nombre
 
     def toString(self):
-        return f"IDventa = {self.getIDventa()}, FechaVenta = {self.getFechaVenta()}, IDvehiculo = {self.getIDvehiculo()}, IDcliente = {self.getIDcliente()}, Concesionario = {self.getConcesionario()}"
+        return f"IDventa = {self.getIDventa()}, FechaVenta = {self.getFechaVenta()}, IDvehiculo = {self.getIDvehiculo()}, IDcliente = {self.getIDcliente()}, Pieza = {self.getPiezas},Concesionario = {self.getConcesionario()}"
 
     def __str__(self):
         return self.toString()

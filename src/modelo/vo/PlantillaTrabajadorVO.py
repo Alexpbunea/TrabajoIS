@@ -6,13 +6,14 @@ Created on Thu Apr 25 12:27:47 2024
 """
 
 class PlantillaTrabajadorVO:
-    def __init__(self, IDtrabajador=None, Contraseña=None, Nombre=None, Apellido1=None, Apellido2=None, Sueldo=None, Concesionario=None):
+    def __init__(self, IDtrabajador=None, Contraseña=None, Nombre=None, Apellido1=None, Apellido2=None, Sueldo=None, Rol = None, Concesionario=None):
         self.IDtrabajador = IDtrabajador
         self.Contraseña = Contraseña
         self.Nombre = Nombre
         self.Apellido1 = Apellido1
         self.Apellido2 = Apellido2
         self.Sueldo = Sueldo
+        self.rol = Rol
         self.Concesionario = Concesionario
 
     def getIDtrabajador(self):
@@ -51,6 +52,12 @@ class PlantillaTrabajadorVO:
     def setSueldo(self, sueldo):
         self.Sueldo = sueldo
 
+    def getRol(self):
+        return self.getRol
+    
+    def setRol(self, r):
+        self.rol = r
+
     def getConcesionario(self):
         return self.Concesionario
 
@@ -58,7 +65,7 @@ class PlantillaTrabajadorVO:
         self.Concesionario = concesionario
 
     def toString(self):
-        return f"IDtrabajador = {self.getIDtrabajador()}, Contraseña = {self.getContraseña()}, Nombre = {self.getNombre()}, Apellido1 = {self.getApellido1()}, Apellido2 = {self.getApellido2()}, Sueldo = {self.getSueldo()}, Concesionario = {self.getConcesionario()}"
+        return f"IDtrabajador = {self.getIDtrabajador()}, Contraseña = {self.getContraseña()}, Nombre = {self.getNombre()}, Apellido1 = {self.getApellido1()}, Apellido2 = {self.getApellido2()}, Sueldo = {self.getSueldo()}, Rol = {self.getRol}, Concesionario = {self.getConcesionario()}"
 
     def __str__(self):
         return self.toString()

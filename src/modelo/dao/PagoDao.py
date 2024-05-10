@@ -7,14 +7,14 @@ Created on Fri May  3 13:26:32 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.Pago import Pago
+from src.modelo.vo.PagoVO import Pago
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.PagoInterface import PagoInterface
 
 class PagoDao(PagoInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT IDpago, FacturaPDF FROM Pagos"
-    SQL_INSERT = "INSERT INTO Pagos(IDpago, FacturaPDF) VALUES (?, ?)"
+    SQL_SELECT = "SELECT IDpago, FacturaPDF, Concesionario FROM Pagos"
+    SQL_INSERT = "INSERT INTO Pagos(IDpago, FacturaPDF, Concesionario) VALUES (?, ?, ?)"
 
     def getPagos(self) -> List[Pago]:
         conexion = self.getConnection()
@@ -35,11 +35,12 @@ class PagoDao(PagoInterface, Conexion):
             rows = cursor.fetchall()
             # Itera sobre todas las filas
             for row in rows:
-                IDpago, FacturaPDF = row
+                IDpago, FacturaPDF, Concesionario = row
                 # Crea un objeto Pago para cada fila
                 pago = Pago()
                 pago.setIDpago(IDpago)
                 pago.setFacturaPDF(FacturaPDF)
+                pago.setConcesionario(Concesionario)
                 pagos.append(pago)
 
         except Error as e:
@@ -67,7 +68,7 @@ class PagoDao(PagoInterface, Conexion):
             else:
                 print("La base de datos no esta disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_INSERT, (pago.getIDpago(), pago.getFacturaPDF()))
+            cursor.execute(self.SQL_INSERT, (pago.getIDpago(), pago.getFacturaPDF(), pago.getConcesionario()))
             
             rows = cursor.rowcount
 

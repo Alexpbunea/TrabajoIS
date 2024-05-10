@@ -7,7 +7,7 @@ Created on Fri May  3 13:37:27 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.Vehiculo import Vehiculo
+from src.modelo.vo.VehiculosVO import Vehiculo
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.VehiculoInterface import VehiculoInterface
 

@@ -61,7 +61,9 @@ class RegistroClienteVentana:
         self.nombre_entry.delete(0, tk.END)
         self.appe1_entry.delete(0, tk.END)
         self.appe2_entry.delete(0, tk.END)
+        self.direccion_entry.delete(0, tk.END)
         self.email_entry.delete(0, tk.END)
+        self.concesionario_entry.delete(0, tk.END)
 
     def setVisible(self, visible: bool) -> None:
         if visible:
@@ -76,7 +78,7 @@ class RegistroClienteVentana:
 
     def registrarPersona(self) -> None:
         try:
-            persona = ClienteVO(
+            persona = Cliente(
                 idUser =  int(self.id_entry.get()),
                 nombre = self.nombre_entry.get(),
                 apellido1 = self.appe1_entry.get(),

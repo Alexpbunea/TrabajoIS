@@ -7,7 +7,7 @@ Created on Fri May  3 13:35:46 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.Taller import Taller
+from src.modelo.vo.TallerVO import Taller   
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.TallerInterface import TallerInterface
 

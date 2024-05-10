@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu May  9 13:15:37 2024
-
-@author: ricar
-"""
 
 from typing import List
 from abc import ABC, abstractmethod
@@ -13,8 +8,8 @@ from src.modelo.vo.ClienteVO import Cliente
 class ClienteInterface(ABC):
     @abstractmethod
     def getClientes(self) -> List[Cliente]:
-        raise NotImplementedError("Método getUsuarios no implementado")
+        raise NotImplementedError("Método getClientes no implementado")
     
     @abstractmethod
     def insertCliente(self, almacen: Cliente):
-        raise NotImplementedError("Método insertUsuario no implementado")
+        raise NotImplementedError("Método insertCliente no implementado")

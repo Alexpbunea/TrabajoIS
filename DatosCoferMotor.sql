@@ -1,6 +1,7 @@
 USE datoscofermotor;
 
 SHOW TABLES;
+
 /*
 CREATE TABLE concesionario (
     Nombre VARCHAR(20) PRIMARY KEY NOT NULL,
@@ -69,6 +70,7 @@ CREATE TABLE plantillaTrabajadores (
     Apellido1 VARCHAR(20) NOT NULL,
     Apellido2 VARCHAR(20) NOT NULL,
     Sueldo DECIMAL(10, 2) NOT NULL,
+    Rol VARCHAR(20) NOT NULL CHECK (Rol IN ('administrador', 'jefeZona', 'jefeDepartamento', 'personal')),
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT TrabajadorConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
 );

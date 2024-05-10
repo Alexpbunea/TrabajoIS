@@ -13,8 +13,8 @@ from src.modelo.dao.AlmacenInterface import AlmacenInterface
 
 class AlmacenDao(AlmacenInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT capacidad, piezas FROM Almacen"
-    SQL_INSERT = "INSERT INTO Almacen(capacidad, piezas) VALUES (?, ?)"
+    SQL_SELECT = "SELECT Capacidad, Piezas, PorcentajeOcupado, Concesionario FROM Almacen"
+    SQL_INSERT = "INSERT INTO Almacen(Capacidad, Piezas, PorcentajeOcupado, Concesionario) VALUES (?, ?, ?, ?)"
 
     def getAlmacenes(self) -> List[AlmacenVO]:
         conexion = self.getConnection()
@@ -35,11 +35,13 @@ class AlmacenDao(AlmacenInterface, Conexion):
             rows = cursor.fetchall()
             # Itera sobre todas las filas
             for row in rows:
-                capacidad, piezas = row
+                capacidad, piezas , PorcentajeOcupado, concesionario = row
                 # Crea un objeto AlmacenVO para cada fila
                 almacen = AlmacenVO()
                 almacen.setCapacidad(capacidad)
                 almacen.setPiezas(piezas)
+                almacen.setPorcentajeOcupado(PorcentajeOcupado)
+                almacen.setConcesionario(concesionario)
                 almacenes.append(almacen)
 
         except Error as e:
@@ -67,7 +69,7 @@ class AlmacenDao(AlmacenInterface, Conexion):
             else:
                 print("La base de datos no esta disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_INSERT, (almacen.getCapacidad(), almacen.getPiezas()))
+            cursor.execute(self.SQL_INSERT, (almacen.getCapacidad(), almacen.getPiezas(), almacen.getPorcentajeOcupado(), almacen.getConcesionario()))
             
             rows = cursor.rowcount
 

@@ -7,14 +7,14 @@ Created on Fri May  3 13:39:09 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.Venta import Venta
+from src.modelo.vo.VentasVO import Venta
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.VentaInterface import VentaInterface
 
 class VentaDao(VentaInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT IDventa, FechaVenta, IDvehiculo, IDcliente, Concesionario FROM Ventas"
-    SQL_INSERT = "INSERT INTO Ventas(IDventa, FechaVenta, IDvehiculo, IDcliente, Concesionario) VALUES (?, ?, ?, ?, ?)"
+    SQL_SELECT = "SELECT IDventa, FechaVenta, IDvehiculo, IDcliente, Piezas, Concesionario FROM Ventas"
+    SQL_INSERT = "INSERT INTO Ventas(IDventa, FechaVenta, IDvehiculo, IDcliente, Piezas, Concesionario) VALUES (?, ?, ?, ?, ?, ?)"
 
     def getVentas(self) -> List[Venta]:
         conexion = self.getConnection()
@@ -35,13 +35,14 @@ class VentaDao(VentaInterface, Conexion):
             rows = cursor.fetchall()
             # Itera sobre todas las filas
             for row in rows:
-                IDventa, FechaVenta, IDvehiculo, IDcliente, Concesionario = row
+                IDventa, FechaVenta, IDvehiculo, IDcliente, Piezas, Concesionario = row
                 # Crea un objeto Venta para cada fila
                 venta = Venta()
                 venta.setIDventa(IDventa)
                 venta.setFechaVenta(FechaVenta)
                 venta.setIDvehiculo(IDvehiculo)
                 venta.setIDcliente(IDcliente)
+                venta.setPiezas(Piezas)
                 venta.setConcesionario(Concesionario)
                 ventas.append(venta)
 
@@ -70,7 +71,7 @@ class VentaDao(VentaInterface, Conexion):
             else:
                 print("La base de datos no esta disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_INSERT, (venta.getIDventa(), venta.getFechaVenta(), venta.getIDvehiculo(), venta.getIDcliente(), venta.getConcesionario()))
+            cursor.execute(self.SQL_INSERT, (venta.getIDventa(), venta.getFechaVenta(), venta.getIDvehiculo(), venta.getIDcliente(), venta.getPiezas(), venta.getConcesionario()))
             
             rows = cursor.rowcount
 
