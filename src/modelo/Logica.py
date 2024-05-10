@@ -55,3 +55,11 @@ class Logica:
             mi_persona_dao.insertConcesionario(mi_persona)
         except:
             messagebox.showwarning("Advertencia", "Error al insertar concesionario")
+
+    def validar_registro_cliente(self, mi_persona: Cliente):
+        if '@' in mi_persona.getEmail():
+            mi_persona_dao = ClienteDao()
+            mi_persona_dao.insertCliente(mi_persona)
+        else:
+            messagebox.showwarning("Advertencia", "El email no es válido")
+

@@ -35,11 +35,17 @@ class Coordinador:
        self._model = model
     
     #Se añade para cada ventana
-    def getViewRegistro(self):
-       return self._viewRegistro
-    
-    def setViewRegistro(self, view):
-       self._viewRegistro = view
+    def getViewRegistroCliente(self):
+        return self._viewRegistroCliente
+
+    def setViewRegistroCliente(self, view):
+        self._viewRegistroCliente = view
+
+    def getViewRegistroConcesionario(self):
+        return self._viewRegistroConcesionario
+
+    def setViewRegistroConcesionario(self, view):
+        self._viewRegistroConcesionario = view
     
     ##############################################
 
@@ -47,5 +53,5 @@ class Coordinador:
        self._model.validar_registro_concesionario(usuario)
 
 
-    #def registrarCliente(self, usuario: Cliente) -> None:
-    #   self._model.validar_registro(usuario)
+    def registrarCliente(self, usuario: Cliente) -> None:
+       self._model.validar_registro_cliente(usuario)

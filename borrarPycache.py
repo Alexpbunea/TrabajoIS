@@ -17,12 +17,14 @@ def borrar_pycache(directorio):
             else:
                 borrar_pycache(ruta)
 
-# Ruta del directorio principal de tu proyecto
-directorio_proyecto =r"C:\Users\Dell XPS 9510\Desktop\Ingenieria del software\TrabajoFinal\src"
 
-# Llamar a la función para borrar los archivos __pycache__
-print("Eliminando archivos __pycache__...")
-borrar_pycache(directorio_proyecto)
-print("¡Eliminación completada!")
+
+if __name__=="__main__":
+# Ruta del directorio principal de tu proyecto
+    directorio_proyecto =r"C:\Users\Dell XPS 9510\Desktop\Ingenieria del software\TrabajoFinal\src"
+    # Llamar a la función para borrar los archivos __pycache__
+    print("Eliminando archivos __pycache__...")
+    borrar_pycache(directorio_proyecto)
+    print("¡Eliminación completada!")
 
 

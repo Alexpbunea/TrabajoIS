@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from src.modelo.vo.TallerVO import Taller
 
 """ La interface permite acceder a distintos tipos de fuentes de datos. """
-class VehiculoInterface(ABC):
+class TallerInterface(ABC):
     @abstractmethod
     def getTalleres(self) -> List[Taller]:
         raise NotImplementedError("Método getTalleres no implementado")
