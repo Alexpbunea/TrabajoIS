@@ -11,10 +11,14 @@ from src.vista.RegistroClienteVentana import RegistroClienteVentana
 from src.controlador.Coordinador import Coordinador
 from src.modelo.Logica import Logica
 
+from src.vista.RegistroConcesionarioVentana import RegistroConcesionarioVentana
+
+
+
 
 if __name__ == "__main__":
     #root = tk.Tk()
-    ventanaRegistro = RegistroClienteVentana()
+    ventanaRegistro = RegistroConcesionarioVentana()
     logica = Logica()
     controlador = Coordinador()
 

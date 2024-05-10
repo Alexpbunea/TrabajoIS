@@ -66,7 +66,7 @@ class TrabajadorDao(TrabajadorInterface, Conexion):
             else:
                 print("La base de datos no esta disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_INSERT, (trabajador.getIDtrabajador(), trabajador.getContraseña(), trabajador.getNombre(), trabajador.getApellido1(), trabajador.getApellido2(), trabajador.getSueldo(), trabajador.getRol(), trabajador.getConcesionario()))
+            cursor.execute(self.SQL_INSERT, (trabajador.getIDtrabajador(), trabajador.getContrasenia(), trabajador.getNombre(), trabajador.getApellido1(), trabajador.getApellido2(), trabajador.getSueldo(), trabajador.getRol(), trabajador.getConcesionario()))
             
             # Asegurarse de que esos cambios se hagan permanentes: conn.commit(). 
             # Si conn.autocommit = True no es necesario llamar explicitamente a conn.commit() despues de cada insercion, 

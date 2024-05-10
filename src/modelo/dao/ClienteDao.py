@@ -84,7 +84,7 @@ class ClienteDao(ClienteInterface, Conexion):
             if cursor:
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        self.close(conn)
 
         return rows
 

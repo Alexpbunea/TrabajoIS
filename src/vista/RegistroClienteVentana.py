@@ -23,6 +23,11 @@ class RegistroClienteVentana:
         self.id_entry = tk.Entry(self.root)
         self.id_entry.pack()
 
+        self.contra_label = tk.Label(self.root, text="Contrasenia:")
+        self.contra_label.pack()
+        self.contra_label = tk.Entry(self.root)
+        self.contra_label.pack()
+
         self.nombre_label = tk.Label(self.root, text="Nombre:")
         self.nombre_label.pack()
         self.nombre_entry = tk.Entry(self.root)
@@ -58,12 +63,13 @@ class RegistroClienteVentana:
 
     def limpiar(self):
         self.id_entry.delete(0, tk.END)
+        self.contra_label.delete(0, tk.END)
         self.nombre_entry.delete(0, tk.END)
         self.appe1_entry.delete(0, tk.END)
         self.appe2_entry.delete(0, tk.END)
-        self.direccion_entry.delete(0, tk.END)
+        self.direccion_label.delete(0, tk.END)
         self.email_entry.delete(0, tk.END)
-        self.concesionario_entry.delete(0, tk.END)
+        self.concesionario_label.delete(0, tk.END)
 
     def setVisible(self, visible: bool) -> None:
         if visible:
@@ -79,16 +85,17 @@ class RegistroClienteVentana:
     def registrarPersona(self) -> None:
         try:
             persona = Cliente(
-                idUser =  int(self.id_entry.get()),
-                nombre = self.nombre_entry.get(),
-                apellido1 = self.appe1_entry.get(),
-                apellido2 = self.appe2_entry.get(),
-                direccion = self.direccion_label.get(),
-                email = self.email_entry.get(),
-                concesionario = self.concesionario_label.get()
+                IDcliente =  self.id_entry.get(),
+                Contrasenia = self.contra_label.get(),
+                Nombre =  self.nombre_entry.get(),
+                Apellido1 =  self.appe1_entry.get(),
+                Apellido2 =  self.appe2_entry.get(),
+                Direccion = self.direccion_label.get(),
+                Email = self.email_entry.get(),
+                Concesionario = self.concesionario_label.get()
                 
             )
-            self.coordinador.registrarUsuario(persona)
+            self.coordinador.registrarCliente(persona)
             self.limpiar()
         except Exception as ex:
             messagebox.showwarning("Error", ex)

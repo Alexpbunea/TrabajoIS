@@ -22,10 +22,10 @@ class PlantillaTrabajadorVO:
     def setIDtrabajador(self, ID):
         self.IDtrabajador = ID
 
-    def getContraseña(self):
+    def getContrasenia(self):
         return self.Contraseña
 
-    def setContraseña(self, contraseña):
+    def setContrasenia(self, contraseña):
         self.Contraseña = contraseña
 
     def getNombre(self):
@@ -65,7 +65,7 @@ class PlantillaTrabajadorVO:
         self.Concesionario = concesionario
 
     def toString(self):
-        return f"IDtrabajador = {self.getIDtrabajador()}, Contraseña = {self.getContraseña()}, Nombre = {self.getNombre()}, Apellido1 = {self.getApellido1()}, Apellido2 = {self.getApellido2()}, Sueldo = {self.getSueldo()}, Rol = {self.getRol}, Concesionario = {self.getConcesionario()}"
+        return f"IDtrabajador = {self.getIDtrabajador()}, Contrasenia = {self.getContrasenia()}, Nombre = {self.getNombre()}, Apellido1 = {self.getApellido1()}, Apellido2 = {self.getApellido2()}, Sueldo = {self.getSueldo()}, Rol = {self.getRol}, Concesionario = {self.getConcesionario()}"
 
     def __str__(self):
         return self.toString()

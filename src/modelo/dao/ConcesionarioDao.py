@@ -13,8 +13,8 @@ from src.modelo.dao.ConcesionarioInterface import ConcesionarioInterface
 
 class ConcesionarioDao(ConcesionarioInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT Nombre, Direccion, Ciudad, FechaInauguracion FROM Concesionarios"
-    SQL_INSERT = "INSERT INTO Concesionarios(Nombre, Direccion, Ciudad, FechaInauguracion) VALUES (?, ?, ?, ?)"
+    SQL_SELECT = "SELECT Nombre, Direccion, Ciudad, FechaInauguracion FROM Concesionario"
+    SQL_INSERT = "INSERT INTO Concesionario(Nombre, Direccion, Ciudad, FechaInauguracion) VALUES (?, ?, ?, ?)"
 
     def getConcesionarios(self) -> List[Concesionario]:
         conexion = self.getConnection()
@@ -80,6 +80,6 @@ class ConcesionarioDao(ConcesionarioInterface, Conexion):
             if cursor:
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        conexion = self.close(conn)
 
         return rows

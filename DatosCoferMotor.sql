@@ -1,6 +1,7 @@
 USE datoscofermotor;
 
-SHOW TABLES;
+#SHOW TABLES;
+#SELECT * FROM Clientes;
 
 /*
 CREATE TABLE concesionario (
@@ -9,10 +10,11 @@ CREATE TABLE concesionario (
     Ciudad VARCHAR(20) NOT NULL,
     FechaInauguracion DATE NOT NULL
 );
-
+*/
+/*
 CREATE TABLE clientes (
     IDcliente VARCHAR(9) PRIMARY KEY NOT NULL,
-    Contraseña VARCHAR(50) NOT NULL,
+    Contrasenia VARCHAR(50) NOT NULL,
     Nombre VARCHAR(30) NOT NULL,
     Apellido1 VARCHAR(30) NOT NULL,
     Apellido2 VARCHAR(30) NOT NULL,
@@ -25,7 +27,8 @@ CREATE TABLE clientes (
     ),
     CONSTRAINT ClienteConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
 );
-
+*/
+/*
 CREATE TABLE vehiculos (
     IDvehiculo VARCHAR(18) PRIMARY KEY NOT NULL,
     Marca VARCHAR(20) NOT NULL,
@@ -62,10 +65,11 @@ CREATE TABLE taller (
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT TallerConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
 );
-
+*/
+/*
 CREATE TABLE plantillaTrabajadores (
     IDtrabajador VARCHAR(9) PRIMARY KEY NOT NULL,
-    Contraseña VARCHAR(50) NOT NULL,
+    Contrasenia VARCHAR(50) NOT NULL,
     Nombre VARCHAR(20) NOT NULL,
     Apellido1 VARCHAR(20) NOT NULL,
     Apellido2 VARCHAR(20) NOT NULL,
@@ -74,7 +78,8 @@ CREATE TABLE plantillaTrabajadores (
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT TrabajadorConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
 );
-
+*/
+/*
 CREATE TABLE administrador (
     IDadmin VARCHAR(9) PRIMARY KEY NOT NULL,
     CONSTRAINT FK_IDtrabajador FOREIGN KEY (IDadmin) REFERENCES plantillaTrabajadores(IDtrabajador)

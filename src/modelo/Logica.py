@@ -7,9 +7,34 @@ Created on Thu Apr 25 13:40:11 2024
 
 import tkinter as tk
 from tkinter import messagebox
+from datetime import datetime
+
+from src.controlador.Coordinador import Coordinador
+
+from src.modelo.vo.ConcesionarioVO import Concesionario
+from src.modelo.dao.ConcesionarioDao import ConcesionarioDao
+
 from src.modelo.vo.ClienteVO import Cliente
 from src.modelo.dao.ClienteDao import ClienteDao
-from src.controlador.Coordinador import Coordinador
+
+from src.modelo.vo.AlmacenVO import AlmacenVO
+from src.modelo.dao.AlmacenDao import AlmacenDao
+
+from src.modelo.vo.PagoVO import Pago
+from src.modelo.dao.PagoDao import PagoDao
+
+from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
+from src.modelo.dao.PlantillaTrabajadorDAO import TrabajadorDao
+
+from src.modelo.vo.TallerVO import Taller
+from src.modelo.dao.TallerDao import TallerDao
+
+from src.modelo.vo.VehiculosVO import Vehiculo
+from src.modelo.dao.VehiculosDao import VehiculoDao
+
+from src.modelo.vo.VentasVO import Venta
+from src.modelo.dao.VentasDao import VentaDao
+
 
 class Logica:
     def __init__(self):
@@ -18,10 +43,15 @@ class Logica:
     def set_coordinador(self, mi_coordinador: Coordinador) -> None:
         self._mi_coordinador = mi_coordinador
 
-    def validar_registro(self, mi_persona: Cliente):
-        if '@' in mi_persona.getEmail():
-            mi_persona_dao = ClienteDao()
-            mi_persona_dao.insertUsuario(mi_persona)
-        else:
-            messagebox.showwarning("Advertencia", "El email no es válido")
+    def validar_registro_concesionario(self, mi_persona: Concesionario):
+        #if '@' in mi_persona.getEmail():
+        try:
+            fecha_str = mi_persona.getFechaInauguracion()
+            fecha_obj = datetime.strptime(fecha_str, '%d-%m-%Y')
+            fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
+            mi_persona.setFechaInauguracion(fecha_mysql)
 
+            mi_persona_dao = ConcesionarioDao()
+            mi_persona_dao.insertConcesionario(mi_persona)
+        except:
+            messagebox.showwarning("Advertencia", "Error al insertar concesionario")
