@@ -56,7 +56,7 @@ class ClienteDao(ClienteInterface, Conexion):
                 # Cierra el cursor para liberar recursos
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        conexion = self.close(conn)
         return clientes
     
 

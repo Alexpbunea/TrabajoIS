@@ -12,6 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
+    def __init(self, coordinador=None):
+        self.coordinador = coordinador
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1240, 720)
@@ -106,9 +109,12 @@ class Ui_MainWindow(object):
         self.Continuar.setText(_translate("MainWindow", "Continuar"))
 
 
+    def setCoordinador(self, coord) -> None:
+        self.coordinador = coord
+
 import imagen_rc
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -117,3 +123,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+"""

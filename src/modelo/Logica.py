@@ -43,6 +43,18 @@ class Logica:
     def set_coordinador(self, mi_coordinador: Coordinador) -> None:
         self._mi_coordinador = mi_coordinador
 
+    def comprobar_Dni_contrasenia_cliente(self, mi_persona: Cliente):
+        #try: 
+            mi_persona_dao = ClienteDao()
+            clientes = mi_persona_dao.getClientes()
+            
+            for cliente in clientes:
+                if cliente.getIDcliente() == mi_persona.getIDcliente() and cliente.getContrasenia() == mi_persona.getContrasenia():
+                    return True
+            return False
+        #except:    
+            #messagebox.showwarning("Advertencia", "Error al intertar acceder a la base de datos")
+
     def validar_registro_concesionario(self, mi_persona: Concesionario):
         #if '@' in mi_persona.getEmail():
         try:

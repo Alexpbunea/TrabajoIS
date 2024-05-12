@@ -9,9 +9,14 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from src.modelo.vo.ClienteVO import Cliente
 
 
 class Ui_MainWindow2(object):
+    def __init(self, coord=None):
+        self.coordinador = coord
+
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1240, 720)
@@ -76,9 +81,16 @@ class Ui_MainWindow2(object):
         font.setBold(True)
         font.setWeight(75)
         self.IniciarSesion.setFont(font)
-        self.IniciarSesion.setStyleSheet("border: 2px solid white;\n"
-"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
-"color: white;")
+        self.IniciarSesion.setStyleSheet("QPushButton {\n"
+"    background-color: transparent;\n"
+"    border: 2px solid white;\n"
+"    color: white;\n"
+"    border-radius: 10px;\n"
+"}\n"
+    "QPushButton:pressed {"
+    "background-color: #2980b9;"
+"}"
+)
         self.IniciarSesion.setObjectName("IniciarSesion")
         self.Incorrecto = QtWidgets.QLabel(self.frame)
         self.Incorrecto.setEnabled(True)
@@ -98,14 +110,27 @@ class Ui_MainWindow2(object):
         self.IniciarSesion.setText(_translate("MainWindow", "Iniciar sesion"))
         self.Incorrecto.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" color:#ff0000;\">Dni o contraseña incorrectos. Vuelve a intentarlo</span></p></body></html>"))
 
-    def hacerVisible(self):
-        self.Incorrecto.setVisible(True)
+    def hacerVisible(self, arg):
+        self.Incorrecto.setVisible(arg)
+    
+    def setCoordinador(self, coord):
+        self.coordinador = coord
+
+    def obtener_datos_ingresados(self):
+        # Obtener el texto ingresado en los lineedits de DNI y contraseña
+        persona = Cliente(
+                IDcliente =  self.LineaDni.text(),
+                Contrasenia = self.LineaContra.text()
+            )
+        
+        return self.coordinador.comprobarIniciarSesion(persona)
+        
 
 
 
 import imagenDes_rc
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -114,3 +139,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+"""
