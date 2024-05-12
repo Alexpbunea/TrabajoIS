@@ -18,24 +18,24 @@ from src.vista.RegistroConcesionarioVentana import RegistroConcesionarioVentana
 
 if __name__ == "__main__":
     #root = tk.Tk()
-    ventanaRegistroConcesionario = RegistroConcesionarioVentana()
+    #ventanaRegistroConcesionario = RegistroConcesionarioVentana()
     ventanaRegistroCliente = RegistroClienteVentana()
     logica = Logica()
     controlador = Coordinador()
 
     # A cada ventada hay que asignarle un coordinador. Un mismo controlador puede controlar varias ventanas
-    ventanaRegistroConcesionario.setCoordinador(controlador)
+    #ventanaRegistroConcesionario.setCoordinador(controlador)
     ventanaRegistroCliente.setCoordinador(controlador)
 
     # Al coordinador hay que asignarle una ventana. Un coordinador puede tener referencias a varias ventanas
-    controlador.setViewRegistroConcesionario(controlador)
+    #controlador.setViewRegistroConcesionario(controlador)
     controlador.setViewRegistroCliente(controlador)
 
     # Al coordinador también hay que asignarle la lógica del modelo
     controlador.setModel(logica)
 
     #Para comenzar con la pantalla de inicio: True aparece la pantalla y False la destruye
-    ventanaRegistroConcesionario.setVisible(True)
+    #ventanaRegistroConcesionario.setVisible(True)
     ventanaRegistroCliente.setVisible(True)
 
     

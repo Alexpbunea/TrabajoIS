@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="direccion2">
+    <file>imageDesenfocada.jpg</file>
+  </qresource>
+</RCC>

@@ -1,7 +1,7 @@
 USE datoscofermotor;
 
 #SHOW TABLES;
-#SELECT * FROM Clientes;
+SELECT * FROM clientes;
 
 /*
 CREATE TABLE concesionario (
