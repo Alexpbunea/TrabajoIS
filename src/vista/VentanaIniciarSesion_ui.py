@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from src.modelo.vo.ClienteVO import Cliente
+from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
 
 
 class Ui_MainWindow2(object):
@@ -118,12 +119,24 @@ class Ui_MainWindow2(object):
 
     def obtener_datos_ingresados(self):
         # Obtener el texto ingresado en los lineedits de DNI y contraseña
-        persona = Cliente(
+        trabajador = PlantillaTrabajadorVO(
+            IDtrabajador= self.LineaDni.text(),
+            Contraseña= self.LineaContra.text()
+        )
+
+
+        cliente = Cliente(
                 IDcliente =  self.LineaDni.text(),
                 Contrasenia = self.LineaContra.text()
             )
         
-        return self.coordinador.comprobarIniciarSesion(persona)
+        if self.coordinador.comprobarIniciarSesion(cliente) == "cliente":
+            return "cliente"
+        elif self.coordinador.comprobarIniciarSesion(trabajador) == "trabajador":
+            return "trabajador"
+        else:
+            print("Error en el DNI o la contrasenia")
+            return False
         
 
 

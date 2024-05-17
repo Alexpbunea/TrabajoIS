@@ -6,8 +6,8 @@ from src.modelo.dao.TrabajadorInterface import TrabajadorInterface
 
 class TrabajadorDao(TrabajadorInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario FROM Trabajadores"
-    SQL_INSERT = "INSERT INTO Trabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    SQL_SELECT = "SELECT IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario FROM plantillatrabajadores"
+    SQL_INSERT = "INSERT INTO plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 
     def getTrabajadores(self) -> List[PlantillaTrabajadorVO]:
         conexion = self.getConnection()
@@ -49,7 +49,7 @@ class TrabajadorDao(TrabajadorInterface, Conexion):
                 # Cierra el cursor para liberar recursos
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        conexion = self.close(conn)
         return trabajadores
     
 
@@ -82,6 +82,6 @@ class TrabajadorDao(TrabajadorInterface, Conexion):
             if cursor:
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        conexion = self.close(conn)
 
         return rows

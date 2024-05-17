@@ -47,6 +47,9 @@ class Coordinador:
     def setViewVentanaIniciarSesion(self, view):
        self._viewVentanaIniciarSesion = view
 
+    def setViewVentanaAdmin(self, view):
+       self._viewVentanaAdmin = view
+
 
     def getViewRegistroCliente(self):
         return self._viewRegistroCliente
@@ -61,8 +64,8 @@ class Coordinador:
         self._viewRegistroConcesionario = view
     
     ##############################################
-    def comprobarIniciarSesion(self, usuario: Cliente) -> None:
-       return self._model.comprobar_Dni_contrasenia_cliente(usuario)
+    def comprobarIniciarSesion(self, usuario) -> None:
+       return self._model.comprobar_Dni_contrasenia(usuario)
 
     def registrarConcesionario(self, usuario: Concesionario) -> None:
        self._model.validar_registro_concesionario(usuario)

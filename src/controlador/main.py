@@ -13,8 +13,10 @@ sys.path.append(ruta_modulo)
 from PyQt5 import QtWidgets
 from src.vista.VentanaPrincipal_ui import Ui_MainWindow
 from src.vista.VentanaIniciarSesion_ui import Ui_MainWindow2
+from src.vista.VentanaAdmin import Ui_MainWindow3
 import imagen_rc
 import imagenDes_rc
+import nissanGtr
 
 #RESTO
 from src.vista.RegistroClienteVentana import RegistroClienteVentana
@@ -27,12 +29,21 @@ from src.vista.RegistroConcesionarioVentana import RegistroConcesionarioVentana
 def mostrar_ventana2():
     ventana_principal.hide()
     ventanaIniciarSesion.show()
+def mostrar_ventana3():
+    ventanaIniciarSesion.hide()
+    ventanaAdmin.show()
 
 def comprobarSesion():
     #"""
     #comprobar si el dni y la contrasenia son correctos
-    if ui_ventana2_ui.obtener_datos_ingresados() is True:
+    if ui_ventana2_ui.obtener_datos_ingresados() == "cliente":
         ui_ventana2_ui.hacerVisible(False)
+        mostrar_ventana3()
+        #print("Hola")
+        #return True
+    elif ui_ventana2_ui.obtener_datos_ingresados() == "trabajador":
+        ui_ventana2_ui.hacerVisible(False)
+        #return True
     elif ui_ventana2_ui.obtener_datos_ingresados() is False:
         ui_ventana2_ui.hacerVisible(True)
 #"""
@@ -57,18 +68,29 @@ if __name__ == "__main__":
     ui_ventana2_ui.setupUi(ventanaIniciarSesion)
     ventanaIniciarSesion.hide()
 
+    ventanaAdmin = QtWidgets.QMainWindow()
+    ui_ventana3_ui = Ui_MainWindow3()
+    ui_ventana3_ui.setupUi(ventanaAdmin)
+    ventanaAdmin.hide()
+
     # A cada ventada hay que asignarle un coordinador. Un mismo controlador puede controlar varias ventanas
     #ventanaRegistroConcesionario.setCoordinador(controlador)
     ui_ventana1.setCoordinador(controlador)
     ui_ventana2_ui.setCoordinador(controlador)
+    ui_ventana3_ui.setCoordinador(controlador)
+
 
     # Al coordinador hay que asignarle una ventana. Un coordinador puede tener referencias a varias ventanas
     #controlador.setViewRegistroConcesionario(controlador)
     controlador.setViewVentanaPrincipal(controlador)
     controlador.setViewVentanaIniciarSesion(controlador)
+    controlador.setViewVentanaAdmin(controlador)
 
     ventana_principal.show()
-    ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
+    if ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion) is True:
+        print("Entrando en la ventana 3")
+        #ventanaIniciarSesion.hide()
+        #ventanaAdmin.show()
 
 
     sys.exit(app.exec_())

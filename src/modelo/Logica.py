@@ -43,15 +43,32 @@ class Logica:
     def set_coordinador(self, mi_coordinador: Coordinador) -> None:
         self._mi_coordinador = mi_coordinador
 
-    def comprobar_Dni_contrasenia_cliente(self, mi_persona: Cliente):
-        #try: 
+    def comprobar_Dni_contrasenia(self, mi_persona):
+        #print(mi_persona)
+        #print(type(mi_persona))
+
+        if isinstance(mi_persona, Cliente):
             mi_persona_dao = ClienteDao()
             clientes = mi_persona_dao.getClientes()
             
             for cliente in clientes:
                 if cliente.getIDcliente() == mi_persona.getIDcliente() and cliente.getContrasenia() == mi_persona.getContrasenia():
-                    return True
-            return False
+                    print(f"Bienvenido cliente --> {cliente.getNombre()}")
+                    return 'cliente'
+            return 'invalido'
+
+        elif isinstance(mi_persona, PlantillaTrabajadorVO):
+            mi_persona_dao = TrabajadorDao()
+            trabajadores = mi_persona_dao.getTrabajadores()
+            
+            for trab in trabajadores:
+                if trab.getIDtrabajador() == mi_persona.getIDtrabajador() and trab.getContrasenia() == mi_persona.getContrasenia():
+                    print(f"Bienvenido trabajador --> {trab.getNombre()}")
+                    return 'trabajador'
+            return 'invalido'
+        else:
+            print("No existe ningun trabajador ni ningun cliente con esas credenciales")
+            return 'invalido'
         #except:    
             #messagebox.showwarning("Advertencia", "Error al intertar acceder a la base de datos")
 
