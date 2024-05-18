@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="direccion">
+    <file>botonAtrasBlanco.png</file>
+  </qresource>
+</RCC>

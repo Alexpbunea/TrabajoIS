@@ -54,8 +54,8 @@ class Logica:
             for cliente in clientes:
                 if cliente.getIDcliente() == mi_persona.getIDcliente() and cliente.getContrasenia() == mi_persona.getContrasenia():
                     print(f"Bienvenido cliente --> {cliente.getNombre()}")
-                    return 'cliente'
-            return 'invalido'
+                    return ('cliente',cliente.getNombre())
+            #return 'invalido'
 
         elif isinstance(mi_persona, PlantillaTrabajadorVO):
             mi_persona_dao = TrabajadorDao()
@@ -64,8 +64,8 @@ class Logica:
             for trab in trabajadores:
                 if trab.getIDtrabajador() == mi_persona.getIDtrabajador() and trab.getContrasenia() == mi_persona.getContrasenia():
                     print(f"Bienvenido trabajador --> {trab.getNombre()}")
-                    return 'trabajador'
-            return 'invalido'
+                    return ('trabajador',trab.getNombre())
+            #return 'invalido'
         else:
             print("No existe ningun trabajador ni ningun cliente con esas credenciales")
             return 'invalido'

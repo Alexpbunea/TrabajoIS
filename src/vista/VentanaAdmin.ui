@@ -140,10 +140,42 @@
      <string>Eliminar cliente</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="atras">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>640</y>
+      <width>51</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#atras{
+border-image: url(:/direccion/botonAtrasBlanco.png);
+background-color: transparent;
+background: none;
+border: none;
+background-repeat: none;
+}
+#atras:pressed{
+border-image: url(:/direccion/bottonAtrasBlancoAzul.jpg);
+background-color: transparent;
+background: none;
+border: none;
+background-repeat: none;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>
   <include location="nissan.qrc"/>
+  <include location="bottonAtrasBlancoAzul.qrc"/>
+  <include location="botonAtrasBlanco.qrc"/>
+  <include location="bottonAtras.qrc"/>
  </resources>
  <connections/>
 </ui>

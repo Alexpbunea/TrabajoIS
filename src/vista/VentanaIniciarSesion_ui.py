@@ -130,10 +130,13 @@ class Ui_MainWindow2(object):
                 Contrasenia = self.LineaContra.text()
             )
         
-        if self.coordinador.comprobarIniciarSesion(cliente) == "cliente":
-            return "cliente"
-        elif self.coordinador.comprobarIniciarSesion(trabajador) == "trabajador":
-            return "trabajador"
+        a = self.coordinador.comprobarIniciarSesion(cliente) 
+        b = self.coordinador.comprobarIniciarSesion(trabajador)
+
+        if a[0] == "cliente":
+            return a
+        elif b[0] == "trabajador":
+            return b
         else:
             print("Error en el DNI o la contrasenia")
             return False

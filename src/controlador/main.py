@@ -33,18 +33,26 @@ def mostrar_ventana3():
     ventanaIniciarSesion.hide()
     ventanaAdmin.show()
 
+def atras(ventanaInicial, ventanaFinal):
+    ventanaInicial.hide()
+    ventanaFinal.show()
+    
+
 def comprobarSesion():
     #"""
     #comprobar si el dni y la contrasenia son correctos
-    if ui_ventana2_ui.obtener_datos_ingresados() == "cliente":
+    a = ui_ventana2_ui.obtener_datos_ingresados()
+
+    if a[0] == "cliente":
         ui_ventana2_ui.hacerVisible(False)
         mostrar_ventana3()
+        ui_ventana3_ui.hola_2.setText(a[1])
         #print("Hola")
         #return True
-    elif ui_ventana2_ui.obtener_datos_ingresados() == "trabajador":
+    elif a[0] == "trabajador":
         ui_ventana2_ui.hacerVisible(False)
         #return True
-    elif ui_ventana2_ui.obtener_datos_ingresados() is False:
+    else:
         ui_ventana2_ui.hacerVisible(True)
 #"""
 
@@ -88,6 +96,8 @@ if __name__ == "__main__":
 
     ventana_principal.show()
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
+    
+    ui_ventana3_ui.atras.clicked.connect(lambda: atras(ventanaAdmin, ventanaIniciarSesion))
     #print("Entrando en la ventana 3")
 
     sys.exit(app.exec_())

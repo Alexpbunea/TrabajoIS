@@ -63,6 +63,24 @@ class Ui_MainWindow3(object):
         self.eleminarCl = QtWidgets.QPushButton(self.centralwidget)
         self.eleminarCl.setGeometry(QtCore.QRect(580, 650, 151, 41))
         self.eleminarCl.setObjectName("eleminarCl")
+        self.atras = QtWidgets.QPushButton(self.centralwidget)
+        self.atras.setGeometry(QtCore.QRect(1160, 640, 51, 51))
+        self.atras.setStyleSheet("#atras{\n"
+"border-image: url(:/direccion/botonAtrasBlanco.png);\n"
+"background-color: transparent;\n"
+"background: none;\n"
+"border: none;\n"
+"background-repeat: none;\n"
+"}\n"
+"#atras:pressed{\n"
+"border-image: url(:/direccion/bottonAtrasBlancoAzul.jpg);\n"
+"background-color: transparent;\n"
+"background: none;\n"
+"border: none;\n"
+"background-repeat: none;\n"
+"}")
+        self.atras.setText("")
+        self.atras.setObjectName("atras")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -70,16 +88,19 @@ class Ui_MainWindow3(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Ventana del administrador"))
         self.hola.setText(_translate("MainWindow", "Hola de nuevo"))
         self.aniadirTr.setText(_translate("MainWindow", "Añadir trabajador"))
         self.eliminarTr.setText(_translate("MainWindow", "Eliminar trabajador"))
         self.aniadirCl.setText(_translate("MainWindow", "Añadir cliente"))
         self.eleminarCl.setText(_translate("MainWindow", "Eliminar cliente"))
 
-    def setCoordinador(self, coord):
+    def setCoordinador(self, coord) -> None:
         self.coordinador = coord
     
+import botonAtrasBlanco
+import botonAtrasBlancoAzul
+import botonAtras
 import nissan2
 
 """
