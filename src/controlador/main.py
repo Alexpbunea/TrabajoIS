@@ -16,7 +16,7 @@ from src.vista.VentanaIniciarSesion_ui import Ui_MainWindow2
 from src.vista.VentanaAdmin import Ui_MainWindow3
 import imagen_rc
 import imagenDes_rc
-import nissanGtr
+import nissan2
 
 #RESTO
 from src.vista.RegistroClienteVentana import RegistroClienteVentana
@@ -87,11 +87,8 @@ if __name__ == "__main__":
     controlador.setViewVentanaAdmin(controlador)
 
     ventana_principal.show()
-    if ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion) is True:
-        print("Entrando en la ventana 3")
-        #ventanaIniciarSesion.hide()
-        #ventanaAdmin.show()
-
+    ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
+    #print("Entrando en la ventana 3")
 
     sys.exit(app.exec_())
 

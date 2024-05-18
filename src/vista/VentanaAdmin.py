@@ -18,35 +18,20 @@ class Ui_MainWindow3(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1240, 720)
-        MainWindow.setMinimumSize(QtCore.QSize(1240, 720))
-        MainWindow.setMaximumSize(QtCore.QSize(1920, 1200))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setMinimumSize(QtCore.QSize(1240, 720))
-        self.centralwidget.setMaximumSize(QtCore.QSize(1920, 1200))
         self.centralwidget.setObjectName("centralwidget")
         self.imagen = QtWidgets.QLabel(self.centralwidget)
         self.imagen.setGeometry(QtCore.QRect(0, 0, 1240, 720))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.imagen.sizePolicy().hasHeightForWidth())
-        #print(self.image)
         self.imagen.setSizePolicy(sizePolicy)
-        self.imagen.setMinimumSize(QtCore.QSize(1240, 720))
-        self.imagen.setMaximumSize(QtCore.QSize(1920, 1200))
-        self.imagen.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD.jpg);")
+        self.imagen.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
         self.imagen.setText("")
-        #self.imagen.setScaledContents(True)
-        self.imagen.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD.jpg"))
+        self.imagen.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
         self.imagen.setScaledContents(True)
         self.imagen.setObjectName("imagen")
-
-        print(self.imagen.size())
-        #pixmap = QtGui.QPixmap("nissan_skyline_gt_r_r34-HD.jpg")
-        #scaled_pixmap = pixmap.scaled(self.imagen.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
-        #self.imagen.setPixmap(scaled_pixmap)
-
-
         self.hola = QtWidgets.QLabel(self.centralwidget)
         self.hola.setGeometry(QtCore.QRect(10, 10, 211, 41))
         font = QtGui.QFont()
@@ -92,20 +77,17 @@ class Ui_MainWindow3(object):
         self.aniadirCl.setText(_translate("MainWindow", "Añadir cliente"))
         self.eleminarCl.setText(_translate("MainWindow", "Eliminar cliente"))
 
-    
     def setCoordinador(self, coord):
         self.coordinador = coord
-
-import nissanGtr
-
-
+    
+import nissan2
 
 """
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow3()
+    ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
