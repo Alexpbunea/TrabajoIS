@@ -26,12 +26,9 @@ from src.modelo.Logica import Logica
 from src.vista.RegistroConcesionarioVentana import RegistroConcesionarioVentana
 
 
-def mostrar_ventana2():
-    ventana_principal.hide()
-    ventanaIniciarSesion.show()
-def mostrar_ventana3():
-    ventanaIniciarSesion.hide()
-    ventanaAdmin.show()
+def mostrar_ventana(ventanaInicial, ventanaFinal):
+    ventanaInicial.hide()
+    ventanaFinal.show()
 
 def atras(ventanaInicial, ventanaFinal):
     ventanaInicial.hide()
@@ -45,13 +42,13 @@ def comprobarSesion():
 
     if a[0] == "cliente":
         ui_ventana2_ui.hacerVisible(False)
-        mostrar_ventana3()
+        mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
         ui_ventana3_ui.hola_2.setText(a[1])
-        #print("Hola")
-        #return True
-    elif a[0] == "trabajador":
+       
+    elif a[0] in ['admistrador', 'jefeZona', 'jefeDepartamento', 'personal']:
         ui_ventana2_ui.hacerVisible(False)
-        #return True
+        
+
     else:
         ui_ventana2_ui.hacerVisible(True)
 #"""
@@ -69,7 +66,7 @@ if __name__ == "__main__":
     ventana_principal = QtWidgets.QMainWindow()
     ui_ventana1 = Ui_MainWindow()
     ui_ventana1.setupUi(ventana_principal)
-    ui_ventana1.Continuar.clicked.connect(mostrar_ventana2)
+    ui_ventana1.Continuar.clicked.connect(lambda: mostrar_ventana(ventana_principal, ventanaIniciarSesion))
 
     ventanaIniciarSesion = QtWidgets.QMainWindow()
     ui_ventana2_ui = Ui_MainWindow2()

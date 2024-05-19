@@ -64,7 +64,7 @@ class Logica:
             for trab in trabajadores:
                 if trab.getIDtrabajador() == mi_persona.getIDtrabajador() and trab.getContrasenia() == mi_persona.getContrasenia():
                     print(f"Bienvenido trabajador --> {trab.getNombre()}")
-                    return ('trabajador',trab.getNombre())
+                    return (trab.getRol(),trab.getNombre())
             #return 'invalido'
         else:
             print("No existe ningun trabajador ni ningun cliente con esas credenciales")

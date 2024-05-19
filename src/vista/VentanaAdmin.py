@@ -11,6 +11,29 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
+class BorderedTextLabel(QtWidgets.QLabel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setStyleSheet("color: white;")  # Set text color to white
+
+    def paintEvent(self, event):
+        painter = QtGui.QPainter(self)
+        pen = QtGui.QPen(QtCore.Qt.black, 2, QtCore.Qt.SolidLine)
+        painter.setPen(pen)
+
+        # Draw the text with a border
+        for dx in range(-1, 2):
+            for dy in range(-1, 2):
+                if dx != 0 or dy != 0:
+                    painter.drawText(self.rect().adjusted(dx, dy, dx, dy), QtCore.Qt.AlignCenter, self.text())
+
+        # Draw the text itself
+        pen.setColor(QtCore.Qt.white)
+        painter.setPen(pen)
+        painter.drawText(self.rect(), QtCore.Qt.AlignCenter, self.text())
+        painter.end()
+
+
 class Ui_MainWindow3(object):
     def __init(self, coord=None):
         self.coordinador = coord
@@ -32,7 +55,7 @@ class Ui_MainWindow3(object):
         self.imagen.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
         self.imagen.setScaledContents(True)
         self.imagen.setObjectName("imagen")
-        self.hola = QtWidgets.QLabel(self.centralwidget)
+        self.hola = BorderedTextLabel(self.centralwidget)
         self.hola.setGeometry(QtCore.QRect(10, 10, 211, 41))
         font = QtGui.QFont()
         font.setPointSize(17)
@@ -41,8 +64,8 @@ class Ui_MainWindow3(object):
         self.hola.setFont(font)
         self.hola.setStyleSheet("color: white")
         self.hola.setObjectName("hola")
-        self.hola_2 = QtWidgets.QLabel(self.centralwidget)
-        self.hola_2.setGeometry(QtCore.QRect(230, 10, 211, 41))
+        self.hola_2 = BorderedTextLabel(self.centralwidget)
+        self.hola_2.setGeometry(QtCore.QRect(200, 10, 211, 41))
         font = QtGui.QFont()
         font.setPointSize(17)
         font.setBold(True)

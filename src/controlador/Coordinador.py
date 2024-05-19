@@ -66,8 +66,6 @@ class Coordinador:
     ##############################################
     def comprobarIniciarSesion(self, usuario) -> None:
        a = self._model.comprobar_Dni_contrasenia(usuario)
-       print("hola")
-       print(a)
        return a
 
     def registrarConcesionario(self, usuario: Concesionario) -> None:
