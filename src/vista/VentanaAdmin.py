@@ -35,7 +35,7 @@ class BorderedTextLabel(QtWidgets.QLabel):
 
 
 class Ui_MainWindow3(object):
-    def __init(self, coord=None):
+    def __init__(self, coord=None):
         self.coordinador = coord
 
     def setupUi(self, MainWindow):
@@ -74,18 +74,21 @@ class Ui_MainWindow3(object):
         self.hola_2.setStyleSheet("color: white")
         self.hola_2.setText("")
         self.hola_2.setObjectName("hola_2")
-        self.aniadirTr = QtWidgets.QPushButton(self.centralwidget)
-        self.aniadirTr.setGeometry(QtCore.QRect(20, 650, 151, 41))
-        self.aniadirTr.setObjectName("aniadirTr")
-        self.eliminarTr = QtWidgets.QPushButton(self.centralwidget)
-        self.eliminarTr.setGeometry(QtCore.QRect(210, 650, 151, 41))
-        self.eliminarTr.setObjectName("eliminarTr")
-        self.aniadirCl = QtWidgets.QPushButton(self.centralwidget)
-        self.aniadirCl.setGeometry(QtCore.QRect(400, 650, 151, 41))
-        self.aniadirCl.setObjectName("aniadirCl")
-        self.eleminarCl = QtWidgets.QPushButton(self.centralwidget)
-        self.eleminarCl.setGeometry(QtCore.QRect(580, 650, 151, 41))
-        self.eleminarCl.setObjectName("eleminarCl")
+        self.Trabajador = QtWidgets.QPushButton(self.centralwidget)
+        self.Trabajador.setGeometry(QtCore.QRect(400, 650, 151, 41))
+        self.Trabajador.setObjectName("Trabajador")
+        self.Taller = QtWidgets.QPushButton(self.centralwidget)
+        self.Taller.setGeometry(QtCore.QRect(580, 650, 151, 41))
+        self.Taller.setObjectName("Taller")
+        self.Cliente = QtWidgets.QPushButton(self.centralwidget)
+        self.Cliente.setGeometry(QtCore.QRect(210, 650, 151, 41))
+        self.Cliente.setObjectName("Cliente")
+        self.Concesionario = QtWidgets.QPushButton(self.centralwidget)
+        self.Concesionario.setGeometry(QtCore.QRect(20, 650, 151, 41))
+        self.Concesionario.setObjectName("Concesionario")
+        self.Almacen = QtWidgets.QPushButton(self.centralwidget)
+        self.Almacen.setGeometry(QtCore.QRect(760, 650, 151, 41))
+        self.Almacen.setObjectName("Almacen")
         self.atras = QtWidgets.QPushButton(self.centralwidget)
         self.atras.setGeometry(QtCore.QRect(1160, 640, 51, 51))
         self.atras.setStyleSheet("#atras{\n"
@@ -104,6 +107,11 @@ class Ui_MainWindow3(object):
 "}")
         self.atras.setText("")
         self.atras.setObjectName("atras")
+        #self.combo_box = QtWidgets.QComboBox(self.centralwidget)
+        #self.combo_box.setGeometry(1040, 10, 180, 30)
+        #self.combo_box.setStyleSheet("background-color: transparent; border: 2px solid white; color: white; border-radius: 10px;")
+        self.estilos([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -113,10 +121,24 @@ class Ui_MainWindow3(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Ventana del administrador"))
         self.hola.setText(_translate("MainWindow", "Hola de nuevo"))
-        self.aniadirTr.setText(_translate("MainWindow", "Añadir trabajador"))
-        self.eliminarTr.setText(_translate("MainWindow", "Eliminar trabajador"))
-        self.aniadirCl.setText(_translate("MainWindow", "Añadir cliente"))
-        self.eleminarCl.setText(_translate("MainWindow", "Eliminar cliente"))
+        self.Trabajador.setText(_translate("MainWindow", "Trabajadores"))
+        self.Taller.setText(_translate("MainWindow", "Talleres"))
+        self.Cliente.setText(_translate("MainWindow", "Clientes"))
+        self.Concesionario.setText(_translate("MainWindow", "Concesionarios"))
+        self.Almacen.setText(_translate("MainWindow", "Almacenes"))
+
+    def estilos(self, lista):
+        for i in lista:
+            i.setStyleSheet("QPushButton {\n"
+            "    background-color: transparent;\n"
+            "    border: 2px solid white;\n"
+            "    color: white;\n"
+            "    border-radius: 10px;\n"
+            "}\n"
+                "QPushButton:pressed {"
+                "background-color: #2980b9;"
+            "}"
+            )
 
     def setCoordinador(self, coord) -> None:
         self.coordinador = coord

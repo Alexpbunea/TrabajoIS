@@ -169,6 +169,23 @@ background-repeat: none;
      <string/>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>10</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;\n
+border: 2px solid white;\n
+color: white;\n
+border-radius: 10px;\n
+</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>
