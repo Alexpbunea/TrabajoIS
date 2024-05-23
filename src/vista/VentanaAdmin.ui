@@ -169,27 +169,38 @@ background-repeat: none;
      <string/>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QCheckBox" name="checkBox">
     <property name="geometry">
      <rect>
-      <x>1040</x>
-      <y>10</y>
-      <width>181</width>
-      <height>31</height>
+      <x>10</x>
+      <y>50</y>
+      <width>141</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: transparent;\n
-border: 2px solid white;\n
-color: white;\n
-border-radius: 10px;\n
-</string>
+     <string notr="true">QCheckBox::indicator {
+    width: 25px;
+    height: 25px;
+	text-align: right;
+}
+QCheckBox {
+    font-size: 16px; /* Tamaño de la letra en píxeles */
+	font-weight: bold;
+	color: white;
+}</string>
+    </property>
+    <property name="text">
+     <string>Modo oscuro</string>
     </property>
    </widget>
   </widget>
  </widget>
  <resources>
   <include location="nissan.qrc"/>
+  <include location="nissanGtrClaro.qrc"/>
+  <include location="apagado.qrc"/>
+  <include location="encendido.qrc"/>
   <include location="bottonAtrasBlancoAzul.qrc"/>
   <include location="botonAtrasBlanco.qrc"/>
   <include location="bottonAtras.qrc"/>

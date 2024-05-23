@@ -15,6 +15,7 @@ class BorderedTextLabel(QtWidgets.QLabel):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setStyleSheet("color: white;")  # Set text color to white
+        
 
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
@@ -34,6 +35,7 @@ class BorderedTextLabel(QtWidgets.QLabel):
         painter.end()
 
 
+
 class Ui_MainWindow3(object):
     def __init__(self, coord=None):
         self.coordinador = coord
@@ -43,6 +45,7 @@ class Ui_MainWindow3(object):
         MainWindow.resize(1240, 720)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
         self.imagen = QtWidgets.QLabel(self.centralwidget)
         self.imagen.setGeometry(QtCore.QRect(0, 0, 1240, 720))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -50,11 +53,10 @@ class Ui_MainWindow3(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.imagen.sizePolicy().hasHeightForWidth())
         self.imagen.setSizePolicy(sizePolicy)
-        self.imagen.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
         self.imagen.setText("")
-        self.imagen.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
         self.imagen.setScaledContents(True)
         self.imagen.setObjectName("imagen")
+
         self.hola = BorderedTextLabel(self.centralwidget)
         self.hola.setGeometry(QtCore.QRect(10, 10, 211, 41))
         font = QtGui.QFont()
@@ -62,60 +64,115 @@ class Ui_MainWindow3(object):
         font.setBold(True)
         font.setWeight(75)
         self.hola.setFont(font)
-        self.hola.setStyleSheet("color: white")
         self.hola.setObjectName("hola")
+
         self.hola_2 = BorderedTextLabel(self.centralwidget)
-        self.hola_2.setGeometry(QtCore.QRect(200, 10, 211, 41))
+        self.hola_2.setGeometry(QtCore.QRect(220, 10, 211, 41))
         font = QtGui.QFont()
         font.setPointSize(17)
         font.setBold(True)
         font.setWeight(75)
         self.hola_2.setFont(font)
-        self.hola_2.setStyleSheet("color: white")
         self.hola_2.setText("")
         self.hola_2.setObjectName("hola_2")
+
         self.Trabajador = QtWidgets.QPushButton(self.centralwidget)
         self.Trabajador.setGeometry(QtCore.QRect(400, 650, 151, 41))
         self.Trabajador.setObjectName("Trabajador")
+
         self.Taller = QtWidgets.QPushButton(self.centralwidget)
         self.Taller.setGeometry(QtCore.QRect(580, 650, 151, 41))
         self.Taller.setObjectName("Taller")
+
         self.Cliente = QtWidgets.QPushButton(self.centralwidget)
         self.Cliente.setGeometry(QtCore.QRect(210, 650, 151, 41))
         self.Cliente.setObjectName("Cliente")
+
         self.Concesionario = QtWidgets.QPushButton(self.centralwidget)
         self.Concesionario.setGeometry(QtCore.QRect(20, 650, 151, 41))
         self.Concesionario.setObjectName("Concesionario")
+
         self.Almacen = QtWidgets.QPushButton(self.centralwidget)
         self.Almacen.setGeometry(QtCore.QRect(760, 650, 151, 41))
         self.Almacen.setObjectName("Almacen")
-        self.atras = QtWidgets.QPushButton(self.centralwidget)
-        self.atras.setGeometry(QtCore.QRect(1160, 640, 51, 51))
-        self.atras.setStyleSheet("#atras{\n"
-"border-image: url(:/direccion/botonAtrasBlanco.png);\n"
-"background-color: transparent;\n"
-"background: none;\n"
-"border: none;\n"
-"background-repeat: none;\n"
-"}\n"
-"#atras:pressed{\n"
-"border-image: url(:/direccion/bottonAtrasBlancoAzul.jpg);\n"
-"background-color: transparent;\n"
-"background: none;\n"
-"border: none;\n"
-"background-repeat: none;\n"
-"}")
-        self.atras.setText("")
-        self.atras.setObjectName("atras")
+
         #self.combo_box = QtWidgets.QComboBox(self.centralwidget)
         #self.combo_box.setGeometry(1040, 10, 180, 30)
         #self.combo_box.setStyleSheet("background-color: transparent; border: 2px solid white; color: white; border-radius: 10px;")
-        self.estilos([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
 
+        self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox.setGeometry(QtCore.QRect(10, 50, 141, 61))
+        self.checkBox.setChecked(True)
+        self.checkBox.setObjectName("checkBox")
+        self.checkBox.stateChanged.connect(self.modoClOs)
+        self.modoClOs()
+        #self.setAtras()
+        #self.atras.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    
+    def setAtras(self):
+        self.atras = QtWidgets.QPushButton(self.centralwidget)
+        self.atras.setGeometry(QtCore.QRect(1160, 640, 51, 51))
+        self.atras.setStyleSheet("#atras{\n"
+                            "border-image: url(:/direccion/botonAtrasBlanco.png);\n"
+                            "background-color: transparent;\n"
+                            "background: none;\n"
+                            "border: none;\n"
+                            "background-repeat: none;\n"
+                        "}\n"
+                        "#atras:pressed{\n"
+                            "border-image: url(:/direccion/bottonAtrasBlancoAzul.jpg);\n"
+                            "background-color: transparent;\n"
+                            "background: none;\n"
+                            "border: none;\n"
+                            "background-repeat: none;\n"
+                        "}")
+        self.atras.setText("")
+        self.atras.setObjectName("atras")
+
+    def modoClOs(self):
+        if self.checkBox.isChecked(): #modo oscuro
+            self.imagen.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
+            self.imagen.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
+            self.estilosOscuro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
+            self.setAtras()
+            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
+                            "    width: 25px;\n"
+                            "    height: 25px;\n"
+                            "    text-align: right;\n"
+                            "}\n"
+                            "QCheckBox {\n"
+                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
+                            "    font-weight: bold;\n"
+                            "    color: white;\n"
+                            "}")
+            BorderedTextLabel.setStyleSheet("color: white;")
+            #self.hola.setStyleSheet("color: white")
+            #self.hola_2.setStyleSheet("color: white")
+            #return "oscuro"
+        else: #modo claro
+            self.imagen.setStyleSheet("background-image: url(:/direccion/nissanGtrClaro.jpg);")
+            self.imagen.setPixmap(QtGui.QPixmap("nissanGtrClaro.jpg"))
+            self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
+            self.setAtras()
+            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
+                            "    width: 25px;\n"
+                            "    height: 25px;\n"
+                            "    text-align: right;\n"
+                            "}\n"
+                            "QCheckBox {\n"
+                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
+                            "    font-weight: bold;\n"
+                            "    color: black;\n"
+                            "}")
+            BorderedTextLabel.setStyleSheet("color: black;")
+            #self.hola.setStyleSheet("color: black;")
+            #self.hola_2.setStyleSheet("color: black;")
+            #return "claro"
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -126,8 +183,9 @@ class Ui_MainWindow3(object):
         self.Cliente.setText(_translate("MainWindow", "Clientes"))
         self.Concesionario.setText(_translate("MainWindow", "Concesionarios"))
         self.Almacen.setText(_translate("MainWindow", "Almacenes"))
+        self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
-    def estilos(self, lista):
+    def estilosOscuro(self, lista):
         for i in lista:
             i.setStyleSheet("QPushButton {\n"
             "    background-color: transparent;\n"
@@ -139,14 +197,27 @@ class Ui_MainWindow3(object):
                 "background-color: #2980b9;"
             "}"
             )
+    def estilosClaro(self, lista):
+        for i in lista:
+            i.setStyleSheet("QPushButton {\n"
+            "    background-color: transparent;\n"
+            "    border: 2px solid black;\n"
+            "    color: black;\n"
+            "    border-radius: 10px;\n"
+            "}\n"
+                "QPushButton:pressed {"
+                "background-color: #2980b9;"
+            "}"
+            )
 
     def setCoordinador(self, coord) -> None:
         self.coordinador = coord
     
-import botonAtrasBlanco
-import botonAtrasBlancoAzul
-import botonAtras
-import nissan2
+#import botonAtrasBlanco
+#import botonAtrasBlancoAzul
+#import botonAtras
+#import nissan2
+#import nissanGtrClaro
 
 """
 if __name__ == "__main__":

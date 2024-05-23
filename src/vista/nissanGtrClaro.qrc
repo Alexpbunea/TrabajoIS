@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="direccion">
+    <file>nissanGtrClaro.jpg</file>
+  </qresource>
+</RCC>

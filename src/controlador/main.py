@@ -17,6 +17,7 @@ from src.vista.VentanaAdmin import Ui_MainWindow3
 import imagen_rc
 import imagenDes_rc
 import nissan2
+import nissanGtrClaro
 
 #RESTO
 from src.vista.RegistroClienteVentana import RegistroClienteVentana
