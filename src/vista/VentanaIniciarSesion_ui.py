@@ -14,7 +14,7 @@ from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
 
 
 class Ui_MainWindow2(object):
-    def __init(self, coord=None):
+    def __init__(self, coord=None):
         self.coordinador = coord
 
 
@@ -76,6 +76,7 @@ class Ui_MainWindow2(object):
 "")
         self.LineaContra.setText("")
         self.LineaContra.setObjectName("LineaContra")
+        self.LineaContra.setEchoMode(QtWidgets.QLineEdit.Password)
         self.IniciarSesion = QtWidgets.QPushButton(self.frame)
         self.IniciarSesion.setGeometry(QtCore.QRect(100, 350, 100, 30))
         font = QtGui.QFont()

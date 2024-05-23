@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
-    def __init(self, coordinador=None):
+    def __init__(self, coordinador=None):
         self.coordinador = coordinador
 
     def setupUi(self, MainWindow):
