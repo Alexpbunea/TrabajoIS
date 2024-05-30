@@ -149,14 +149,14 @@ class Ui_MainWindow3(object):
                             "    font-weight: bold;\n"
                             "    color: white;\n"
                             "}")
-            BorderedTextLabel.setStyleSheet("color: white;")
-            #self.hola.setStyleSheet("color: white")
-            #self.hola_2.setStyleSheet("color: white")
+            #BorderedTextLabel.setStyleSheet("color: white;")
+            self.hola.setStyleSheet("color: white")
+            self.hola_2.setStyleSheet("color: white")
             #return "oscuro"
         else: #modo claro
             self.imagen.setStyleSheet("background-image: url(:/direccion/nissanGtrClaro.jpg);")
             self.imagen.setPixmap(QtGui.QPixmap("nissanGtrClaro.jpg"))
-            self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
+            #self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
             self.setAtras()
             self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
                             "    width: 25px;\n"
@@ -168,9 +168,9 @@ class Ui_MainWindow3(object):
                             "    font-weight: bold;\n"
                             "    color: black;\n"
                             "}")
-            BorderedTextLabel.setStyleSheet("color: black;")
-            #self.hola.setStyleSheet("color: black;")
-            #self.hola_2.setStyleSheet("color: black;")
+            #BorderedTextLabel.setStyleSheet("color: black;")
+            self.hola.setStyleSheet("color: black;")
+            self.hola_2.setStyleSheet("color: black;")
             #return "claro"
 
 
