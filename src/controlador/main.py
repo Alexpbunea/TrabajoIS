@@ -14,10 +14,13 @@ from PyQt5 import QtWidgets
 from src.vista.VentanaPrincipal_ui import Ui_MainWindow
 from src.vista.VentanaIniciarSesion_ui import Ui_MainWindow2
 from src.vista.VentanaAdmin import Ui_MainWindow3
+from src.vista.VentanaConcesionario import Ui_MainWindow4
 import imagen_rc
 import imagenDes_rc
 import nissan2
 import nissanGtrClaro
+import botonAtrasBlanco
+import botonAtrasBlancoAzul
 
 #RESTO
 from src.vista.RegistroClienteVentana import RegistroClienteVentana
@@ -45,7 +48,10 @@ def comprobarSesion():
         ui_ventana2_ui.hacerVisible(False)
         mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
         ui_ventana3_ui.hola_2.setText(a[1])
-       
+        ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
+        ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
+        #ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
+    
     elif a[0] in ['admistrador', 'jefeZona', 'jefeDepartamento', 'personal']:
         ui_ventana2_ui.hacerVisible(False)
         
@@ -53,6 +59,9 @@ def comprobarSesion():
     else:
         ui_ventana2_ui.hacerVisible(True)
 #"""
+
+    def funcionConcesionarios():
+        pass
 
 if __name__ == "__main__":
     import sys
@@ -79,11 +88,17 @@ if __name__ == "__main__":
     ui_ventana3_ui.setupUi(ventanaAdmin)
     ventanaAdmin.hide()
 
+    ventanaConcesionario = QtWidgets.QMainWindow()
+    ui_ventana4_ui = Ui_MainWindow4()
+    ui_ventana4_ui.setupUi(ventanaConcesionario)
+    ventanaConcesionario.hide()
+
     # A cada ventada hay que asignarle un coordinador. Un mismo controlador puede controlar varias ventanas
     #ventanaRegistroConcesionario.setCoordinador(controlador)
     ui_ventana1.setCoordinador(controlador)
     ui_ventana2_ui.setCoordinador(controlador)
     ui_ventana3_ui.setCoordinador(controlador)
+    ui_ventana4_ui.setCoordinador(controlador)
 
 
     # Al coordinador hay que asignarle una ventana. Un coordinador puede tener referencias a varias ventanas
@@ -91,6 +106,7 @@ if __name__ == "__main__":
     controlador.setViewVentanaPrincipal(controlador)
     controlador.setViewVentanaIniciarSesion(controlador)
     controlador.setViewVentanaAdmin(controlador)
+    controlador.setViewRegistroConcesionario(controlador)
 
     ventana_principal.show()
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)

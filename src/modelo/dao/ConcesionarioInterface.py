@@ -11,5 +11,15 @@ class ConcesionarioInterface(ABC):
         raise NotImplementedError("Método getConcesionarios no implementado")
     
     @abstractmethod
-    def insertConcesionario(self, almacen: Concesionario):
+    def insertConcesionario(self, c: Concesionario):
         raise NotImplementedError("Método insertConcesionario no implementado")
+    
+    @abstractmethod
+    def deleteConcesionario(self, nombre:str):
+        raise NotImplementedError("Método deleteConcesionario no implementado")
+    
+    @abstractmethod
+    def updateConcesionario(self, c:Concesionario):
+        raise NotImplementedError("Método updateConcesionario no implementado")
+    
+    

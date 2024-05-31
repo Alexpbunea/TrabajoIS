@@ -79,22 +79,27 @@ class Ui_MainWindow3(object):
         self.Trabajador = QtWidgets.QPushButton(self.centralwidget)
         self.Trabajador.setGeometry(QtCore.QRect(400, 650, 151, 41))
         self.Trabajador.setObjectName("Trabajador")
+        self.Trabajador.setToolTip("Añade, elimina o modifica trabajadores")
 
         self.Taller = QtWidgets.QPushButton(self.centralwidget)
         self.Taller.setGeometry(QtCore.QRect(580, 650, 151, 41))
         self.Taller.setObjectName("Taller")
+        self.Taller.setToolTip("Añade, elimina o modifica piezas en un taller")
 
         self.Cliente = QtWidgets.QPushButton(self.centralwidget)
         self.Cliente.setGeometry(QtCore.QRect(210, 650, 151, 41))
         self.Cliente.setObjectName("Cliente")
+        self.Cliente.setToolTip("Añade, elimina o modifica clientes")
 
         self.Concesionario = QtWidgets.QPushButton(self.centralwidget)
         self.Concesionario.setGeometry(QtCore.QRect(20, 650, 151, 41))
         self.Concesionario.setObjectName("Concesionario")
+        self.Concesionario.setToolTip("Añade, elimina, modifica o busca concesionarios")
 
         self.Almacen = QtWidgets.QPushButton(self.centralwidget)
         self.Almacen.setGeometry(QtCore.QRect(760, 650, 151, 41))
         self.Almacen.setObjectName("Almacen")
+        self.Almacen.setToolTip("Almacen")
 
         #self.combo_box = QtWidgets.QComboBox(self.centralwidget)
         #self.combo_box.setGeometry(1040, 10, 180, 30)
@@ -105,9 +110,8 @@ class Ui_MainWindow3(object):
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
         self.checkBox.stateChanged.connect(self.modoClOs)
+        self.setAtras()
         self.modoClOs()
-        #self.setAtras()
-        #self.atras.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -132,13 +136,14 @@ class Ui_MainWindow3(object):
                         "}")
         self.atras.setText("")
         self.atras.setObjectName("atras")
+        self.atras.setToolTip("Atras")
 
     def modoClOs(self):
         if self.checkBox.isChecked(): #modo oscuro
             self.imagen.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
             self.imagen.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
             self.estilosOscuro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
-            self.setAtras()
+            #self.setAtras()
             self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
                             "    width: 25px;\n"
                             "    height: 25px;\n"
@@ -157,7 +162,7 @@ class Ui_MainWindow3(object):
             self.imagen.setStyleSheet("background-image: url(:/direccion/nissanGtrClaro.jpg);")
             self.imagen.setPixmap(QtGui.QPixmap("nissanGtrClaro.jpg"))
             #self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
-            self.setAtras()
+            #self.setAtras()
             self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
                             "    width: 25px;\n"
                             "    height: 25px;\n"

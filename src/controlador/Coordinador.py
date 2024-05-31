@@ -37,18 +37,24 @@ class Coordinador:
     #Se añade para cada ventana
     def getViewVentanaPrincipal(self):
        return self._viewVentanaPrincipal
-    
     def setViewVentanaPrincipal(self, view):
        self._viewVentanaPrincipal = view
 
+
     def getViewVentanaIniciarSesion(self):
        return self._viewVentanaIniciarSesion
-    
     def setViewVentanaIniciarSesion(self, view):
        self._viewVentanaIniciarSesion = view
 
+    def getViewVentanaAdmin(self):
+       return self._viewVentanaAdmin
     def setViewVentanaAdmin(self, view):
        self._viewVentanaAdmin = view
+
+    def getViewVentanaConcesionario(self):
+       return self._viewVentanaConcesionario
+    def setViewVentanaConcesionario(self, view):
+       self._viewVentanaConcesionario = view
 
 
     def getViewRegistroCliente(self):
@@ -68,8 +74,9 @@ class Coordinador:
        a = self._model.comprobar_Dni_contrasenia(usuario)
        return a
 
-    def registrarConcesionario(self, usuario: Concesionario) -> None:
-       self._model.validar_registro_concesionario(usuario)
+    def registrarConcesionario(self, usuario, queHago) -> None:
+       a = self._model.validar_registro_concesionario(usuario, queHago)
+       return a
 
 
     def registrarCliente(self, usuario: Cliente) -> None:

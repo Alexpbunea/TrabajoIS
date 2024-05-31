@@ -72,18 +72,80 @@ class Logica:
         #except:    
             #messagebox.showwarning("Advertencia", "Error al intertar acceder a la base de datos")
 
-    def validar_registro_concesionario(self, mi_persona: Concesionario):
+    
+    def validar_registro_concesionario(self, mi_persona: Concesionario, queHago):
         #if '@' in mi_persona.getEmail():
-        try:
-            fecha_str = mi_persona.getFechaInauguracion()
-            fecha_obj = datetime.strptime(fecha_str, '%d-%m-%Y')
-            fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
-            mi_persona.setFechaInauguracion(fecha_mysql)
+        
+        
+        
+        if queHago == "aniadir":
+            try:
+                nombre = mi_persona.getNombre()
+                direccion = mi_persona.getDireccion()
+                ciudad = mi_persona.getCiudad()
+                fecha_str = mi_persona.getFechaInauguracion()
+                
+                #comprobando si son nulos
+                if nombre is None or direccion is None or ciudad is None or fecha_str is None:
+                    return "Error"
+                
+                #Comprobando el formato del nombre
+                if nombre[:10] == "Cofermotor":
+                    print("Nombre correcto")
+                elif nombre[:10] == "cofermotor":
+                    print("Falta mayuscula en la inicial nombre. Corrigiendo")
+                    nombre = "Cofermotor" + nombre[10:]
+                    mi_persona.setNombre(nombre)
+                else:
+                    print("Formato incorrecto de nombre")
+                    return "Error"
+                
+                #comprobando el formato de la ciudad
+                if ciudad[0].isupper() is True:
+                    print("Ciudad con formato correcto")
+                elif ciudad[0].isupper() is False:
+                    c = ciudad[0].upper()
+                    iudad = ciudad[1:]
+                    ciudad = c + iudad
+                    mi_persona.setCiudad(ciudad)
+                else:
+                    print("Formato incorrecto de la ciudad")
+                    return "Error"
 
-            mi_persona_dao = ConcesionarioDao()
-            mi_persona_dao.insertConcesionario(mi_persona)
-        except:
-            messagebox.showwarning("Advertencia", "Error al insertar concesionario")
+
+                #paso la fecha al formato correcto
+                
+                fecha_obj = datetime.strptime(fecha_str, '%d-%m-%Y')
+                fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
+                mi_persona.setFechaInauguracion(fecha_mysql)
+
+                mi_persona_dao = ConcesionarioDao()
+                mi_persona_dao.insertConcesionario(mi_persona)
+                return True
+            except:
+                messagebox.showwarning("Advertencia", "Error al insertar concesionario")
+
+        elif queHago == "eliminar":
+            try:
+                nombre = mi_persona.getNombre()
+                #Comprobando el formato del nombre
+                if nombre[:10] == "Cofermotor":
+                    print("Nombre correcto")
+                elif nombre[:10] == "cofermotor":
+                    print("Falta mayuscula en la inicial nombre. Corrigiendo")
+                    nombre = "Cofermotor" + nombre[10:]
+                    mi_persona.setNombre(nombre)
+                else:
+                    print("Formato incorrecto de nombre")
+                    return "Error"
+
+                mi_persona_dao = ConcesionarioDao()
+                mi_persona_dao.deleteConcesionario(mi_persona)
+                return True
+            except:
+                messagebox.showwarning("Advertencia", "Error al eliminar concesionario")
+
+
 
     def validar_registro_cliente(self, mi_persona: Cliente):
         if '@' in mi_persona.getEmail():
