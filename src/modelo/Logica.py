@@ -73,21 +73,16 @@ class Logica:
             #messagebox.showwarning("Advertencia", "Error al intertar acceder a la base de datos")
 
     
-    def validar_registro_concesionario(self, mi_persona: Concesionario, queHago):
+    def validar_registro_concesionario(self, mi_concesionario: Concesionario, queHago):
         #if '@' in mi_persona.getEmail():
-        
-        
         
         if queHago == "aniadir":
             try:
-                nombre = mi_persona.getNombre()
-                direccion = mi_persona.getDireccion()
-                ciudad = mi_persona.getCiudad()
-                fecha_str = mi_persona.getFechaInauguracion()
-                
-                #comprobando si son nulos
-                if nombre is None or direccion is None or ciudad is None or fecha_str is None:
-                    return "Error"
+                print("Hola2")
+                nombre = mi_concesionario.getNombre()
+                direccion = mi_concesionario.getDireccion()
+                ciudad = mi_concesionario.getCiudad()
+                fecha_str = mi_concesionario.getFechaInauguracion()
                 
                 #Comprobando el formato del nombre
                 if nombre[:10] == "Cofermotor":
@@ -95,10 +90,11 @@ class Logica:
                 elif nombre[:10] == "cofermotor":
                     print("Falta mayuscula en la inicial nombre. Corrigiendo")
                     nombre = "Cofermotor" + nombre[10:]
-                    mi_persona.setNombre(nombre)
+                    mi_concesionario.setNombre(nombre)
                 else:
-                    print("Formato incorrecto de nombre")
-                    return "Error"
+                    print(nombre)
+                    print("Formato incorrecto del nombre")
+                    return ("Error", "Formato incorrecto del nombre")
                 
                 #comprobando el formato de la ciudad
                 if ciudad[0].isupper() is True:
@@ -107,41 +103,40 @@ class Logica:
                     c = ciudad[0].upper()
                     iudad = ciudad[1:]
                     ciudad = c + iudad
-                    mi_persona.setCiudad(ciudad)
+                    mi_concesionario.setCiudad(ciudad)
                 else:
                     print("Formato incorrecto de la ciudad")
-                    return "Error"
+                    return ("Error", "Formato incorrecto de la ciudad")
 
 
                 #paso la fecha al formato correcto
-                
                 fecha_obj = datetime.strptime(fecha_str, '%d-%m-%Y')
                 fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
-                mi_persona.setFechaInauguracion(fecha_mysql)
+                mi_concesionario.setFechaInauguracion(fecha_mysql)
 
-                mi_persona_dao = ConcesionarioDao()
-                mi_persona_dao.insertConcesionario(mi_persona)
+                print(mi_concesionario)
+                mi_concesionario_dao = ConcesionarioDao()
+                mi_concesionario_dao.insertConcesionario(mi_concesionario)
                 return True
             except:
                 messagebox.showwarning("Advertencia", "Error al insertar concesionario")
 
         elif queHago == "eliminar":
             try:
-                nombre = mi_persona.getNombre()
-                #Comprobando el formato del nombre
-                if nombre[:10] == "Cofermotor":
-                    print("Nombre correcto")
-                elif nombre[:10] == "cofermotor":
-                    print("Falta mayuscula en la inicial nombre. Corrigiendo")
-                    nombre = "Cofermotor" + nombre[10:]
-                    mi_persona.setNombre(nombre)
-                else:
-                    print("Formato incorrecto de nombre")
-                    return "Error"
+                nombre = mi_concesionario.getNombre()
+                
+                #if nombre == "":
+                #    return ("Error", "Casilla vacia")
+                
+                #Comprobando el formato del nombro
+                mi_concesionario_dao = ConcesionarioDao()
+                concesionarios = mi_concesionario_dao.getConcesionarios()
 
-                mi_persona_dao = ConcesionarioDao()
-                mi_persona_dao.deleteConcesionario(mi_persona)
-                return True
+                for conc in concesionarios:
+                    if conc.getNombre() == mi_concesionario.getNombre():
+                        print(f"Eliminando concesionario --> {conc.getNombre()}")
+                        mi_concesionario_dao.deleteConcesionario(mi_concesionario.getNombre())
+                return ("Error", "Ese concesionario no existe")
             except:
                 messagebox.showwarning("Advertencia", "Error al eliminar concesionario")
 

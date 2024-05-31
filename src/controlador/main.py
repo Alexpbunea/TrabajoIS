@@ -39,18 +39,26 @@ def atras(ventanaInicial, ventanaFinal):
     ventanaFinal.show()
     
 
+
+def funcionConcesionarios():
+        ui_ventana4_ui.obtener_datos_ingresados()
+
 def comprobarSesion():
     #"""
     #comprobar si el dni y la contrasenia son correctos
     a = ui_ventana2_ui.obtener_datos_ingresados()
 
-    if a[0] == "cliente":
+    if a is False:
+        ui_ventana2_ui.hacerVisible(True)
+
+    elif a[0] == "cliente":
         ui_ventana2_ui.hacerVisible(False)
         mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
         ui_ventana3_ui.hola_2.setText(a[1])
         ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
         ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
-        #ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
+        ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
+        ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
     
     elif a[0] in ['admistrador', 'jefeZona', 'jefeDepartamento', 'personal']:
         ui_ventana2_ui.hacerVisible(False)
@@ -60,8 +68,7 @@ def comprobarSesion():
         ui_ventana2_ui.hacerVisible(True)
 #"""
 
-    def funcionConcesionarios():
-        pass
+    
 
 if __name__ == "__main__":
     import sys

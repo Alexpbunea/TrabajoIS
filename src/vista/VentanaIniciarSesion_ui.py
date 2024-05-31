@@ -119,18 +119,26 @@ class Ui_MainWindow2(object):
         self.coordinador = coord
 
     def obtener_datos_ingresados(self):
-        # Obtener el texto ingresado en los lineedits de DNI y contraseña
+      # Obtener el texto ingresado en los lineedits de DNI y contraseña
+        dni = self.LineaDni.text()
+        contra = self.LineaContra.text()
+
+        # Verificar si los campos están vacíos
+        if not dni or not contra:
+            #self.hacerVisible(True)  # Hacer visible la etiqueta de advertencia
+            return False
+
+        # Si los campos no están vacíos, proceder con el inicio de sesión
         trabajador = PlantillaTrabajadorVO(
-            IDtrabajador= self.LineaDni.text(),
-            Contraseña= self.LineaContra.text()
+            IDtrabajador=dni,
+            Contraseña=contra
         )
 
-
         cliente = Cliente(
-                IDcliente =  self.LineaDni.text(),
-                Contrasenia = self.LineaContra.text()
-            )
-        
+            IDcliente=dni,
+            Contrasenia=contra
+        )
+            
         a = self.coordinador.comprobarIniciarSesion(cliente) 
         b = self.coordinador.comprobarIniciarSesion(trabajador)
 

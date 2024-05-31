@@ -18,8 +18,8 @@ class Ui_MainWindow4(object):
         self.rojo = "#ff0000"
         self.verde = "#00FF00"
         #self.textoIncorrecto = "Revisa el formato"
-        self.error = "Error al añadir o modicar un concesionario"
-        self.error2 = "Error al eliminar un concesionario"
+        #self.error = "Error al añadir o modicar un concesionario"
+        #self.error2 = "Revisa el nombre"
         self.completado = "Accion completada con exito"
 
 
@@ -212,7 +212,7 @@ class Ui_MainWindow4(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.estilosOscuro([self.aniadirCon, self.eliminarCon, self.BuscarCon, self.ModificarCon, self.botonEliminar, self.Nombre2])
+        self.estilosOscuro([self.aniadirCon, self.eliminarCon, self.BuscarCon, self.ModificarCon, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
         self.visible()
         
 
@@ -290,26 +290,37 @@ class Ui_MainWindow4(object):
             Nombre=self.LineaNombre.text(),
             Direccion=self.LineaDireccion.text(),
             Ciudad=self.LineaCiudad.text(),
-            FechaInauguracion=self.LineaFecha()
+            FechaInauguracion=self.LineaFecha.text()
         )
 
         eliminar = Concesionario(
             Nombre=self.LineaNombre2.text()
         )
-
-        if anadirModificar.Nombre is not None:
+        
+        
+        if anadirModificar.Nombre != "":
             a = self.coordinador.registrarConcesionario(anadirModificar, "aniadir") 
-            if a == "Error":
-                self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, self.error)
+            if a[0] == "Error":
+                self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                 self.Incorrecto.setVisible(True)
             else:
-                self.actualizarTextoIncorrecto2(self.Incorrecto2, self.verde, self.completado)
+                self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
                 self.Incorrecto.setVisible(True)
-        elif eliminar.Nombre is not None:
-            a = self.coordinador.registrarConcesionario(eliminar, "eliminar") 
-            if a == "Error":
-                self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, self.error2)
+
+        else:
+            self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, "Casillas vacias")
+            self.Incorrecto.setVisible(True)
+
+        if eliminar.Nombre != "":
+            a = self.coordinador.registrarConcesionario(eliminar, "eliminar")
+            #print(a)
+            if a[0] == "Error":
+                self.actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
                 self.Incorrecto2.setVisible(True)
             else:
                 self.actualizarTextoIncorrecto2(self.Incorrecto2, self.verde, self.completado)
                 self.Incorrecto2.setVisible(True)
+        
+        else:
+            self.actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, "Casilla vacia")
+            self.Incorrecto2.setVisible(True)

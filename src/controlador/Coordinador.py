@@ -76,6 +76,7 @@ class Coordinador:
 
     def registrarConcesionario(self, usuario, queHago) -> None:
        a = self._model.validar_registro_concesionario(usuario, queHago)
+       #print(a)
        return a
 
 
