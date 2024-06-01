@@ -64,20 +64,29 @@ def comprobarSesion():
 
     elif a[0] in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
         ui_ventana2_ui.hacerVisible(False)
-        mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
-        ui_ventana3_ui.hola_2.setText(a[1])
-        ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
-        ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
-        ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
-        ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
-        ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
-        ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
+        if a[0] == "administrador":
+            mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
+            ui_ventana3_ui.hola_2.setText(a[1])
+            ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
+            ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
+            ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
+            ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
+            ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
+            ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
         
 
     else:
         ui_ventana2_ui.hacerVisible(True)
 #"""
 
+def sync_checkbox_state(state, origin, target):
+    target.blockSignals(True)
+    target.setCheckState(state)
+    if target == ui_ventana4_ui.checkBox:
+        ui_ventana4_ui.modoClOs()
+    elif target == ui_ventana3_ui.checkBox:
+        ui_ventana3_ui.modoClOs()
+    target.blockSignals(False)
     
 
 if __name__ == "__main__":
@@ -129,7 +138,10 @@ if __name__ == "__main__":
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
     
     ui_ventana3_ui.atras.clicked.connect(lambda: atras(ventanaAdmin, ventanaIniciarSesion))
-    #print("Entrando en la ventana 3")
+    
+    
+    ui_ventana3_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana3_ui.checkBox, ui_ventana4_ui.checkBox))
+    ui_ventana4_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana4_ui.checkBox, ui_ventana3_ui.checkBox))
 
     sys.exit(app.exec_())
 
