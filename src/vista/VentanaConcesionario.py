@@ -32,9 +32,9 @@ class Ui_MainWindow4(object):
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(0, 0, 1240, 720))
-        self.label.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
+        #self.label.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap(":/direccion/nissan_skyline_gt_r_r34-HD2.jpg"))
+        #self.label.setPixmap(QtGui.QPixmap(":/direccion/nissan_skyline_gt_r_r34-HD2.jpg"))
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
         self.aniadirCon = QtWidgets.QPushButton(self.centralwidget)
@@ -235,10 +235,15 @@ class Ui_MainWindow4(object):
 
         MainWindow.setCentralWidget(self.centralwidget)
 
+        self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox.setGeometry(QtCore.QRect(10, 10, 141, 61))
+        self.checkBox.setChecked(True)
+        self.checkBox.setObjectName("checkBox")
+        self.checkBox.stateChanged.connect(self.modoClOs)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.estilosOscuro([self.aniadirCon, self.eliminarCon, self.BuscarCon, self.ModificarCon, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
+        self.modoClOs()
         self.visible()
         #self.mostrasConcesionarios()
        
@@ -325,11 +330,10 @@ class Ui_MainWindow4(object):
         self.BuscarCon.setText(_translate("MainWindow", "Buscar concesionario"))
         self.Nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
         self.Direccion.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Direccion:</span></p></body></html>"))
-        #self.Incorrecto.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" color:#ff0000;\">Concesionario incorrecto. Vuelve a intentarlo</span></p></body></html>"))
         self.Ciudad.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Ciudad:</span></p></body></html>"))
         self.Fecha.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">FechaInauguracion:</span></p></body></html>"))
         self.Nombre2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
-        #self.Incorrecto2.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" color:#ff0000;\">Concesionario incorrecto. Vuelve a intentarlo</span></p></body></html>"))
+        self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 
 
@@ -409,4 +413,42 @@ class Ui_MainWindow4(object):
 
         # Conectar la barra de búsqueda con el filtro del modelo
         self.searchBar.textChanged.connect(self.proxy_model.setFilterRegExp)
+
+
+
+    #BOTON MODO OSCURO
+    def modoClOs(self):
+        if self.checkBox.isChecked(): #modo oscuro
+            self.label.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
+            self.label.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
+            self.estilosOscuro([self.aniadirCon, self.eliminarCon, self.BuscarCon, self.ModificarCon, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
+            #self.setAtras()
+            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
+                            "    width: 25px;\n"
+                            "    height: 25px;\n"
+                            "    text-align: right;\n"
+                            "}\n"
+                            "QCheckBox {\n"
+                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
+                            "    font-weight: bold;\n"
+                            "    color: white;\n"
+                            "}")
+            
+        else: #modo claro
+            self.label.setStyleSheet("background-image: url(:/direccion/nissanGtrClaro.jpg);")
+            self.label.setPixmap(QtGui.QPixmap("nissanGtrClaro.jpg"))
+            #self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
+            #self.setAtras()
+            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
+                            "    width: 25px;\n"
+                            "    height: 25px;\n"
+                            "    text-align: right;\n"
+                            "}\n"
+                            "QCheckBox {\n"
+                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
+                            "    font-weight: bold;\n"
+                            "    color: black;\n"
+                            "}")
+            
+            
         

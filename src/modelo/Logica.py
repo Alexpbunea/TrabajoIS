@@ -43,34 +43,31 @@ class Logica:
     def set_coordinador(self, mi_coordinador: Coordinador) -> None:
         self._mi_coordinador = mi_coordinador
 
-    def comprobar_Dni_contrasenia(self, mi_persona):
+    def comprobar_Dni_contrasenia(self, mi_persona, mi_trabajador):
         #print(mi_persona)
         #print(type(mi_persona))
+        mi_persona_dao = ClienteDao()
+        clientes = mi_persona_dao.getClientes()
 
-        if isinstance(mi_persona, Cliente):
-            mi_persona_dao = ClienteDao()
-            clientes = mi_persona_dao.getClientes()
+        mi_trabajador_dao = TrabajadorDao()
+        trabajadores = mi_trabajador_dao.getTrabajadores()
             
+        try:   
             for cliente in clientes:
                 if cliente.getIDcliente() == mi_persona.getIDcliente() and cliente.getContrasenia() == mi_persona.getContrasenia():
                     print(f"Bienvenido cliente --> {cliente.getNombre()}")
                     return ('cliente',cliente.getNombre())
-            #return 'invalido'
 
-        elif isinstance(mi_persona, PlantillaTrabajadorVO):
-            mi_persona_dao = TrabajadorDao()
-            trabajadores = mi_persona_dao.getTrabajadores()
-            
             for trab in trabajadores:
-                if trab.getIDtrabajador() == mi_persona.getIDtrabajador() and trab.getContrasenia() == mi_persona.getContrasenia():
+                if trab.getIDtrabajador() == mi_trabajador.getIDtrabajador() and trab.getContrasenia() == mi_trabajador.getContrasenia():
                     print(f"Bienvenido trabajador --> {trab.getNombre()}")
                     return (trab.getRol(),trab.getNombre())
-            #return 'invalido'
-        else:
-            print("No existe ningun trabajador ni ningun cliente con esas credenciales")
-            return 'invalido'
-        #except:    
-            #messagebox.showwarning("Advertencia", "Error al intertar acceder a la base de datos")
+            
+            else:
+                print("No existe ningun trabajador ni ningun cliente con esas credenciales")
+                return 'invalido'
+        except:    
+            messagebox.showwarning("Advertencia", "Error al iniciar sesion")
 
     
     def validar_registro_concesionario(self, mi_concesionario: Concesionario, queHago):

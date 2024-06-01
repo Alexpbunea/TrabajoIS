@@ -53,7 +53,7 @@ class PlantillaTrabajadorVO:
         self.Sueldo = sueldo
 
     def getRol(self):
-        return self.getRol
+        return self.rol
     
     def setRol(self, r):
         self.rol = r

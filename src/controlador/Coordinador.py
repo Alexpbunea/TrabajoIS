@@ -71,8 +71,8 @@ class Coordinador:
         self._viewRegistroConcesionario = view
     
     ##############################################
-    def comprobarIniciarSesion(self, usuario) -> None:
-       a = self._model.comprobar_Dni_contrasenia(usuario)
+    def comprobarIniciarSesion(self, usuario, usuario2):
+       a = self._model.comprobar_Dni_contrasenia(usuario, usuario2)
        return a
 
     def registrarConcesionario(self, usuario, queHago) -> None:

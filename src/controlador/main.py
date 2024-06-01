@@ -61,9 +61,17 @@ def comprobarSesion():
         ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
         ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
         ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
-        
-    elif a[0] in ['admistrador', 'jefeZona', 'jefeDepartamento', 'personal']:
+
+    elif a[0] in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
         ui_ventana2_ui.hacerVisible(False)
+        mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
+        ui_ventana3_ui.hola_2.setText(a[1])
+        ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
+        ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
+        ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
+        ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
+        ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
+        ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
         
 
     else:
