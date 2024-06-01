@@ -126,7 +126,7 @@ background-repeat: none;
       <x>460</x>
       <y>30</y>
       <width>301</width>
-      <height>541</height>
+      <height>200</height>
      </rect>
     </property>
     <property name="styleSheet">

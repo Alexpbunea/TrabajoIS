@@ -78,7 +78,6 @@ class Logica:
         
         if queHago == "aniadir":
             try:
-                print("Hola2")
                 nombre = mi_concesionario.getNombre()
                 direccion = mi_concesionario.getDireccion()
                 ciudad = mi_concesionario.getCiudad()
@@ -92,7 +91,6 @@ class Logica:
                     nombre = "Cofermotor" + nombre[10:]
                     mi_concesionario.setNombre(nombre)
                 else:
-                    print(nombre)
                     print("Formato incorrecto del nombre")
                     return ("Error", "Formato incorrecto del nombre")
                 
@@ -117,16 +115,13 @@ class Logica:
                 print(mi_concesionario)
                 mi_concesionario_dao = ConcesionarioDao()
                 mi_concesionario_dao.insertConcesionario(mi_concesionario)
-                return True
+                return ("Correcto", "Has introducido bien los datos")
             except:
-                messagebox.showwarning("Advertencia", "Error al insertar concesionario")
+                messagebox.showwarning("Advertencia", "Error al insertar el concesionario")
 
         elif queHago == "eliminar":
             try:
                 nombre = mi_concesionario.getNombre()
-                
-                #if nombre == "":
-                #    return ("Error", "Casilla vacia")
                 
                 #Comprobando el formato del nombro
                 mi_concesionario_dao = ConcesionarioDao()
@@ -136,11 +131,38 @@ class Logica:
                     if conc.getNombre() == mi_concesionario.getNombre():
                         print(f"Eliminando concesionario --> {conc.getNombre()}")
                         mi_concesionario_dao.deleteConcesionario(mi_concesionario.getNombre())
+                        return ("Correcto", "Has introducido bien los datos")
+                    
                 return ("Error", "Ese concesionario no existe")
             except:
-                messagebox.showwarning("Advertencia", "Error al eliminar concesionario")
+                messagebox.showwarning("Advertencia", "Error al eliminar el concesionario")
+        
+        elif queHago == "modificar":
+            try:
+                nombre = mi_concesionario.getNombre()
+                direccion = mi_concesionario.getDireccion()
+                ciudad = mi_concesionario.getCiudad()
+                fecha_str = mi_concesionario.getFechaInauguracion()
 
+                fecha_obj = datetime.strptime(fecha_str, '%d-%m-%Y')
+                fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
+                
+                mi_concesionario_dao = ConcesionarioDao()
+                concesionarios = mi_concesionario_dao.getConcesionarios()
 
+                for conc in concesionarios:
+                    if conc.getNombre() == nombre:
+                        # Modificar los datos del concesionario
+                        mi_concesionario.setDireccion(direccion)
+                        mi_concesionario.setCiudad(ciudad)
+                        mi_concesionario.setFechaInauguracion(fecha_mysql)
+                        mi_concesionario_dao.updateConcesionario(mi_concesionario)
+                        print(f"Modificado correctamente el concesionario --> {nombre}")
+                        return ("Correcto", "Concesionario modificado correctamente")
+            
+                return ("Error", "El concesionario no existe")
+            except:
+                messagebox.showwarning("Advertencia", "Error al modificar el concesionario")
 
     def validar_registro_cliente(self, mi_persona: Cliente):
         if '@' in mi_persona.getEmail():
@@ -148,4 +170,21 @@ class Logica:
             mi_persona_dao.insertCliente(mi_persona)
         else:
             messagebox.showwarning("Advertencia", "El email no es válido")
+    
+    def obtener_todos_concesionarios(self):
+        try:
+            mi_concesionario_dao = ConcesionarioDao()
+            concesionarios = mi_concesionario_dao.getConcesionarios()
+            concesionarios_data = []
+            for conc in concesionarios:
+                concesionarios_data.append({
+                    'nombre': conc.getNombre(),
+                    'direccion': conc.getDireccion(),
+                    'ciudad': conc.getCiudad(),
+                    'fecha_inauguracion': conc.getFechaInauguracion()
+                })
+            return concesionarios_data
+        except Exception as e:
+            print(f"Error al obtener concesionarios: {e}")
+            #return None
 

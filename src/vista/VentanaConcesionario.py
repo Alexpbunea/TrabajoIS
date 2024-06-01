@@ -9,6 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt, QSortFilterProxyModel
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from src.modelo.vo.ConcesionarioVO import Concesionario
 
 
@@ -206,7 +208,31 @@ class Ui_MainWindow4(object):
         self.Incorrecto2.setObjectName("Incorrecto2")
         self.Incorrecto2.setVisible(False)
         
-        
+
+        # Creación del QTableView para mostrar las columnas de la base de datos
+        self.tableView = QtWidgets.QTableView(self.centralwidget)
+        self.tableView.setGeometry(QtCore.QRect(383, 235, 475, 250))
+        self.tableView.setObjectName("tableView")
+
+        # Barra de búsqueda
+        self.searchBar = QtWidgets.QLineEdit(self.centralwidget)
+        self.searchBar.setGeometry(QtCore.QRect(383, 200, 220, 31))
+        self.searchBar.setPlaceholderText("Buscar...")
+        self.searchBar.setStyleSheet("background-color:white;\n"
+                                     "border: 2px solid gray;\n"
+                                     "border-radius: 10px;\n"
+                                     "padding: 5px;")
+        self.searchBar.setObjectName("searchBar")
+
+        # Configuración del modelo de la tabla
+        self.model = QStandardItemModel()
+        self.proxy_model = QSortFilterProxyModel()
+        self.proxy_model.setSourceModel(self.model)
+        self.proxy_model.setFilterKeyColumn(-1)  # Filtrar en todas las columnas
+        self.proxy_model.setFilterCaseSensitivity(Qt.CaseInsensitive)
+
+        self.tableView.setModel(self.proxy_model)
+
         MainWindow.setCentralWidget(self.centralwidget)
 
 
@@ -214,12 +240,18 @@ class Ui_MainWindow4(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.estilosOscuro([self.aniadirCon, self.eliminarCon, self.BuscarCon, self.ModificarCon, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
         self.visible()
+        #self.mostrasConcesionarios()
+       
         
+
+
 
 
     def visible(self):
         self.frameAniaidir.setVisible(False)
         self.frame2.setVisible(False)
+        self.tableView.setVisible(False)
+        self.searchBar.setVisible(False)
         
         self.aniadirCon.clicked.connect(self.toggle_frame_visibility)
         self.aniadirCon.clicked.connect(lambda: self.actualizarBotonFrame("Añadir"))
@@ -230,17 +262,33 @@ class Ui_MainWindow4(object):
         self.ModificarCon.clicked.connect(self.toggle_frame_visibility)
         self.ModificarCon.clicked.connect(lambda: self.actualizarBotonFrame("Modificar"))
 
+        
+
     def toggle_frame_visibility(self):
-        if self.frame2.isVisible():
+        if self.frame2.isVisible(): 
             self.frame2_visibility()
+        elif self.tableView.isVisible():
+            self.tablaYbusquedaVisibilidad()
         current_visibility = self.frameAniaidir.isVisible()
         self.frameAniaidir.setVisible(not current_visibility)
+        
  
     def frame2_visibility(self):
         if self.frameAniaidir.isVisible():
             self.toggle_frame_visibility()
+        elif self.tableView.isVisible():
+            self.tablaYbusquedaVisibilidad
         current_visibility = self.frame2.isVisible()
         self.frame2.setVisible(not current_visibility)
+
+    def tablaYbusquedaVisibilidad(self):
+        if self.frameAniaidir.isVisible():
+            self.toggle_frame_visibility()
+        elif self.frame2.isVisible(): 
+            self.frame2_visibility()
+        current_visibility = self.tableView.isVisible()
+        self.tableView.setVisible(not current_visibility)
+        self.searchBar.setVisible(not current_visibility)
 
     def actualizarBotonFrame(self, palabra):
         self.botonAniadirModificar.setText(palabra)
@@ -299,17 +347,29 @@ class Ui_MainWindow4(object):
         
         
         if anadirModificar.Nombre != "":
-            a = self.coordinador.registrarConcesionario(anadirModificar, "aniadir") 
-            if a[0] == "Error":
-                self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
-                self.Incorrecto.setVisible(True)
-            else:
-                self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
-                self.Incorrecto.setVisible(True)
+            if self.botonAniadirModificar.text() == "Añadir":
+                a = self.coordinador.registrarConcesionario(anadirModificar, "aniadir") 
+                if a[0] == "Error":
+                    self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
+                    self.Incorrecto.setVisible(True)
+                else:
+                    self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
+                    self.Incorrecto.setVisible(True)
+                    
+            elif self.botonAniadirModificar.text() == "Modificar":
+                a = self.coordinador.registrarConcesionario(anadirModificar, "modificar")
+                if a[0] == "Error":
+                    self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
+                    self.Incorrecto.setVisible(True)
+                else:
+                    self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
+                    self.Incorrecto.setVisible(True) 
+            
+            self.LineaNombre.setText("")
+            self.LineaDireccion.setText("")
+            self.LineaCiudad.setText("")
+            self.LineaFecha.setText("")
 
-        else:
-            self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, "Casillas vacias")
-            self.Incorrecto.setVisible(True)
 
         if eliminar.Nombre != "":
             a = self.coordinador.registrarConcesionario(eliminar, "eliminar")
@@ -317,10 +377,36 @@ class Ui_MainWindow4(object):
             if a[0] == "Error":
                 self.actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
                 self.Incorrecto2.setVisible(True)
+                
             else:
                 self.actualizarTextoIncorrecto2(self.Incorrecto2, self.verde, self.completado)
                 self.Incorrecto2.setVisible(True)
+                #self.mostrasConcesionarios()
+            
+            self.LineaNombre2.setText("")
+
         
-        else:
-            self.actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, "Casilla vacia")
-            self.Incorrecto2.setVisible(True)
+        
+
+    def mostrasConcesionarios(self):
+        self.model.removeRows(0, self.model.rowCount())
+
+        a = self.coordinador.obtenerConcesionarios()
+        #print(a)
+        columnas = ["Nombre", "Dirección", "Ciudad", "Fecha de Inauguración"]
+        self.model.setHorizontalHeaderLabels(columnas)
+        for fila in a:
+            items = [
+                QStandardItem(fila['nombre']),
+                QStandardItem(fila['direccion']),
+                QStandardItem(fila['ciudad']),
+                QStandardItem(fila['fecha_inauguracion'])
+            ]
+            self.model.appendRow(items)
+
+        # Actualizar la vista
+        self.tableView.resizeColumnsToContents()
+
+        # Conectar la barra de búsqueda con el filtro del modelo
+        self.searchBar.textChanged.connect(self.proxy_model.setFilterRegExp)
+        

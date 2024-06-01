@@ -57,6 +57,7 @@ class Coordinador:
        self._viewVentanaConcesionario = view
 
 
+
     def getViewRegistroCliente(self):
         return self._viewRegistroCliente
 
@@ -77,6 +78,9 @@ class Coordinador:
     def registrarConcesionario(self, usuario, queHago) -> None:
        a = self._model.validar_registro_concesionario(usuario, queHago)
        #print(a)
+       return a
+    def obtenerConcesionarios(self):
+       a = self._model.obtener_todos_concesionarios()
        return a
 
 

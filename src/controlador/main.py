@@ -59,7 +59,9 @@ def comprobarSesion():
         ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
         ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
         ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
-    
+        ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
+        ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
+        
     elif a[0] in ['admistrador', 'jefeZona', 'jefeDepartamento', 'personal']:
         ui_ventana2_ui.hacerVisible(False)
         
