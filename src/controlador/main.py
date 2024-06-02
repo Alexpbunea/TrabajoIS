@@ -83,6 +83,26 @@ def comprobarSesion():
             ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
             ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
             ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
+        
+        elif a[0] == "jefeZona":
+            pass
+
+        elif a[0] == "jefeDepartamento":
+            pass
+
+        elif a[0] == "personal":
+            mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
+            ui_ventana3_ui.hola_2.setText(a[1])
+            ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
+            
+            ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
+            ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
+            ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
+            ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
+            ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
+
+        else:
+            return "Error"
 
         
 
@@ -165,11 +185,24 @@ if __name__ == "__main__":
     ui_ventana3_ui.atras.clicked.connect(lambda: atras(ventanaAdmin, ventanaIniciarSesion))
     
     
+
+
+    
     #se encarga de mantener el modo oscuro o no entre ventanas
-    ui_ventana3_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana3_ui.checkBox, ui_ventana4_ui.checkBox))
-    ui_ventana3_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana3_ui.checkBox, ui_ventana5_ui.checkBox))
-    ui_ventana4_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana4_ui.checkBox, ui_ventana3_ui.checkBox))
-    ui_ventana5_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana5_ui.checkBox, ui_ventana3_ui.checkBox))
+    def sync_checkbox_state(state, current_checkbox, other_checkbox):
+        other_checkbox.setChecked(current_checkbox.isChecked())
+
+    def connect_checkboxes(main_ui, other_ui):
+        main_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, main_ui.checkBox, other_ui.checkBox))
+        other_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, other_ui.checkBox, main_ui.checkBox))
+
+    # En el código que cambia de ventana, conecta las casillas de verificación
+    connect_checkboxes(ui_ventana3_ui, ui_ventana4_ui)
+    connect_checkboxes(ui_ventana3_ui, ui_ventana5_ui)
+    connect_checkboxes(ui_ventana4_ui, ui_ventana5_ui)
+
+
+
 
     sys.exit(app.exec_())
 

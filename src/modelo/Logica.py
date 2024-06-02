@@ -62,14 +62,14 @@ class Logica:
         return letra == letra_correcta
 
     #ENCRIPTAR Y DEENCRIPTAR CONTRASENIA
-    def encriptar_contrasenia(contrasenia) -> str:
+    def encriptar_contrasenia(self, contrasenia) -> str:
         #print("Hola")
         salt = bcrypt.gensalt()
         # Hashea la contraseña con el salt
         hashed = bcrypt.hashpw(contrasenia.encode('utf-8'), salt)
         return hashed.decode('utf-8')
 
-    def verificar_contrasenia(contrasenia, hashed_contrasenia) -> bool:
+    def verificar_contrasenia(self, contrasenia, hashed_contrasenia) -> bool:
         return bcrypt.checkpw(contrasenia.encode('utf-8'), hashed_contrasenia.encode('utf-8'))
     
     #COMPROBAR EL FORMATO DEL NOMBRE DEL CONCESIONARIO
@@ -112,12 +112,12 @@ class Logica:
         try:   
             for cliente in clientes:
                 if cliente.getIDcliente() == mi_persona.getIDcliente() and cliente.getContrasenia() == mi_persona.getContrasenia():
-                    print(f"Bienvenido cliente --> {cliente.getNombre()}")
+                    print(f"Bienvenido/a cliente --> {cliente.getNombre()}")
                     return ('cliente',cliente.getNombre())
 
             for trab in trabajadores:
-                if trab.getIDtrabajador() == mi_trabajador.getIDtrabajador() and trab.getContrasenia() == mi_trabajador.getContrasenia():
-                    print(f"Bienvenido trabajador --> {trab.getNombre()}")
+                if trab.getIDtrabajador() == mi_trabajador.getIDtrabajador() and self.verificar_contrasenia(mi_trabajador.getContrasenia(), trab.getContrasenia()):
+                    print(f"Bienvenido/a trabajador/a --> {trab.getNombre()}")
                     return (trab.getRol(),trab.getNombre())
             
             else:
@@ -127,6 +127,9 @@ class Logica:
             messagebox.showwarning("Advertencia", "Error al iniciar sesion")
 
 
+#################################################################################################################################################
+#################################################################################################################################################
+#################################################################################################################################################
 
     #FUNCIONES PARA LA VENTANA CONCESIONARIO    
     def validar_registro_concesionario(self, mi_concesionario: Concesionario, queHago):
@@ -271,12 +274,10 @@ class Logica:
                     print("El IDtrabajador es incorrecto, compruebalo")
                     return ("Error", "El IDtrabajador es incorrecto")
                 
-                print(contrasenia)
-                print(type(contrasenia))
+                
                 try:
                     #Encripto la contrasenia
                     contrasenia2 = self.encriptar_contrasenia(contrasenia)
-                    print(contrasenia2)
                     mi_trabajador.setContrasenia(contrasenia2)
                 except:
                     messagebox.showwarning("Advertencia", "Error en la libreria bcrypt o en sus funciones")
@@ -332,11 +333,12 @@ class Logica:
                 apellido1 = mi_trabajador.getApellido1()
                 apellido2 = mi_trabajador.getApellido2()
                 sueldo = mi_trabajador.getSueldo()
-                Rol = mi_trabajador.getRol()
+                rol = mi_trabajador.getRol()
                 concesionario = mi_trabajador.getConcesionario()
                 
                 try:
                 #Encripto la contrasenia
+                     # Encripto la contrasenia solo si ha cambiado
                     contrasenia = self.encriptar_contrasenia(contrasenia)
                     mi_trabajador.setContrasenia(contrasenia)
                 except:
@@ -368,15 +370,15 @@ class Logica:
 
                 for trab in trabajadores:
                     if trab.getIDtrabajador() == IDtrabajador:
-                        mi_trabajador.getIDtrabajador()
-                        mi_trabajador.getContrasenia()
-                        mi_trabajador.getNombre()
-                        mi_trabajador.getApellido1()
-                        mi_trabajador.getApellido2()
-                        mi_trabajador.getSueldo()
-                        mi_trabajador.getRol()
-                        mi_trabajador.getConcesionario()
-                        mi_trabajador_dao.updateTrabajador(mi_trabajador)
+                        trab.setContrasenia(mi_trabajador.getContrasenia())
+                        trab.setNombre(mi_trabajador.getNombre())
+                        trab.setApellido1(mi_trabajador.getApellido1())
+                        trab.setApellido2(mi_trabajador.getApellido2())
+                        trab.setSueldo(mi_trabajador.getSueldo())
+                        trab.setRol(mi_trabajador.getRol())
+                        trab.setConcesionario(mi_trabajador.getConcesionario())
+                        mi_trabajador_dao.updateTrabajador(trab)
+                        mi_trabajador_dao.updateTrabajador(trab)
                         print(f"Modificado correctamente el trabajador --> {IDtrabajador}, {nombre}")
                         return ("Correcto", "Concesionario modificado correctamente")
             

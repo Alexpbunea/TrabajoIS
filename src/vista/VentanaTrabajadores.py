@@ -11,7 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QSortFilterProxyModel
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtCore import QTimer
 from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
+
 
 
 class Ui_MainWindow5(object):
@@ -250,7 +252,7 @@ class Ui_MainWindow5(object):
         
         self.Incorrecto = QtWidgets.QLabel(self.frameAniaidir)
         self.Incorrecto.setEnabled(True)
-        self.Incorrecto.setGeometry(QtCore.QRect(10, 460, 281, 21))
+        self.Incorrecto.setGeometry(QtCore.QRect(10, 460, 500, 21))
         self.Incorrecto.setObjectName("Incorrecto")
         
         
@@ -308,12 +310,12 @@ class Ui_MainWindow5(object):
         
         # Creación del QTableView para mostrar las columnas de la base de datos
         self.tableView = QtWidgets.QTableView(self.centralwidget)
-        self.tableView.setGeometry(QtCore.QRect(100, 10, 600, 250))
+        self.tableView.setGeometry(QtCore.QRect(58, 235, 1125, 250))
         self.tableView.setObjectName("tableView")
 
         # Barra de búsqueda
         self.searchBar = QtWidgets.QLineEdit(self.centralwidget)
-        self.searchBar.setGeometry(QtCore.QRect(383, 200, 220, 31))
+        self.searchBar.setGeometry(QtCore.QRect(58, 200, 220, 31))
         self.searchBar.setPlaceholderText("Buscar...")
         self.searchBar.setStyleSheet("background-color:white;\n"
                                      "border: 2px solid gray;\n"
@@ -347,7 +349,7 @@ class Ui_MainWindow5(object):
        
         
 
-
+    
 
 
     def visible(self):
@@ -438,7 +440,66 @@ class Ui_MainWindow5(object):
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 
+######################################################################################################################################################
+######################################################################################################################################################
+######################################################################################################################################################
+######################################################################################################################################################
 
+
+    #FUNCIONES ESTETICAS
+    def show_incorrecto_for_5_seconds(self, incorrecto):
+        # Hacer visible el QLabel
+        incorrecto.setVisible(True)
+
+        # Crear un temporizador que ocultará el QLabel después de 5 segundos
+        QTimer.singleShot(5000, lambda: self.hide_incorrecto(incorrecto))
+
+    def hide_incorrecto(self,incorrecto):
+        # Hacer invisible el QLabel
+        incorrecto.setVisible(False)
+    
+
+    #BOTON MODO OSCURO
+    def modoClOs(self):
+        if self.checkBox.isChecked(): #modo oscuro
+            self.label.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
+            self.label.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
+            self.estilosOscuro([self.aniadirTra, self.eliminarTra, self.BuscarTra, self.ModificarTra, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
+            #self.setAtras()
+            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
+                            "    width: 25px;\n"
+                            "    height: 25px;\n"
+                            "    text-align: right;\n"
+                            "}\n"
+                            "QCheckBox {\n"
+                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
+                            "    font-weight: bold;\n"
+                            "    color: white;\n"
+                            "}")
+            
+        else: #modo claro
+            self.label.setStyleSheet("background-image: url(:/direccion/nissanGtrClaro.jpg);")
+            self.label.setPixmap(QtGui.QPixmap("nissanGtrClaro.jpg"))
+            #self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
+            #self.setAtras()
+            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
+                            "    width: 25px;\n"
+                            "    height: 25px;\n"
+                            "    text-align: right;\n"
+                            "}\n"
+                            "QCheckBox {\n"
+                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
+                            "    font-weight: bold;\n"
+                            "    color: black;\n"
+                            "}")
+
+
+######################################################################################################################################################
+######################################################################################################################################################
+######################################################################################################################################################
+######################################################################################################################################################
+
+    #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
     def obtener_datos_ingresados(self):
         anadirModificar = PlantillaTrabajadorVO(
            IDtrabajador=self.LineaID.text(),
@@ -461,19 +522,19 @@ class Ui_MainWindow5(object):
                 a = self.coordinador.registrarTrabajador(anadirModificar, "aniadir") 
                 if a[0] == "Error":
                     self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
-                    self.Incorrecto.setVisible(True)
+                    self.show_incorrecto_for_5_seconds(self.Incorrecto)
                 else:
                     self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
-                    self.Incorrecto.setVisible(True)
+                    self.show_incorrecto_for_5_seconds(self.Incorrecto)
                     
             elif self.botonAniadirModificar.text() == "Modificar":
                 a = self.coordinador.registrarTrabajador(anadirModificar, "modificar")
                 if a[0] == "Error":
                     self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
-                    self.Incorrecto.setVisible(True)
+                    self.show_incorrecto_for_5_seconds(self.Incorrecto)
                 else:
                     self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
-                    self.Incorrecto.setVisible(True) 
+                    self.show_incorrecto_for_5_seconds(self.Incorrecto)
             
             self.LineaID.setText("")
             self.LineaContra.setText("")
@@ -491,11 +552,11 @@ class Ui_MainWindow5(object):
             #print(a)
             if a[0] == "Error":
                 self.actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
-                self.Incorrecto2.setVisible(True)
+                self.show_incorrecto_for_5_seconds(self.Incorrecto2)
                 
             else:
                 self.actualizarTextoIncorrecto2(self.Incorrecto2, self.verde, self.completado)
-                self.Incorrecto2.setVisible(True)
+                self.show_incorrecto_for_5_seconds(self.Incorrecto2)
                 #self.mostrasConcesionarios()
             
             self.LineaNombre2.setText("")
@@ -531,39 +592,6 @@ class Ui_MainWindow5(object):
 
 
 
-    #BOTON MODO OSCURO
-    def modoClOs(self):
-        if self.checkBox.isChecked(): #modo oscuro
-            self.label.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
-            self.label.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
-            self.estilosOscuro([self.aniadirTra, self.eliminarTra, self.BuscarTra, self.ModificarTra, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
-            #self.setAtras()
-            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
-                            "    width: 25px;\n"
-                            "    height: 25px;\n"
-                            "    text-align: right;\n"
-                            "}\n"
-                            "QCheckBox {\n"
-                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
-                            "    font-weight: bold;\n"
-                            "    color: white;\n"
-                            "}")
-            
-        else: #modo claro
-            self.label.setStyleSheet("background-image: url(:/direccion/nissanGtrClaro.jpg);")
-            self.label.setPixmap(QtGui.QPixmap("nissanGtrClaro.jpg"))
-            #self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
-            #self.setAtras()
-            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
-                            "    width: 25px;\n"
-                            "    height: 25px;\n"
-                            "    text-align: right;\n"
-                            "}\n"
-                            "QCheckBox {\n"
-                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
-                            "    font-weight: bold;\n"
-                            "    color: black;\n"
-                            "}")
-            
+    
             
         
