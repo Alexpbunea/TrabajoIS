@@ -145,7 +145,6 @@ class Ui_MainWindow2(object):
         self.LineaDni.setText("")
         self.LineaContra.setText("")
 
-        print(a)
         if a[0] == "cliente":
             return a
         elif a[0] in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:

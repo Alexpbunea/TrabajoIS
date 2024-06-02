@@ -161,6 +161,13 @@ class Logica:
             except:
                 messagebox.showwarning("Advertencia", "Error al modificar el concesionario")
 
+
+
+    def validar_registro_trabajador(self, mi_trabajador: PlantillaTrabajadorVO, queHago):
+        pass
+
+
+
     def validar_registro_cliente(self, mi_persona: Cliente):
         if '@' in mi_persona.getEmail():
             mi_persona_dao = ClienteDao()

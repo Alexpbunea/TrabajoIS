@@ -46,15 +46,23 @@ class Coordinador:
     def setViewVentanaIniciarSesion(self, view):
        self._viewVentanaIniciarSesion = view
 
+
     def getViewVentanaAdmin(self):
        return self._viewVentanaAdmin
     def setViewVentanaAdmin(self, view):
        self._viewVentanaAdmin = view
 
+
     def getViewVentanaConcesionario(self):
        return self._viewVentanaConcesionario
     def setViewVentanaConcesionario(self, view):
        self._viewVentanaConcesionario = view
+
+
+    def getViewVentanaTrabajadores(self):
+       return self._viewVentanaTrabajadores
+    def setViewVentanaTrabajadores(self, view):
+       self._viewVentanaTrabajadores = view
 
 
 
@@ -75,12 +83,18 @@ class Coordinador:
        a = self._model.comprobar_Dni_contrasenia(usuario, usuario2)
        return a
 
+
     def registrarConcesionario(self, usuario, queHago) -> None:
        a = self._model.validar_registro_concesionario(usuario, queHago)
        #print(a)
        return a
     def obtenerConcesionarios(self):
        a = self._model.obtener_todos_concesionarios()
+       return a
+
+
+    def registrarTrabajador(self):
+       a = self._model.validar_registro_trabajador()
        return a
 
 

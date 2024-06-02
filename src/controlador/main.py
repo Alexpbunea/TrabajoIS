@@ -15,6 +15,7 @@ from src.vista.VentanaPrincipal_ui import Ui_MainWindow
 from src.vista.VentanaIniciarSesion_ui import Ui_MainWindow2
 from src.vista.VentanaAdmin import Ui_MainWindow3
 from src.vista.VentanaConcesionario import Ui_MainWindow4
+from src.vista.VentanaTrabajadores import Ui_MainWindow5
 import imagen_rc
 import imagenDes_rc
 import nissan2
@@ -56,11 +57,15 @@ def comprobarSesion():
         mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
         ui_ventana3_ui.hola_2.setText(a[1])
         ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
+        
         ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
         ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
         ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
         ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
         ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
+
+        ui_ventana3_ui.Trabajador.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaTrabajadores))
+        ui_ventana5_ui.atras.clicked.connect(lambda: atras(ventanaTrabajadores, ventanaAdmin))
 
     elif a[0] in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
         ui_ventana2_ui.hacerVisible(False)
@@ -68,11 +73,13 @@ def comprobarSesion():
             mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
             ui_ventana3_ui.hola_2.setText(a[1])
             ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
+            
             ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
             ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
             ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
             ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
             ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
+
         
 
     else:
@@ -82,9 +89,16 @@ def comprobarSesion():
 def sync_checkbox_state(state, origin, target):
     target.blockSignals(True)
     target.setCheckState(state)
-    if target == ui_ventana4_ui.checkBox:
+    #caso ventanaAdmin-VentanaConcesionario
+    if origin == ui_ventana3_ui.checkBox and target == ui_ventana4_ui.checkBox:
         ui_ventana4_ui.modoClOs()
-    elif target == ui_ventana3_ui.checkBox:
+    elif origin == ui_ventana4_ui.checkBox and target == ui_ventana3_ui.checkBox:
+        ui_ventana3_ui.modoClOs()
+
+    #caso ventanaAdmin-VentanaTrabajadores
+    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana5_ui.checkBox:
+        ui_ventana5_ui.modoClOs()
+    elif origin == ui_ventana5_ui.checkBox and target == ui_ventana3_ui.checkBox:
         ui_ventana3_ui.modoClOs()
     target.blockSignals(False)
     
@@ -119,12 +133,18 @@ if __name__ == "__main__":
     ui_ventana4_ui.setupUi(ventanaConcesionario)
     ventanaConcesionario.hide()
 
+    ventanaTrabajadores = QtWidgets.QMainWindow()
+    ui_ventana5_ui = Ui_MainWindow5()
+    ui_ventana5_ui.setupUi(ventanaTrabajadores)
+    ventanaTrabajadores.hide()
+
     # A cada ventada hay que asignarle un coordinador. Un mismo controlador puede controlar varias ventanas
     #ventanaRegistroConcesionario.setCoordinador(controlador)
     ui_ventana1.setCoordinador(controlador)
     ui_ventana2_ui.setCoordinador(controlador)
     ui_ventana3_ui.setCoordinador(controlador)
     ui_ventana4_ui.setCoordinador(controlador)
+    ui_ventana5_ui.setCoordinador(controlador)
 
 
     # Al coordinador hay que asignarle una ventana. Un coordinador puede tener referencias a varias ventanas
@@ -133,6 +153,7 @@ if __name__ == "__main__":
     controlador.setViewVentanaIniciarSesion(controlador)
     controlador.setViewVentanaAdmin(controlador)
     controlador.setViewRegistroConcesionario(controlador)
+    controlador.setViewVentanaTrabajadores(controlador)
 
     ventana_principal.show()
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
@@ -140,8 +161,11 @@ if __name__ == "__main__":
     ui_ventana3_ui.atras.clicked.connect(lambda: atras(ventanaAdmin, ventanaIniciarSesion))
     
     
+    #se encarga de mantener el modo oscuro o no entre ventanas
     ui_ventana3_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana3_ui.checkBox, ui_ventana4_ui.checkBox))
+    ui_ventana3_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana3_ui.checkBox, ui_ventana5_ui.checkBox))
     ui_ventana4_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana4_ui.checkBox, ui_ventana3_ui.checkBox))
+    ui_ventana5_ui.checkBox.stateChanged.connect(lambda state: sync_checkbox_state(state, ui_ventana5_ui.checkBox, ui_ventana3_ui.checkBox))
 
     sys.exit(app.exec_())
 

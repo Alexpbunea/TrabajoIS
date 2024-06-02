@@ -11,10 +11,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QSortFilterProxyModel
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from src.modelo.vo.ConcesionarioVO import Concesionario
+from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
 
 
-class Ui_MainWindow4(object):
+class Ui_MainWindow5(object):
     def __init__(self, coord=None):
         self.coordinador = coord
         self.rojo = "#ff0000"
@@ -30,6 +30,7 @@ class Ui_MainWindow4(object):
         MainWindow.resize(1240, 720)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(0, 0, 1240, 720))
         #self.label.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
@@ -37,12 +38,15 @@ class Ui_MainWindow4(object):
         #self.label.setPixmap(QtGui.QPixmap(":/direccion/nissan_skyline_gt_r_r34-HD2.jpg"))
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
-        self.aniadirCon = QtWidgets.QPushButton(self.centralwidget)
-        self.aniadirCon.setGeometry(QtCore.QRect(40, 650, 151, 41))
-        self.aniadirCon.setObjectName("aniadirCon")
-        self.eliminarCon = QtWidgets.QPushButton(self.centralwidget)
-        self.eliminarCon.setGeometry(QtCore.QRect(230, 650, 151, 41))
-        self.eliminarCon.setObjectName("eliminarCon")
+
+        self.aniadirTra = QtWidgets.QPushButton(self.centralwidget)
+        self.aniadirTra.setGeometry(QtCore.QRect(40, 650, 151, 41))
+        self.aniadirTra.setObjectName("aniadirTra")
+        
+        self.eliminarTra = QtWidgets.QPushButton(self.centralwidget)
+        self.eliminarTra.setGeometry(QtCore.QRect(230, 650, 151, 41))
+        self.eliminarTra.setObjectName("eliminarTra")
+        
         self.atras = QtWidgets.QPushButton(self.centralwidget)
         self.atras.setGeometry(QtCore.QRect(1160, 650, 51, 51))
         self.atras.setStyleSheet("#atras{\n"
@@ -62,28 +66,68 @@ class Ui_MainWindow4(object):
         self.atras.setText("")
         self.atras.setObjectName("atras")
         self.atras.setToolTip("Atras")
-        self.ModificarCon = QtWidgets.QPushButton(self.centralwidget)
-        self.ModificarCon.setGeometry(QtCore.QRect(420, 650, 151, 41))
-        self.ModificarCon.setObjectName("ModificarCon")
-        self.BuscarCon = QtWidgets.QPushButton(self.centralwidget)
-        self.BuscarCon.setGeometry(QtCore.QRect(620, 650, 151, 41))
-        self.BuscarCon.setObjectName("BuscarCon")
+        
+        self.ModificarTra = QtWidgets.QPushButton(self.centralwidget)
+        self.ModificarTra.setGeometry(QtCore.QRect(420, 650, 151, 41))
+        self.ModificarTra.setObjectName("ModificarTra")
+        
+        self.BuscarTra = QtWidgets.QPushButton(self.centralwidget)
+        self.BuscarTra.setGeometry(QtCore.QRect(620, 650, 151, 41))
+        self.BuscarTra.setObjectName("BuscarTra")
+        
         self.frameAniaidir = QtWidgets.QFrame(self.centralwidget)
         self.frameAniaidir.setEnabled(True)
-        self.frameAniaidir.setGeometry(QtCore.QRect(460, 30, 301, 541))
+        self.frameAniaidir.setGeometry(QtCore.QRect(360, 30, 520, 541))
         self.frameAniaidir.setStyleSheet("background-color: #282e2a;\n"
 "border-radius: 20px;")
         self.frameAniaidir.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frameAniaidir.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frameAniaidir.setObjectName("frameAniaidir")
+
+        self.IDtrabajador = QtWidgets.QLabel(self.frameAniaidir)
+        self.IDtrabajador.setGeometry(QtCore.QRect(26, 10, 220, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.IDtrabajador.setFont(font)
+        self.IDtrabajador.setObjectName("DNI")
+        
+        self.LineaID = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaID.setGeometry(QtCore.QRect(26, 70, 220, 31))
+        self.LineaID.setStyleSheet("background-color:white;\n"
+"\n"
+"border: 2px solid gray;\n"
+"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
+"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
+"\n"
+"")
+        
+        self.Contrasenia = QtWidgets.QLabel(self.frameAniaidir)
+        self.Contrasenia.setGeometry(QtCore.QRect(26, 110, 220, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.Contrasenia.setFont(font)
+        self.Contrasenia.setObjectName("Contra")
+        
+        self.LineaContra = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaContra.setGeometry(QtCore.QRect(26, 170, 220, 31))
+        self.LineaContra.setStyleSheet("background-color:white;\n"
+"\n"
+"border: 2px solid gray;\n"
+"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
+"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
+"\n"
+"")
+
+
         self.Nombre = QtWidgets.QLabel(self.frameAniaidir)
-        self.Nombre.setGeometry(QtCore.QRect(40, 10, 220, 50))
+        self.Nombre.setGeometry(QtCore.QRect(26, 210, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Nombre.setFont(font)
-        self.Nombre.setObjectName("DNI")
+        self.Nombre.setObjectName("Nombre")
+        
         self.LineaNombre = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaNombre.setGeometry(QtCore.QRect(40, 70, 220, 31))
+        self.LineaNombre.setGeometry(QtCore.QRect(26, 270, 220, 31))
         self.LineaNombre.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
@@ -93,25 +137,104 @@ class Ui_MainWindow4(object):
 "")
         self.LineaNombre.setText("")
         self.LineaNombre.setObjectName("LineaNombre")
-        self.Direccion = QtWidgets.QLabel(self.frameAniaidir)
-        self.Direccion.setGeometry(QtCore.QRect(40, 120, 220, 50))
+        
+        self.Apellido1 = QtWidgets.QLabel(self.frameAniaidir)
+        self.Apellido1.setGeometry(QtCore.QRect(26, 310, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Direccion.setFont(font)
-        self.Direccion.setObjectName("Direccion")
-        self.LineaDireccion = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaDireccion.setGeometry(QtCore.QRect(40, 180, 220, 31))
-        self.LineaDireccion.setStyleSheet("background-color:white;\n"
+        self.Apellido1.setFont(font)
+        self.Apellido1.setObjectName("Apellido1")
+        
+        self.LineaApellido1 = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaApellido1.setGeometry(QtCore.QRect(26, 370, 220, 31))
+        self.LineaApellido1.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaDireccion.setText("")
-        self.LineaDireccion.setObjectName("LineaDireccion")
+        self.LineaApellido1.setText("")
+        self.LineaApellido1.setObjectName("LineaApellido1")
+        
+        self.Apellido2 = QtWidgets.QLabel(self.frameAniaidir)
+        self.Apellido2.setGeometry(QtCore.QRect(273, 10, 220, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.Apellido2.setFont(font)
+        self.Apellido2.setObjectName("Apellido2")
+        
+        self.LineaApellido2 = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaApellido2.setGeometry(QtCore.QRect(273, 70, 220, 31))
+        self.LineaApellido2.setStyleSheet("background-color:white;\n"
+"\n"
+"border: 2px solid gray;\n"
+"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
+"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
+"\n"
+"")
+        self.LineaApellido2.setText("")
+        self.LineaApellido2.setObjectName("LineaApellido2")
+
+        self.Sueldo = QtWidgets.QLabel(self.frameAniaidir)
+        self.Sueldo.setGeometry(QtCore.QRect(273, 110, 220, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.Sueldo.setFont(font)
+        self.Sueldo.setObjectName("Sueldo")
+        
+        self.LineaSueldo = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaSueldo.setGeometry(QtCore.QRect(273, 170, 220, 31))
+        self.LineaSueldo.setStyleSheet("background-color:white;\n"
+"\n"
+"border: 2px solid gray;\n"
+"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
+"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
+"\n"
+"")
+        self.LineaSueldo.setText("")
+        self.LineaSueldo.setObjectName("LineaSueldo")
+        
+        self.Rol = QtWidgets.QLabel(self.frameAniaidir)
+        self.Rol.setGeometry(QtCore.QRect(273, 210, 241, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.Rol.setFont(font)
+        self.Rol.setObjectName("Rol")
+
+        self.LineaRol = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaRol.setGeometry(QtCore.QRect(273, 270, 220, 31))
+        self.LineaRol.setStyleSheet("background-color:white;\n"
+"\n"
+"border: 2px solid gray;\n"
+"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
+"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
+"\n"
+"")
+        self.LineaRol.setText("")
+        self.LineaRol.setObjectName("LineaRol")
+
+        self.Concesionario = QtWidgets.QLabel(self.frameAniaidir)
+        self.Concesionario.setGeometry(QtCore.QRect(273, 310, 241, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.Concesionario.setFont(font)
+        self.Concesionario.setObjectName("Concesionario")
+
+        self.LineaConc = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaConc.setGeometry(QtCore.QRect(273, 370, 220, 31))
+        self.LineaConc.setStyleSheet("background-color:white;\n"
+"\n"
+"border: 2px solid gray;\n"
+"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
+"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
+"\n"
+"")
+        self.LineaConc.setText("")
+        self.LineaConc.setObjectName("LineaConc")
+
         self.botonAniadirModificar = QtWidgets.QPushButton(self.frameAniaidir)
-        self.botonAniadirModificar.setGeometry(QtCore.QRect(100, 500, 100, 30))
+        self.botonAniadirModificar.setGeometry(QtCore.QRect(210, 500, 100, 30))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
@@ -121,45 +244,17 @@ class Ui_MainWindow4(object):
 "color: white;")
         self.botonAniadirModificar.setText("")
         self.botonAniadirModificar.setObjectName("AniadirModificar")
+        
         self.Incorrecto = QtWidgets.QLabel(self.frameAniaidir)
         self.Incorrecto.setEnabled(True)
         self.Incorrecto.setGeometry(QtCore.QRect(10, 460, 281, 21))
         self.Incorrecto.setObjectName("Incorrecto")
-        self.LineaCiudad = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaCiudad.setGeometry(QtCore.QRect(40, 290, 220, 31))
-        self.LineaCiudad.setStyleSheet("background-color:white;\n"
-"\n"
-"border: 2px solid gray;\n"
-"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
-"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
-"\n"
-"")
-        self.LineaCiudad.setText("")
-        self.LineaCiudad.setObjectName("LineaCiudad")
-        self.Ciudad = QtWidgets.QLabel(self.frameAniaidir)
-        self.Ciudad.setGeometry(QtCore.QRect(40, 230, 220, 50))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.Ciudad.setFont(font)
-        self.Ciudad.setObjectName("Ciudad")
-        self.LineaFecha = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaFecha.setGeometry(QtCore.QRect(40, 400, 220, 31))
-        self.LineaFecha.setStyleSheet("background-color:white;\n"
-"\n"
-"border: 2px solid gray;\n"
-"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
-"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
-"\n"
-"")
-        self.LineaFecha.setText("")
-        self.LineaFecha.setObjectName("LineaFecha")
-        self.Fecha = QtWidgets.QLabel(self.frameAniaidir)
-        self.Fecha.setGeometry(QtCore.QRect(40, 340, 241, 50))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.Fecha.setFont(font)
-        self.Fecha.setObjectName("FechaInauguracion")
         
+        
+        
+        
+
+
 
         #FRAME 2 HECHO UNICAMENTE PARA EL BOTON ELIMINAR
         self.frame2 = 2
@@ -208,7 +303,6 @@ class Ui_MainWindow4(object):
         self.Incorrecto2.setObjectName("Incorrecto2")
         self.Incorrecto2.setVisible(False)
         
-
         # Creación del QTableView para mostrar las columnas de la base de datos
         self.tableView = QtWidgets.QTableView(self.centralwidget)
         self.tableView.setGeometry(QtCore.QRect(383, 235, 475, 250))
@@ -235,6 +329,7 @@ class Ui_MainWindow4(object):
 
         MainWindow.setCentralWidget(self.centralwidget)
 
+        #check box del modo oscuro, igual que el de ventanaAdmin
         self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
         self.checkBox.setGeometry(QtCore.QRect(10, 10, 141, 61))
         self.checkBox.setChecked(True)
@@ -258,14 +353,14 @@ class Ui_MainWindow4(object):
         self.tableView.setVisible(False)
         self.searchBar.setVisible(False)
         
-        self.aniadirCon.clicked.connect(self.toggle_frame_visibility)
-        self.aniadirCon.clicked.connect(lambda: self.actualizarBotonFrame("Añadir"))
+        self.aniadirTra.clicked.connect(self.toggle_frame_visibility)
+        self.aniadirTra.clicked.connect(lambda: self.actualizarBotonFrame("Añadir"))
 
-        self.eliminarCon.clicked.connect(self.frame2_visibility)
+        self.eliminarTra.clicked.connect(self.frame2_visibility)
         #self.eliminarCon.clicked.connect(lambda: self.actualizarBotonFrame("Eliminar"))
 
-        self.ModificarCon.clicked.connect(self.toggle_frame_visibility)
-        self.ModificarCon.clicked.connect(lambda: self.actualizarBotonFrame("Modificar"))
+        self.ModificarTra.clicked.connect(self.toggle_frame_visibility)
+        self.ModificarTra.clicked.connect(lambda: self.actualizarBotonFrame("Modificar"))
 
         
 
@@ -323,36 +418,44 @@ class Ui_MainWindow4(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Concesionarios"))
-        self.aniadirCon.setText(_translate("MainWindow", "Añadir concesionario"))
-        self.eliminarCon.setText(_translate("MainWindow", "Eliminar concesionario"))
-        self.ModificarCon.setText(_translate("MainWindow", "Modificar concesionario"))
-        self.BuscarCon.setText(_translate("MainWindow", "Buscar concesionario"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Trabajadores"))
+        self.aniadirTra.setText(_translate("MainWindow", "Añadir trabajador"))
+        self.eliminarTra.setText(_translate("MainWindow", "Eliminar trabajador"))
+        self.ModificarTra.setText(_translate("MainWindow", "Modificar trabajador"))
+        self.BuscarTra.setText(_translate("MainWindow", "Buscar trabajador"))
+        self.IDtrabajador.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Idtrabajador:</span></p></body></html>"))
+        self.Contrasenia.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Contrasenia:</span></p></body></html>"))
         self.Nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
-        self.Direccion.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Direccion:</span></p></body></html>"))
-        self.Ciudad.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Ciudad:</span></p></body></html>"))
-        self.Fecha.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">FechaInauguracion:</span></p></body></html>"))
+        self.Apellido1.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Apellido1:</span></p></body></html>"))
+        self.Apellido2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Apellido2:</span></p></body></html>"))
+        self.Sueldo.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Sueldo:</span></p></body></html>"))
+        self.Rol.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Rol:</span></p></body></html>"))
+        self.Concesionario.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Concesionario:</span></p></body></html>"))
         self.Nombre2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 
 
     def obtener_datos_ingresados(self):
-        anadirModificar = Concesionario(
-            Nombre=self.LineaNombre.text(),
-            Direccion=self.LineaDireccion.text(),
-            Ciudad=self.LineaCiudad.text(),
-            FechaInauguracion=self.LineaFecha.text()
+        anadirModificar = PlantillaTrabajadorVO(
+           IDtrabajador=self.LineaID.text(),
+           Contraseña=self.LineaContra.text(),
+           Nombre=self.LineaNombre.text(),
+           Apellido1=self.LineaApellido1.text(),
+           Apellido2=self.LineaApellido2.text(),
+           Sueldo=self.LineaSueldo.text(),
+           Rol=self.LineaRol.text(),
+           Concesionario=self.LineaConc.text()
         )
 
-        eliminar = Concesionario(
+        eliminar = PlantillaTrabajadorVO(
             Nombre=self.LineaNombre2.text()
         )
         
         
         if anadirModificar.Nombre != "":
             if self.botonAniadirModificar.text() == "Añadir":
-                a = self.coordinador.registrarConcesionario(anadirModificar, "aniadir") 
+                a = self.coordinador.registrarTrabajador(anadirModificar, "aniadir") 
                 if a[0] == "Error":
                     self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                     self.Incorrecto.setVisible(True)
@@ -361,7 +464,7 @@ class Ui_MainWindow4(object):
                     self.Incorrecto.setVisible(True)
                     
             elif self.botonAniadirModificar.text() == "Modificar":
-                a = self.coordinador.registrarConcesionario(anadirModificar, "modificar")
+                a = self.coordinador.registrarTrabajador(anadirModificar, "modificar")
                 if a[0] == "Error":
                     self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                     self.Incorrecto.setVisible(True)
@@ -369,14 +472,19 @@ class Ui_MainWindow4(object):
                     self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
                     self.Incorrecto.setVisible(True) 
             
+            self.LineaID.setText("")
+            self.LineaContra.setText("")
             self.LineaNombre.setText("")
-            self.LineaDireccion.setText("")
-            self.LineaCiudad.setText("")
-            self.LineaFecha.setText("")
+            self.LineaApellido1.setText("")
+            self.LineaApellido2.setText("")
+            self.LineaSueldo.setText("")
+            self.LineaRol.setText("")
+            self.LineaConc.setText("")
+            
 
 
         if eliminar.Nombre != "":
-            a = self.coordinador.registrarConcesionario(eliminar, "eliminar")
+            a = self.coordinador.registrarTrabajador(eliminar, "eliminar")
             #print(a)
             if a[0] == "Error":
                 self.actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
@@ -392,19 +500,23 @@ class Ui_MainWindow4(object):
         
         
 
-    def mostrasConcesionarios(self):
+    def mostrarTrabajadores(self):
         self.model.removeRows(0, self.model.rowCount())
-
+        #IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario
         a = self.coordinador.obtenerConcesionarios()
         #print(a)
-        columnas = ["Nombre", "Dirección", "Ciudad", "Fecha de Inauguración"]
+        columnas = ["IDtrabajador", "Contraseña", "Nombre", "Apellido1", "Apellido2", "Sueldo", "Rol", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:
             items = [
-                QStandardItem(fila['nombre']),
-                QStandardItem(fila['direccion']),
-                QStandardItem(fila['ciudad']),
-                QStandardItem(fila['fecha_inauguracion'])
+                QStandardItem(fila['IDtrabajador']),
+                QStandardItem(fila['Contraseña']),
+                QStandardItem(fila['Nombre']),
+                QStandardItem(fila['Apellido1']),
+                QStandardItem(fila['Apellido2']),
+                QStandardItem(fila['Sueldo']),
+                QStandardItem(fila['Rol']),
+                QStandardItem(fila['Concesionario']),
             ]
             self.model.appendRow(items)
 
@@ -421,7 +533,7 @@ class Ui_MainWindow4(object):
         if self.checkBox.isChecked(): #modo oscuro
             self.label.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
             self.label.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
-            self.estilosOscuro([self.aniadirCon, self.eliminarCon, self.BuscarCon, self.ModificarCon, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
+            self.estilosOscuro([self.aniadirTra, self.eliminarTra, self.BuscarTra, self.ModificarTra, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
             #self.setAtras()
             self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
                             "    width: 25px;\n"
