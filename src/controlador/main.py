@@ -66,6 +66,10 @@ def comprobarSesion():
 
         ui_ventana3_ui.Trabajador.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaTrabajadores))
         ui_ventana5_ui.atras.clicked.connect(lambda: atras(ventanaTrabajadores, ventanaAdmin))
+        ui_ventana5_ui.botonAniadirModificar.clicked.connect(ui_ventana5_ui.obtener_datos_ingresados)
+        ui_ventana5_ui.botonEliminar.clicked.connect(ui_ventana5_ui.obtener_datos_ingresados)
+        ui_ventana5_ui.BuscarTra.clicked.connect(ui_ventana5_ui.tablaYbusquedaVisibilidad)
+        ui_ventana5_ui.BuscarTra.clicked.connect(ui_ventana5_ui.mostrarTrabajadores)
 
     elif a[0] in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
         ui_ventana2_ui.hacerVisible(False)

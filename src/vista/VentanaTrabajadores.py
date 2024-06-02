@@ -117,6 +117,9 @@ class Ui_MainWindow5(object):
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
+        self.LineaContra.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.LineaContra.setText("")
+        self.LineaContra.setObjectName("LineaContra")
 
 
         self.Nombre = QtWidgets.QLabel(self.frameAniaidir)
@@ -305,7 +308,7 @@ class Ui_MainWindow5(object):
         
         # Creación del QTableView para mostrar las columnas de la base de datos
         self.tableView = QtWidgets.QTableView(self.centralwidget)
-        self.tableView.setGeometry(QtCore.QRect(383, 235, 475, 250))
+        self.tableView.setGeometry(QtCore.QRect(100, 10, 600, 250))
         self.tableView.setObjectName("tableView")
 
         # Barra de búsqueda
@@ -423,7 +426,7 @@ class Ui_MainWindow5(object):
         self.eliminarTra.setText(_translate("MainWindow", "Eliminar trabajador"))
         self.ModificarTra.setText(_translate("MainWindow", "Modificar trabajador"))
         self.BuscarTra.setText(_translate("MainWindow", "Buscar trabajador"))
-        self.IDtrabajador.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Idtrabajador:</span></p></body></html>"))
+        self.IDtrabajador.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">IDtrabajador:</span></p></body></html>"))
         self.Contrasenia.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Contrasenia:</span></p></body></html>"))
         self.Nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
         self.Apellido1.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Apellido1:</span></p></body></html>"))
@@ -449,7 +452,7 @@ class Ui_MainWindow5(object):
         )
 
         eliminar = PlantillaTrabajadorVO(
-            Nombre=self.LineaNombre2.text()
+            IDtrabajador=self.LineaNombre2.text()
         )
         
         
@@ -503,14 +506,14 @@ class Ui_MainWindow5(object):
     def mostrarTrabajadores(self):
         self.model.removeRows(0, self.model.rowCount())
         #IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario
-        a = self.coordinador.obtenerConcesionarios()
+        a = self.coordinador.obtenerTrabajadores()
         #print(a)
-        columnas = ["IDtrabajador", "Contraseña", "Nombre", "Apellido1", "Apellido2", "Sueldo", "Rol", "Concesionario"]
+        columnas = ["IDtrabajador", "Contrasenia", "Nombre", "Apellido1", "Apellido2", "Sueldo", "Rol", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:
             items = [
                 QStandardItem(fila['IDtrabajador']),
-                QStandardItem(fila['Contraseña']),
+                QStandardItem(fila['Contrasenia']),
                 QStandardItem(fila['Nombre']),
                 QStandardItem(fila['Apellido1']),
                 QStandardItem(fila['Apellido2']),

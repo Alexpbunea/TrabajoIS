@@ -6,6 +6,8 @@ USE datoscofermotor;
 #select * FROM plantillatrabajadores;
 #SELECT * FROM clientes;
 SELECT * FROM concesionario;
+#DROP TABLE plantillatrabajadores;
+#SELECT * FROM plantillatrabajadores;
 
 /*
 CREATE TABLE concesionario (
@@ -73,14 +75,14 @@ CREATE TABLE taller (
 /*
 CREATE TABLE plantillaTrabajadores (
     IDtrabajador VARCHAR(9) PRIMARY KEY NOT NULL,
-    Contrasenia VARCHAR(50) NOT NULL,
+    Contrasenia VARCHAR(65) NOT NULL,
     Nombre VARCHAR(20) NOT NULL,
     Apellido1 VARCHAR(20) NOT NULL,
     Apellido2 VARCHAR(20) NOT NULL,
     Sueldo DECIMAL(10, 2) NOT NULL,
     Rol VARCHAR(20) NOT NULL CHECK (Rol IN ('administrador', 'jefeZona', 'jefeDepartamento', 'personal')),
     Concesionario VARCHAR(20) NOT NULL,
-    CONSTRAINT TrabajadorConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
+    CONSTRAINT TrabajadorConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */
 /*

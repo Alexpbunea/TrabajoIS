@@ -8,6 +8,8 @@ class TrabajadorDao(TrabajadorInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
     SQL_SELECT = "SELECT IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario FROM plantillatrabajadores"
     SQL_INSERT = "INSERT INTO plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    SQL_DELETE = "DELETE FROM plantillatrabajadores WHERE IDtrabajador = ?"
+    SQL_UPDATE = "UPDATE plantillatrabajadores SET Contrasenia = ?, Nombre = ?, Apellido1 = ?, Apellido2 = ?, Sueldo = ?, Rol = ?, Concesionario = ? WHERE IDtrabajador = ?"
 
     def getTrabajadores(self) -> List[PlantillaTrabajadorVO]:
         conexion = self.getConnection()
@@ -84,4 +86,54 @@ class TrabajadorDao(TrabajadorInterface, Conexion):
 
         conexion = self.close(conn)
 
+        return rows
+
+    def deleteTrabajador(self, IDtrabajador: str) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion             
+            else:
+                print("La base de datos no está disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_DELETE, (IDtrabajador,))
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al eliminar trabajador:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+        conexion = self.close(conn)
+        return rows
+
+    def updateTrabajador(self, trabajador: PlantillaTrabajadorVO) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion             
+            else:
+                print("La base de datos no está disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_UPDATE, (trabajador.getContrasenia(), trabajador.getNombre(), trabajador.getApellido1(), trabajador.getApellido2(), trabajador.getSueldo(), trabajador.getRol(), trabajador.getConcesionario(), trabajador.getIDtrabajador()))
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al actualizar trabajador:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+        conexion = self.close(conn)
         return rows

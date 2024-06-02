@@ -8,6 +8,7 @@ Created on Thu Apr 25 13:40:11 2024
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
+import bcrypt
 
 from src.controlador.Coordinador import Coordinador
 
@@ -43,6 +44,62 @@ class Logica:
     def set_coordinador(self, mi_coordinador: Coordinador) -> None:
         self._mi_coordinador = mi_coordinador
 
+    #DEVUELVE TRUE SI ES VALIDO, FALSE SI NO LO ES
+    def funcionInsertarDNI(self, dni):
+        if len(dni) != 9:
+            return False
+        if not dni[:8].isdigit() or not dni[-1].isalpha():
+            return False
+        
+        letras = "TRWAGMYFPDXBNJZSQVHLCKE"
+        numeros = int(dni[:8])
+        letra = dni[-1].upper()
+
+        # Calcular la letra correcta
+        letra_correcta = letras[numeros % 23]
+
+        # Comparar la letra proporcionada con la letra calculada
+        return letra == letra_correcta
+
+    #ENCRIPTAR Y DEENCRIPTAR CONTRASENIA
+    def encriptar_contrasenia(contrasenia) -> str:
+        #print("Hola")
+        salt = bcrypt.gensalt()
+        # Hashea la contraseña con el salt
+        hashed = bcrypt.hashpw(contrasenia.encode('utf-8'), salt)
+        return hashed.decode('utf-8')
+
+    def verificar_contrasenia(contrasenia, hashed_contrasenia) -> bool:
+        return bcrypt.checkpw(contrasenia.encode('utf-8'), hashed_contrasenia.encode('utf-8'))
+    
+    #COMPROBAR EL FORMATO DEL NOMBRE DEL CONCESIONARIO
+    def comprobarFormatoConcesionario(self, concesionario):
+        if concesionario[:10] == "Cofermotor":
+            print("Nombre concesionario correcto")
+            return ("Correcto", concesionario)
+        elif concesionario[:10] == "cofermotor":
+            print("Falta mayuscula en la inicial nombre del concesionario. Corrigiendo")
+            concesionario = "Cofermotor" + concesionario[10:]
+            return ("Corregido", concesionario)
+        else:
+            print("Formato incorrecto del nombre del concesionario")
+            return ("Error", "Formato incorrecto del concesionario")
+    
+    #COMPROBAR SI EL CONCESIONARIO EXISTE EN LA BASE DE DATOS
+    def comprobarExistenciaConcesionario(self, concesionario):
+        tablaConcesionarios = ConcesionarioDao()
+        concs = tablaConcesionarios.getConcesionarios()
+        for conc in concs:
+            if conc.getNombre() == concesionario:
+                return True
+        print("El concesionario no existe")
+        return False
+
+
+#################################################################################################################################################
+#################################################################################################################################################
+
+
     def comprobar_Dni_contrasenia(self, mi_persona, mi_trabajador):
         #print(mi_persona)
         #print(type(mi_persona))
@@ -69,10 +126,11 @@ class Logica:
         except:    
             messagebox.showwarning("Advertencia", "Error al iniciar sesion")
 
-    
+
+
+    #FUNCIONES PARA LA VENTANA CONCESIONARIO    
     def validar_registro_concesionario(self, mi_concesionario: Concesionario, queHago):
-        #if '@' in mi_persona.getEmail():
-        
+        #if '@' in mi_persona.getEmail(): 
         if queHago == "aniadir":
             try:
                 nombre = mi_concesionario.getNombre()
@@ -109,7 +167,7 @@ class Logica:
                 fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
                 mi_concesionario.setFechaInauguracion(fecha_mysql)
 
-                print(mi_concesionario)
+                #print(mi_concesionario)
                 mi_concesionario_dao = ConcesionarioDao()
                 mi_concesionario_dao.insertConcesionario(mi_concesionario)
                 return ("Correcto", "Has introducido bien los datos")
@@ -124,12 +182,12 @@ class Logica:
                 mi_concesionario_dao = ConcesionarioDao()
                 concesionarios = mi_concesionario_dao.getConcesionarios()
 
-                for conc in concesionarios:
-                    if conc.getNombre() == mi_concesionario.getNombre():
-                        print(f"Eliminando concesionario --> {conc.getNombre()}")
-                        mi_concesionario_dao.deleteConcesionario(mi_concesionario.getNombre())
-                        return ("Correcto", "Has introducido bien los datos")
-                    
+                comprueba = self.comprobarExistenciaConcesionario(nombre)
+                if comprueba:
+                    print(f"Eliminando concesionario --> {nombre}")
+                    mi_concesionario_dao.deleteConcesionario(nombre)
+                    return ("Correcto", "Has introducido bien los datos")
+                
                 return ("Error", "Ese concesionario no existe")
             except:
                 messagebox.showwarning("Advertencia", "Error al eliminar el concesionario")
@@ -141,9 +199,19 @@ class Logica:
                 ciudad = mi_concesionario.getCiudad()
                 fecha_str = mi_concesionario.getFechaInauguracion()
 
+                conc = self.comprobarFormatoConcesionario(nombre)
+                if conc[0] == "Error":
+                    return conc
+                elif conc[0] == "Corregido":
+                    nombre = conc[1]
+                else:
+                    pass #Esto significa que es correcto el formato del nombre
+                
                 fecha_obj = datetime.strptime(fecha_str, '%d-%m-%Y')
                 fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
                 
+
+
                 mi_concesionario_dao = ConcesionarioDao()
                 concesionarios = mi_concesionario_dao.getConcesionarios()
 
@@ -161,20 +229,6 @@ class Logica:
             except:
                 messagebox.showwarning("Advertencia", "Error al modificar el concesionario")
 
-
-
-    def validar_registro_trabajador(self, mi_trabajador: PlantillaTrabajadorVO, queHago):
-        pass
-
-
-
-    def validar_registro_cliente(self, mi_persona: Cliente):
-        if '@' in mi_persona.getEmail():
-            mi_persona_dao = ClienteDao()
-            mi_persona_dao.insertCliente(mi_persona)
-        else:
-            messagebox.showwarning("Advertencia", "El email no es válido")
-    
     def obtener_todos_concesionarios(self):
         try:
             mi_concesionario_dao = ConcesionarioDao()
@@ -190,5 +244,175 @@ class Logica:
             return concesionarios_data
         except Exception as e:
             print(f"Error al obtener concesionarios: {e}")
-            #return None
+            return None
+
+
+
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+
+
+    #FUNCIONES PARA LA VENTANA TRABAJADOR
+    def validar_registro_trabajador(self, mi_trabajador: PlantillaTrabajadorVO, queHago):
+        if queHago == "aniadir":
+            try:
+                IDtrabajador = mi_trabajador.getIDtrabajador()
+                contrasenia = str(mi_trabajador.getContrasenia())
+                nombre = mi_trabajador.getNombre()
+                apellido1 = mi_trabajador.getApellido1()
+                apellido2 = mi_trabajador.getApellido2()
+                sueldo = mi_trabajador.getSueldo()
+                rol = mi_trabajador.getRol()
+                concesionario = mi_trabajador.getConcesionario()
+                
+                #Comprobando si el dni es correcto o no
+                if self.funcionInsertarDNI(IDtrabajador) is False:
+                    print("El IDtrabajador es incorrecto, compruebalo")
+                    return ("Error", "El IDtrabajador es incorrecto")
+                
+                print(contrasenia)
+                print(type(contrasenia))
+                try:
+                    #Encripto la contrasenia
+                    contrasenia2 = self.encriptar_contrasenia(contrasenia)
+                    print(contrasenia2)
+                    mi_trabajador.setContrasenia(contrasenia2)
+                except:
+                    messagebox.showwarning("Advertencia", "Error en la libreria bcrypt o en sus funciones")
+
+                #Compruebo el rol
+                if rol not in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
+                    print("El rol escrito no es posible en la empresa")
+                    return ("Error", "El rol escrito no es posible en la empresa")
+
+                #Comprobando el formato del nombre del concesionario
+                conc = self.comprobarFormatoConcesionario(concesionario)
+                if conc[0] == "Error":
+                    return conc
+                elif conc[0] == "Corregido":
+                    concesionario = conc[1]
+                    mi_trabajador.setConcesionario(concesionario)
+                else:
+                    pass #Esto significa que es correcto el formato del nombre
+
+                #compruebo si existe el concesionario en la base de datos
+                conc = self.comprobarExistenciaConcesionario(concesionario)
+                if conc is False:
+                    return ("Error", "El concesionario no existe")
+
+                mi_trabajador_dao = TrabajadorDao()
+                mi_trabajador_dao.insertTrabajador(mi_trabajador)
+                return ("Correcto", "Has introducido bien los datos")
+            except:
+                messagebox.showwarning("Advertencia", "Error al insertar el trabajador")
+
+        elif queHago == "eliminar":
+            try:
+                ID = mi_trabajador.getIDtrabajador()
+        
+                mi_trabajador_dao = TrabajadorDao()
+                trabajadores = mi_trabajador_dao.getTrabajadores()
+
+                for trab in trabajadores:
+                    if trab.getIDtrabajador() == ID:
+                        print(f"Eliminando trabajador --> {trab.getIDtrabajador()}, {trab.getNombre()}")
+                        mi_trabajador_dao.deleteTrabajador(ID)
+                        return ("Correcto", "Has introducido bien los datos")
+                    
+                return ("Error", "Ese trabajador no esta registrado")
+            except:
+                messagebox.showwarning("Advertencia", "Error al eliminar el trabajador")
+        
+        elif queHago == "modificar":
+            try:
+                IDtrabajador = mi_trabajador.getIDtrabajador()
+                contrasenia = mi_trabajador.getContrasenia()
+                nombre = mi_trabajador.getNombre()
+                apellido1 = mi_trabajador.getApellido1()
+                apellido2 = mi_trabajador.getApellido2()
+                sueldo = mi_trabajador.getSueldo()
+                Rol = mi_trabajador.getRol()
+                concesionario = mi_trabajador.getConcesionario()
+                
+                try:
+                #Encripto la contrasenia
+                    contrasenia = self.encriptar_contrasenia(contrasenia)
+                    mi_trabajador.setContrasenia(contrasenia)
+                except:
+                    messagebox.showwarning("Advertencia", "Error en la libreria bcrypt o en sus funciones")
+
+                #Compruebo el rol
+                if rol not in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
+                    print("El rol escrito no es posible en la empresa")
+                    return ("Error", "El rol escrito no es posible en la empresa")
+
+                #Comprobando el formato del nombre del concesionario
+                conc = self.comprobarFormatoConcesionario(concesionario)
+                if conc[0] == "Error":
+                    return conc
+                elif conc[0] == "Corregido":
+                    concesionario = conc[1]
+                    mi_trabajador.setConcesionario(concesionario)
+                else:
+                    pass #Esto significa que es correcto el formato del nombre
+
+                #compruebo si existe el concesionario en la base de datos
+                conc = self.comprobarExistenciaConcesionario(concesionario)
+                if conc is False:
+                    return ("Error", "El concesionario no existe")
+
+
+                mi_trabajador_dao = TrabajadorDao()
+                trabajadores = mi_trabajador_dao.getTrabajadores()
+
+                for trab in trabajadores:
+                    if trab.getIDtrabajador() == IDtrabajador:
+                        mi_trabajador.getIDtrabajador()
+                        mi_trabajador.getContrasenia()
+                        mi_trabajador.getNombre()
+                        mi_trabajador.getApellido1()
+                        mi_trabajador.getApellido2()
+                        mi_trabajador.getSueldo()
+                        mi_trabajador.getRol()
+                        mi_trabajador.getConcesionario()
+                        mi_trabajador_dao.updateTrabajador(mi_trabajador)
+                        print(f"Modificado correctamente el trabajador --> {IDtrabajador}, {nombre}")
+                        return ("Correcto", "Concesionario modificado correctamente")
+            
+                return ("Error", "El trabajador no esta registrado")
+            except:
+                messagebox.showwarning("Advertencia", "Error al modificar el trabajador")
+    
+    def obtener_todos_trabajadores(self):
+        try:
+            mi_trabajador_dao = TrabajadorDao()
+            trabajadores = mi_trabajador_dao.getTrabajadores()
+            trabajadores_data = []
+            for trab in trabajadores:
+                trabajadores_data.append({
+                    "IDtrabajador": trab.getIDtrabajador(),
+                    "Contrasenia": trab.getContrasenia(),
+                    'Nombre': trab.getNombre(),
+                    'Apellido1': trab.getApellido1(),
+                    'Apellido2': trab.getApellido2(),
+                    'Sueldo': str(trab.getSueldo()),
+                    'Rol': trab.getRol(),
+                    'Concesionario': trab.getConcesionario()
+                })
+            return trabajadores_data
+        except Exception as e:
+            print(f"Error al obtener trabajadores: {e}")
+
+
+
+    #FUNCIONES PARA LA VENTANA CLIENTES
+    def validar_registro_cliente(self, mi_persona: Cliente):
+        if '@' in mi_persona.getEmail():
+            mi_persona_dao = ClienteDao()
+            mi_persona_dao.insertCliente(mi_persona)
+        else:
+            messagebox.showwarning("Advertencia", "El email no es válido")
+    
+    
 

@@ -93,8 +93,11 @@ class Coordinador:
        return a
 
 
-    def registrarTrabajador(self):
-       a = self._model.validar_registro_trabajador()
+    def registrarTrabajador(self, usuario, queHago):
+       a = self._model.validar_registro_trabajador(usuario, queHago)
+       return a
+    def obtenerTrabajadores(self):
+       a = self._model.obtener_todos_trabajadores()
        return a
 
 
