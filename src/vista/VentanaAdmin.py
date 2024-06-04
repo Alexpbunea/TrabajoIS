@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from src.vista.funciones import *
 
 
 class BorderedTextLabel(QtWidgets.QLabel):
@@ -109,9 +110,15 @@ class Ui_MainWindow3(object):
         self.checkBox.setGeometry(QtCore.QRect(10, 50, 141, 61))
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
-        self.checkBox.stateChanged.connect(self.modoClOs)
+        
         self.setAtras()
-        self.modoClOs()
+        
+        self.lista = [self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen]
+        
+        
+        self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.imagen, self.lista))
+        modoClOs(self.checkBox, self.imagen, self.lista)
+        
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -138,45 +145,7 @@ class Ui_MainWindow3(object):
         self.atras.setObjectName("atras")
         self.atras.setToolTip("Atras")
 
-    def modoClOs(self):
-        if self.checkBox.isChecked(): #modo oscuro
-            self.imagen.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
-            self.imagen.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
-            self.estilosOscuro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
-            #self.setAtras()
-            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
-                            "    width: 25px;\n"
-                            "    height: 25px;\n"
-                            "    text-align: right;\n"
-                            "}\n"
-                            "QCheckBox {\n"
-                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
-                            "    font-weight: bold;\n"
-                            "    color: white;\n"
-                            "}")
-            #BorderedTextLabel.setStyleSheet("color: white;")
-            self.hola.setStyleSheet("color: white")
-            self.hola_2.setStyleSheet("color: white")
-            #return "oscuro"
-        else: #modo claro
-            self.imagen.setStyleSheet("background-image: url(:/direccion/nissanGtrClaro.jpg);")
-            self.imagen.setPixmap(QtGui.QPixmap("nissanGtrClaro.jpg"))
-            #self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
-            #self.setAtras()
-            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
-                            "    width: 25px;\n"
-                            "    height: 25px;\n"
-                            "    text-align: right;\n"
-                            "}\n"
-                            "QCheckBox {\n"
-                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
-                            "    font-weight: bold;\n"
-                            "    color: black;\n"
-                            "}")
-            #BorderedTextLabel.setStyleSheet("color: black;")
-            self.hola.setStyleSheet("color: black;")
-            self.hola_2.setStyleSheet("color: black;")
-            #return "claro"
+
 
 
     def retranslateUi(self, MainWindow):
@@ -190,30 +159,6 @@ class Ui_MainWindow3(object):
         self.Almacen.setText(_translate("MainWindow", "Almacenes"))
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
-    def estilosOscuro(self, lista):
-        for i in lista:
-            i.setStyleSheet("QPushButton {\n"
-            "    background-color: transparent;\n"
-            "    border: 2px solid white;\n"
-            "    color: white;\n"
-            "    border-radius: 10px;\n"
-            "}\n"
-                "QPushButton:pressed {"
-                "background-color: #2980b9;"
-            "}"
-            )
-    def estilosClaro(self, lista):
-        for i in lista:
-            i.setStyleSheet("QPushButton {\n"
-            "    background-color: transparent;\n"
-            "    border: 2px solid black;\n"
-            "    color: black;\n"
-            "    border-radius: 10px;\n"
-            "}\n"
-                "QPushButton:pressed {"
-                "background-color: #2980b9;"
-            "}"
-            )
 
     def setCoordinador(self, coord) -> None:
         self.coordinador = coord

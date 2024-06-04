@@ -16,12 +16,14 @@ from src.vista.VentanaIniciarSesion_ui import Ui_MainWindow2
 from src.vista.VentanaAdmin import Ui_MainWindow3
 from src.vista.VentanaConcesionario import Ui_MainWindow4
 from src.vista.VentanaTrabajadores import Ui_MainWindow5
-import imagen_rc
-import imagenDes_rc
-import nissan2
-import nissanGtrClaro
-import botonAtrasBlanco
-import botonAtrasBlancoAzul
+from src.vista.funciones import *
+
+import Imagespy.imagen_rc
+import Imagespy.imagenDes_rc
+import Imagespy.nissan2
+import Imagespy.nissanGtrClaro
+import Imagespy.botonAtrasBlanco
+import Imagespy.botonAtrasBlancoAzul
 
 #RESTO
 from src.vista.RegistroClienteVentana import RegistroClienteVentana
@@ -115,15 +117,15 @@ def sync_checkbox_state(state, origin, target):
     target.setCheckState(state)
     #caso ventanaAdmin-VentanaConcesionario
     if origin == ui_ventana3_ui.checkBox and target == ui_ventana4_ui.checkBox:
-        ui_ventana4_ui.modoClOs()
+        modoClOs(ui_ventana4_ui.checkBox, ui_ventana4_ui.label, ui_ventana4_ui.lista, ui_ventana4_ui.listaFrames, ui_ventana4_ui.listaTexto)
     elif origin == ui_ventana4_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        ui_ventana3_ui.modoClOs()
+        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
 
     #caso ventanaAdmin-VentanaTrabajadores
     elif origin == ui_ventana3_ui.checkBox and target == ui_ventana5_ui.checkBox:
-        ui_ventana5_ui.modoClOs()
+        modoClOs(ui_ventana5_ui.checkBox, ui_ventana5_ui.label, ui_ventana5_ui.lista, ui_ventana5_ui.frameAniaidir, ui_ventana5_ui.frame2)
     elif origin == ui_ventana5_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        ui_ventana3_ui.modoClOs()
+        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
     target.blockSignals(False)
     
 

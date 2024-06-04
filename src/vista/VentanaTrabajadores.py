@@ -13,6 +13,7 @@ from PyQt5.QtCore import Qt, QSortFilterProxyModel
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import QTimer
 from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
+from src.vista.funciones import *
 
 
 
@@ -80,8 +81,7 @@ class Ui_MainWindow5(object):
         self.frameAniaidir = QtWidgets.QFrame(self.centralwidget)
         self.frameAniaidir.setEnabled(True)
         self.frameAniaidir.setGeometry(QtCore.QRect(360, 30, 520, 541))
-        self.frameAniaidir.setStyleSheet("background-color: #282e2a;\n"
-"border-radius: 20px;")
+
         self.frameAniaidir.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frameAniaidir.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frameAniaidir.setObjectName("frameAniaidir")
@@ -91,7 +91,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.IDtrabajador.setFont(font)
-        self.IDtrabajador.setObjectName("DNI")
+        
         
         self.LineaID = QtWidgets.QLineEdit(self.frameAniaidir)
         self.LineaID.setGeometry(QtCore.QRect(26, 70, 220, 31))
@@ -108,7 +108,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Contrasenia.setFont(font)
-        self.Contrasenia.setObjectName("Contra")
+        
         
         self.LineaContra = QtWidgets.QLineEdit(self.frameAniaidir)
         self.LineaContra.setGeometry(QtCore.QRect(26, 170, 220, 31))
@@ -129,7 +129,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Nombre.setFont(font)
-        self.Nombre.setObjectName("Nombre")
+        
         
         self.LineaNombre = QtWidgets.QLineEdit(self.frameAniaidir)
         self.LineaNombre.setGeometry(QtCore.QRect(26, 270, 220, 31))
@@ -148,7 +148,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Apellido1.setFont(font)
-        self.Apellido1.setObjectName("Apellido1")
+        
         
         self.LineaApellido1 = QtWidgets.QLineEdit(self.frameAniaidir)
         self.LineaApellido1.setGeometry(QtCore.QRect(26, 370, 220, 31))
@@ -167,7 +167,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Apellido2.setFont(font)
-        self.Apellido2.setObjectName("Apellido2")
+        
         
         self.LineaApellido2 = QtWidgets.QLineEdit(self.frameAniaidir)
         self.LineaApellido2.setGeometry(QtCore.QRect(273, 70, 220, 31))
@@ -186,7 +186,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Sueldo.setFont(font)
-        self.Sueldo.setObjectName("Sueldo")
+        
         
         self.LineaSueldo = QtWidgets.QLineEdit(self.frameAniaidir)
         self.LineaSueldo.setGeometry(QtCore.QRect(273, 170, 220, 31))
@@ -205,7 +205,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Rol.setFont(font)
-        self.Rol.setObjectName("Rol")
+        
 
         self.LineaRol = QtWidgets.QLineEdit(self.frameAniaidir)
         self.LineaRol.setGeometry(QtCore.QRect(273, 270, 220, 31))
@@ -224,7 +224,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Concesionario.setFont(font)
-        self.Concesionario.setObjectName("Concesionario")
+        
 
         self.LineaConc = QtWidgets.QLineEdit(self.frameAniaidir)
         self.LineaConc.setGeometry(QtCore.QRect(273, 370, 220, 31))
@@ -266,8 +266,6 @@ class Ui_MainWindow5(object):
         self.frame2 = QtWidgets.QFrame(self.centralwidget)
         self.frame2.setEnabled(True)
         self.frame2.setGeometry(QtCore.QRect(460, 30, 301, 300))
-        self.frame2.setStyleSheet("background-color: #282e2a;\n"
-"border-radius: 20px;")
         self.frame2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame2.setObjectName("frame2")
@@ -288,7 +286,7 @@ class Ui_MainWindow5(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.Nombre2.setFont(font)
-        self.Nombre2.setObjectName("DNI")
+        
 
         self.LineaNombre2 = QtWidgets.QLineEdit(self.frame2)
         self.LineaNombre2.setGeometry(QtCore.QRect(40, 90, 220, 31))
@@ -339,11 +337,39 @@ class Ui_MainWindow5(object):
         self.checkBox.setGeometry(QtCore.QRect(10, 10, 141, 61))
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
-        self.checkBox.stateChanged.connect(self.modoClOs)
+        
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.modoClOs()
+        
+
+        #Nombres de cada texto (para el modo oscuro/claro)
+        self.IDtrabajador.setObjectName("IDtrabajador")
+        self.Contrasenia.setObjectName("Contraseña")
+        self.Nombre.setObjectName("Nombre")
+        self.Apellido1.setObjectName("Apellido1")
+        self.Apellido2.setObjectName("Apellido2")
+        self.Sueldo.setObjectName("Sueldo")
+        self.Rol.setObjectName("Rol")
+        self.Concesionario.setObjectName("Concesionario")
+        self.Nombre2.setObjectName("IDtrabajador") #esto es para lo de eliminar
+
+
+        #muestra una pequenia ayuda al poner el raton sobre el boton
+        self.aniadirTra.setToolTip("Añadir trabajador")
+        self.eliminarTra.setToolTip("Eliminar trabajador")
+        self.ModificarTra.setToolTip("Modificar trabajador")
+        self.BuscarTra.setToolTip("Buscar trabajador")
+
+
+        self.lista = [self.aniadirTra, self.eliminarTra, self.BuscarTra, self.ModificarTra, self.botonEliminar, self.Nombre2, self.botonAniadirModificar]
+        self.listaFrames = [self.frameAniaidir, self.frame2]
+        self.listaTexto = [self.IDtrabajador, self.Contrasenia, self.Nombre, self.Apellido1, self.Apellido2, self.Sueldo, self.Rol, self.Concesionario, self.Nombre2]
+        self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto))
+        
+        #POR DEFECTO ACTIVO EL MODO OSCURO
+        modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto)
+        
         self.visible()
         #self.mostrasConcesionarios()
        
@@ -397,29 +423,11 @@ class Ui_MainWindow5(object):
 
     def actualizarBotonFrame(self, palabra):
         self.botonAniadirModificar.setText(palabra)
-    
+
 
     def setCoordinador(self, coord):
         self.coordinador = coord
     
-
-    def estilosOscuro(self, lista):
-        for i in lista:
-            i.setStyleSheet("QPushButton {\n"
-            "    background-color: transparent;\n"
-            "    border: 2px solid white;\n"
-            "    color: white;\n"
-            "    border-radius: 10px;\n"
-            "}\n"
-                "QPushButton:pressed {"
-                "background-color: #2980b9;"
-            "}"
-            )
-
-        
-    def actualizarTextoIncorrecto2(self,incorrecto, color, nuevo_texto):
-        estilo_html = "<html><head/><body><p align=\"center\"><span style=\" color:{};\">{}</span></p></body></html>"
-        incorrecto.setText(QtCore.QCoreApplication.translate("MainWindow", estilo_html.format(color, nuevo_texto)))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -446,59 +454,6 @@ class Ui_MainWindow5(object):
 ######################################################################################################################################################
 
 
-    #FUNCIONES ESTETICAS
-    def show_incorrecto_for_5_seconds(self, incorrecto):
-        # Hacer visible el QLabel
-        incorrecto.setVisible(True)
-
-        # Crear un temporizador que ocultará el QLabel después de 5 segundos
-        QTimer.singleShot(5000, lambda: self.hide_incorrecto(incorrecto))
-
-    def hide_incorrecto(self,incorrecto):
-        # Hacer invisible el QLabel
-        incorrecto.setVisible(False)
-    
-
-    #BOTON MODO OSCURO
-    def modoClOs(self):
-        if self.checkBox.isChecked(): #modo oscuro
-            self.label.setStyleSheet("background-image: url(:/direccion/nissan_skyline_gt_r_r34-HD2.jpg);")
-            self.label.setPixmap(QtGui.QPixmap("nissan_skyline_gt_r_r34-HD2.jpg"))
-            self.estilosOscuro([self.aniadirTra, self.eliminarTra, self.BuscarTra, self.ModificarTra, self.botonEliminar, self.Nombre2, self.botonAniadirModificar])
-            #self.setAtras()
-            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
-                            "    width: 25px;\n"
-                            "    height: 25px;\n"
-                            "    text-align: right;\n"
-                            "}\n"
-                            "QCheckBox {\n"
-                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
-                            "    font-weight: bold;\n"
-                            "    color: white;\n"
-                            "}")
-            
-        else: #modo claro
-            self.label.setStyleSheet("background-image: url(:/direccion/nissanGtrClaro.jpg);")
-            self.label.setPixmap(QtGui.QPixmap("nissanGtrClaro.jpg"))
-            #self.estilosClaro([self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen])
-            #self.setAtras()
-            self.checkBox.setStyleSheet("QCheckBox::indicator {\n"
-                            "    width: 25px;\n"
-                            "    height: 25px;\n"
-                            "    text-align: right;\n"
-                            "}\n"
-                            "QCheckBox {\n"
-                            "    font-size: 16px; /* Tamaño de la letra en píxeles */\n"
-                            "    font-weight: bold;\n"
-                            "    color: black;\n"
-                            "}")
-
-
-######################################################################################################################################################
-######################################################################################################################################################
-######################################################################################################################################################
-######################################################################################################################################################
-
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
     def obtener_datos_ingresados(self):
         anadirModificar = PlantillaTrabajadorVO(
@@ -521,20 +476,20 @@ class Ui_MainWindow5(object):
             if self.botonAniadirModificar.text() == "Añadir":
                 a = self.coordinador.registrarTrabajador(anadirModificar, "aniadir") 
                 if a[0] == "Error":
-                    self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
-                    self.show_incorrecto_for_5_seconds(self.Incorrecto)
+                    actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
+                    show_incorrecto_for_5_seconds(self.Incorrecto)
                 else:
                     self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
-                    self.show_incorrecto_for_5_seconds(self.Incorrecto)
+                    show_incorrecto_for_5_seconds(self.Incorrecto)
                     
             elif self.botonAniadirModificar.text() == "Modificar":
                 a = self.coordinador.registrarTrabajador(anadirModificar, "modificar")
                 if a[0] == "Error":
-                    self.actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
-                    self.show_incorrecto_for_5_seconds(self.Incorrecto)
+                    actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
+                    show_incorrecto_for_5_seconds(self.Incorrecto)
                 else:
-                    self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
-                    self.show_incorrecto_for_5_seconds(self.Incorrecto)
+                    actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
+                    show_incorrecto_for_5_seconds(self.Incorrecto)
             
             self.LineaID.setText("")
             self.LineaContra.setText("")
@@ -551,12 +506,12 @@ class Ui_MainWindow5(object):
             a = self.coordinador.registrarTrabajador(eliminar, "eliminar")
             #print(a)
             if a[0] == "Error":
-                self.actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
-                self.show_incorrecto_for_5_seconds(self.Incorrecto2)
+                actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
+                show_incorrecto_for_5_seconds(self.Incorrecto2)
                 
             else:
-                self.actualizarTextoIncorrecto2(self.Incorrecto2, self.verde, self.completado)
-                self.show_incorrecto_for_5_seconds(self.Incorrecto2)
+                actualizarTextoIncorrecto2(self.Incorrecto2, self.verde, self.completado)
+                show_incorrecto_for_5_seconds(self.Incorrecto2)
                 #self.mostrasConcesionarios()
             
             self.LineaNombre2.setText("")

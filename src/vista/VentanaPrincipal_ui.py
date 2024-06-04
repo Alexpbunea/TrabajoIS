@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Cofermotor"))
         self.Bienvenido.setText(_translate("MainWindow", "Bienvenido"))
         self.Continuar.setText(_translate("MainWindow", "Continuar"))
 
@@ -112,7 +112,7 @@ class Ui_MainWindow(object):
     def setCoordinador(self, coord) -> None:
         self.coordinador = coord
 
-import imagen_rc
+#import imagen_rc
 
 """
 if __name__ == "__main__":

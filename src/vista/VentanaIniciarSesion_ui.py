@@ -106,7 +106,7 @@ class Ui_MainWindow2(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Cofermotor"))
         self.DNI.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">DNI:</span></p></body></html>"))
         self.Contra.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Contraseña:</span></p></body></html>"))
         self.IniciarSesion.setText(_translate("MainWindow", "Iniciar sesion"))
@@ -117,6 +117,15 @@ class Ui_MainWindow2(object):
     
     def setCoordinador(self, coord):
         self.coordinador = coord
+
+
+
+######################################################################################################################################################
+######################################################################################################################################################
+######################################################################################################################################################
+######################################################################################################################################################
+
+
 
     def obtener_datos_ingresados(self):
       # Obtener el texto ingresado en los lineedits de DNI y contraseña
@@ -153,21 +162,3 @@ class Ui_MainWindow2(object):
             print("Error en el DNI o la contrasenia")
             return False
         
-        
-
-        
-
-
-
-import imagenDes_rc
-
-"""
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow2()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-"""
