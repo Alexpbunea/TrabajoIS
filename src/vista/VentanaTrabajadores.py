@@ -50,25 +50,6 @@ class Ui_MainWindow5(object):
         self.eliminarTra.setGeometry(QtCore.QRect(230, 650, 151, 41))
         self.eliminarTra.setObjectName("eliminarTra")
         
-        self.atras = QtWidgets.QPushButton(self.centralwidget)
-        self.atras.setGeometry(QtCore.QRect(1160, 650, 51, 51))
-        self.atras.setStyleSheet("#atras{\n"
-"border-image: url(:/direccion/botonAtrasBlanco.png);\n"
-"background-color: transparent;\n"
-"background: none;\n"
-"border: none;\n"
-"background-repeat: none;\n"
-"}\n"
-"#atras:pressed{\n"
-"border-image: url(:/direccion/bottonAtrasBlancoAzul.jpg);\n"
-"background-color: transparent;\n"
-"background: none;\n"
-"border: none;\n"
-"background-repeat: none;\n"
-"}")
-        self.atras.setText("")
-        self.atras.setObjectName("atras")
-        self.atras.setToolTip("Atras")
         
         self.ModificarTra = QtWidgets.QPushButton(self.centralwidget)
         self.ModificarTra.setGeometry(QtCore.QRect(420, 650, 151, 41))
@@ -339,6 +320,12 @@ class Ui_MainWindow5(object):
         self.checkBox.setObjectName("checkBox")
         
 
+        #cargo el boton atras
+        self.atras = setAtras(self.centralwidget)
+        self.ayuda = ayuda(self.centralwidget, "Ventana trabajadores")
+
+
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
@@ -365,64 +352,33 @@ class Ui_MainWindow5(object):
         self.lista = [self.aniadirTra, self.eliminarTra, self.BuscarTra, self.ModificarTra, self.botonEliminar, self.Nombre2, self.botonAniadirModificar]
         self.listaFrames = [self.frameAniaidir, self.frame2]
         self.listaTexto = [self.IDtrabajador, self.Contrasenia, self.Nombre, self.Apellido1, self.Apellido2, self.Sueldo, self.Rol, self.Concesionario, self.Nombre2]
-        self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto))
+        
+        
         
         #POR DEFECTO ACTIVO EL MODO OSCURO
-        modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto)
+        self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto, self.ayuda))
+        modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto, self.ayuda)
         
         self.visible()
         #self.mostrasConcesionarios()
        
-        
-
-    
-
 
     def visible(self):
         self.frameAniaidir.setVisible(False)
         self.frame2.setVisible(False)
         self.tableView.setVisible(False)
         self.searchBar.setVisible(False)
+        self.ayuda.setVisible(False)
         
-        self.aniadirTra.clicked.connect(self.toggle_frame_visibility)
-        self.aniadirTra.clicked.connect(lambda: self.actualizarBotonFrame("Añadir"))
+        self.aniadirTra.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.aniadirTra.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
 
-        self.eliminarTra.clicked.connect(self.frame2_visibility)
-        #self.eliminarCon.clicked.connect(lambda: self.actualizarBotonFrame("Eliminar"))
-
-        self.ModificarTra.clicked.connect(self.toggle_frame_visibility)
-        self.ModificarTra.clicked.connect(lambda: self.actualizarBotonFrame("Modificar"))
-
+        self.eliminarTra.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar))
         
-
-    def toggle_frame_visibility(self):
-        if self.frame2.isVisible(): 
-            self.frame2_visibility()
-        elif self.tableView.isVisible():
-            self.tablaYbusquedaVisibilidad()
-        current_visibility = self.frameAniaidir.isVisible()
-        self.frameAniaidir.setVisible(not current_visibility)
+        self.ModificarTra.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBa, self.ayuda))
+        self.ModificarTra.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
         
- 
-    def frame2_visibility(self):
-        if self.frameAniaidir.isVisible():
-            self.toggle_frame_visibility()
-        elif self.tableView.isVisible():
-            self.tablaYbusquedaVisibilidad()
-        current_visibility = self.frame2.isVisible()
-        self.frame2.setVisible(not current_visibility)
-
-    def tablaYbusquedaVisibilidad(self):
-        if self.frameAniaidir.isVisible():
-            self.toggle_frame_visibility()
-        elif self.frame2.isVisible(): 
-            self.frame2_visibility()
-        current_visibility = self.tableView.isVisible()
-        self.tableView.setVisible(not current_visibility)
-        self.searchBar.setVisible(not current_visibility)
-
-    def actualizarBotonFrame(self, palabra):
-        self.botonAniadirModificar.setText(palabra)
+        self.BuscarTra.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar))
 
 
     def setCoordinador(self, coord):
@@ -436,15 +392,6 @@ class Ui_MainWindow5(object):
         self.eliminarTra.setText(_translate("MainWindow", "Eliminar trabajador"))
         self.ModificarTra.setText(_translate("MainWindow", "Modificar trabajador"))
         self.BuscarTra.setText(_translate("MainWindow", "Buscar trabajador"))
-        self.IDtrabajador.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">IDtrabajador:</span></p></body></html>"))
-        self.Contrasenia.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Contrasenia:</span></p></body></html>"))
-        self.Nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
-        self.Apellido1.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Apellido1:</span></p></body></html>"))
-        self.Apellido2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Apellido2:</span></p></body></html>"))
-        self.Sueldo.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Sueldo:</span></p></body></html>"))
-        self.Rol.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Rol:</span></p></body></html>"))
-        self.Concesionario.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Concesionario:</span></p></body></html>"))
-        self.Nombre2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 
@@ -479,7 +426,7 @@ class Ui_MainWindow5(object):
                     actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                     show_incorrecto_for_5_seconds(self.Incorrecto)
                 else:
-                    self.actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
+                    actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
                     show_incorrecto_for_5_seconds(self.Incorrecto)
                     
             elif self.botonAniadirModificar.text() == "Modificar":

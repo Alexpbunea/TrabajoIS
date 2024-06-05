@@ -94,6 +94,19 @@ class Logica:
                 return True
         print("El concesionario no existe")
         return False
+    
+    #FUNCION PARA MAYUSCULA LA PRIMERA LETRA
+    def mayuscula(self, palabra):
+        if palabra[0].isupper():
+            print(f"{palabra} tiene el formato correcto")
+            return palabra
+        elif palabra[0].isupper() is False:
+            print(f"Corrigiendo {palabra} ---> ", end="")
+            palabra_corregida = palabra.capitalize()
+            print(f"Corregida: {palabra_corregida}")
+            return palabra_corregida
+        else:
+            return "Error"
 
 
 #################################################################################################################################################
@@ -141,28 +154,16 @@ class Logica:
                 ciudad = mi_concesionario.getCiudad()
                 fecha_str = mi_concesionario.getFechaInauguracion()
                 
-                #Comprobando el formato del nombre
-                if nombre[:10] == "Cofermotor":
-                    print("Nombre correcto")
-                elif nombre[:10] == "cofermotor":
-                    print("Falta mayuscula en la inicial nombre. Corrigiendo")
-                    nombre = "Cofermotor" + nombre[10:]
-                    mi_concesionario.setNombre(nombre)
-                else:
-                    print("Formato incorrecto del nombre")
-                    return ("Error", "Formato incorrecto del nombre")
                 
-                #comprobando el formato de la ciudad
-                if ciudad[0].isupper() is True:
-                    print("Ciudad con formato correcto")
-                elif ciudad[0].isupper() is False:
-                    c = ciudad[0].upper()
-                    iudad = ciudad[1:]
-                    ciudad = c + iudad
-                    mi_concesionario.setCiudad(ciudad)
+                #Comprobando el formato del nombre del concesionario
+                conc = self.comprobarFormatoConcesionario(nombre)
+                if conc[0] == "Error":
+                    return conc
+                elif conc[0] == "Corregido":
+                    concesionario = conc[1]
+                    mi_concesionario.setConcesionario(concesionario)
                 else:
-                    print("Formato incorrecto de la ciudad")
-                    return ("Error", "Formato incorrecto de la ciudad")
+                    pass #Esto significa que es correcto el formato del nombre
 
 
                 #paso la fecha al formato correcto
@@ -254,6 +255,7 @@ class Logica:
 ##################################################################################################################################################
 ##################################################################################################################################################
 ##################################################################################################################################################
+##################################################################################################################################################
 
 
     #FUNCIONES PARA LA VENTANA TRABAJADOR
@@ -280,7 +282,15 @@ class Logica:
                     contrasenia2 = self.encriptar_contrasenia(contrasenia)
                     mi_trabajador.setContrasenia(contrasenia2)
                 except:
-                    messagebox.showwarning("Advertencia", "Error en la libreria bcrypt o en sus funciones")
+                    return ("Error", "CONTACTA CON LOS PROGRAMADORES")
+
+                #Mayusculas
+                try:
+                    mi_trabajador.setNombre(self.mayuscula(nombre))
+                    mi_trabajador.setApellido1(self.mayuscula(apellido1))
+                    mi_trabajador.setApellido2(self.mayuscula(apellido2))
+                except:
+                    return ("Error", "Verifica nombre y apellidos")
 
                 #Compruebo el rol
                 if rol not in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
@@ -405,6 +415,13 @@ class Logica:
             return trabajadores_data
         except Exception as e:
             print(f"Error al obtener trabajadores: {e}")
+
+
+
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
 
 
 

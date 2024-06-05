@@ -111,7 +111,9 @@ class Ui_MainWindow3(object):
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
         
-        self.setAtras()
+        #cargo el boton atras
+        self.atras = setAtras(self.centralwidget)
+        
         
         self.lista = [self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen]
         
@@ -124,28 +126,6 @@ class Ui_MainWindow3(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     
-    def setAtras(self):
-        self.atras = QtWidgets.QPushButton(self.centralwidget)
-        self.atras.setGeometry(QtCore.QRect(1160, 640, 51, 51))
-        self.atras.setStyleSheet("#atras{\n"
-                            "border-image: url(:/direccion/botonAtrasBlanco.png);\n"
-                            "background-color: transparent;\n"
-                            "background: none;\n"
-                            "border: none;\n"
-                            "background-repeat: none;\n"
-                        "}\n"
-                        "#atras:pressed{\n"
-                            "border-image: url(:/direccion/bottonAtrasBlancoAzul.jpg);\n"
-                            "background-color: transparent;\n"
-                            "background: none;\n"
-                            "border: none;\n"
-                            "background-repeat: none;\n"
-                        "}")
-        self.atras.setText("")
-        self.atras.setObjectName("atras")
-        self.atras.setToolTip("Atras")
-
-
 
 
     def retranslateUi(self, MainWindow):

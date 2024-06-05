@@ -45,25 +45,7 @@ class Ui_MainWindow4(object):
         self.eliminarCon = QtWidgets.QPushButton(self.centralwidget)
         self.eliminarCon.setGeometry(QtCore.QRect(230, 650, 151, 41))
         self.eliminarCon.setObjectName("eliminarCon")
-        self.atras = QtWidgets.QPushButton(self.centralwidget)
-        self.atras.setGeometry(QtCore.QRect(1160, 650, 51, 51))
-        self.atras.setStyleSheet("#atras{\n"
-"border-image: url(:/direccion/botonAtrasBlanco.png);\n"
-"background-color: transparent;\n"
-"background: none;\n"
-"border: none;\n"
-"background-repeat: none;\n"
-"}\n"
-"#atras:pressed{\n"
-"border-image: url(:/direccion/bottonAtrasBlancoAzul.jpg);\n"
-"background-color: transparent;\n"
-"background: none;\n"
-"border: none;\n"
-"background-repeat: none;\n"
-"}")
-        self.atras.setText("")
-        self.atras.setObjectName("atras")
-        self.atras.setToolTip("Atras")
+ 
         self.ModificarCon = QtWidgets.QPushButton(self.centralwidget)
         self.ModificarCon.setGeometry(QtCore.QRect(420, 650, 151, 41))
         self.ModificarCon.setObjectName("ModificarCon")
@@ -241,7 +223,14 @@ class Ui_MainWindow4(object):
         self.checkBox.setGeometry(QtCore.QRect(10, 10, 141, 61))
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
+
+
+        #cargo el boton atras
+        self.atras = setAtras(self.centralwidget)
+        #cargo la ayuda
+        self.ayuda = ayuda(self.centralwidget, "Ventana concesionario")
         
+        #se lo paso a modoclos
         self.lista = [self.aniadirCon, self.eliminarCon, self.BuscarCon, self.ModificarCon, self.botonEliminar, self.Nombre2, self.botonAniadirModificar]
         self.listaFrames = [self.frameAniaidir, self.frame2]
         self.listaTexto = [self.Nombre, self.Direccion, self.Ciudad, self.Fecha, self.Nombre2]
@@ -261,8 +250,9 @@ class Ui_MainWindow4(object):
         self.BuscarCon.setToolTip("Buscar concesionario")
 
 
-        self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto))
-        modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto)
+        self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto, self.ayuda))
+        modoClOs(self.checkBox, self.label, self.lista, self.listaFrames, self.listaTexto, self.ayuda)
+        
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -280,11 +270,6 @@ class Ui_MainWindow4(object):
         self.eliminarCon.setText(_translate("MainWindow", "Eliminar concesionario"))
         self.ModificarCon.setText(_translate("MainWindow", "Modificar concesionario"))
         self.BuscarCon.setText(_translate("MainWindow", "Buscar concesionario"))
-        self.Nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
-        self.Direccion.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Direccion:</span></p></body></html>"))
-        self.Ciudad.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Ciudad:</span></p></body></html>"))
-        self.Fecha.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">FechaInauguracion:</span></p></body></html>"))
-        self.Nombre2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">Nombre:</span></p></body></html>"))
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 
@@ -301,47 +286,19 @@ class Ui_MainWindow4(object):
         self.frame2.setVisible(False)
         self.tableView.setVisible(False)
         self.searchBar.setVisible(False)
+        self.ayuda.setVisible(False)
         
-        self.aniadirCon.clicked.connect(self.toggle_frame_visibility)
-        self.aniadirCon.clicked.connect(lambda: self.actualizarBotonFrame("Añadir"))
+        self.aniadirCon.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.aniadirCon.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
 
-        self.eliminarCon.clicked.connect(self.frame2_visibility)
+        self.eliminarCon.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar))
         #self.eliminarCon.clicked.connect(lambda: self.actualizarBotonFrame("Eliminar"))
 
-        self.ModificarCon.clicked.connect(self.toggle_frame_visibility)
-        self.ModificarCon.clicked.connect(lambda: self.actualizarBotonFrame("Modificar"))
+        self.ModificarCon.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.ModificarCon.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
 
-        
+        self.BuscarCon.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
 
-    def toggle_frame_visibility(self):
-        if self.frame2.isVisible(): 
-            self.frame2_visibility()
-        elif self.tableView.isVisible():
-            self.tablaYbusquedaVisibilidad()
-        current_visibility = self.frameAniaidir.isVisible()
-        self.frameAniaidir.setVisible(not current_visibility)
-        
- 
-    def frame2_visibility(self):
-        if self.frameAniaidir.isVisible():
-            self.toggle_frame_visibility()
-        elif self.tableView.isVisible():
-            self.tablaYbusquedaVisibilidad()
-        current_visibility = self.frame2.isVisible()
-        self.frame2.setVisible(not current_visibility)
-
-    def tablaYbusquedaVisibilidad(self):
-        if self.frameAniaidir.isVisible():
-            self.toggle_frame_visibility()
-        elif self.frame2.isVisible(): 
-            self.frame2_visibility()
-        current_visibility = self.tableView.isVisible()
-        self.tableView.setVisible(not current_visibility)
-        self.searchBar.setVisible(not current_visibility)
-    
-
-    def actualizarBotonFrame(self, palabra):
-        self.botonAniadirModificar.setText(palabra)
 
 ######################################################################################################################################################
 ######################################################################################################################################################

@@ -37,7 +37,7 @@ def mostrar_ventana(ventanaInicial, ventanaFinal):
     ventanaInicial.hide()
     ventanaFinal.show()
 
-def atras(ventanaInicial, ventanaFinal):
+def atras2(ventanaInicial, ventanaFinal):
     ventanaInicial.hide()
     ventanaFinal.show()
     
@@ -60,17 +60,15 @@ def comprobarSesion():
         ui_ventana3_ui.hola_2.setText(a[1])
         ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
         
-        ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
+        ui_ventana4_ui.atras.clicked.connect(lambda: atras2(ventanaConcesionario, ventanaAdmin))
         ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
         ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
-        ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
         ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
 
         ui_ventana3_ui.Trabajador.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaTrabajadores))
-        ui_ventana5_ui.atras.clicked.connect(lambda: atras(ventanaTrabajadores, ventanaAdmin))
+        ui_ventana5_ui.atras.clicked.connect(lambda: atras2(ventanaTrabajadores, ventanaAdmin))
         ui_ventana5_ui.botonAniadirModificar.clicked.connect(ui_ventana5_ui.obtener_datos_ingresados)
         ui_ventana5_ui.botonEliminar.clicked.connect(ui_ventana5_ui.obtener_datos_ingresados)
-        ui_ventana5_ui.BuscarTra.clicked.connect(ui_ventana5_ui.tablaYbusquedaVisibilidad)
         ui_ventana5_ui.BuscarTra.clicked.connect(ui_ventana5_ui.mostrarTrabajadores)
 
     elif a[0] in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
@@ -80,7 +78,7 @@ def comprobarSesion():
             ui_ventana3_ui.hola_2.setText(a[1])
             ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
             
-            ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
+            ui_ventana4_ui.atras.clicked.connect(lambda: atras2(ventanaConcesionario, ventanaAdmin))
             ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
             ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
             ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
@@ -97,7 +95,7 @@ def comprobarSesion():
             ui_ventana3_ui.hola_2.setText(a[1])
             ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
             
-            ui_ventana4_ui.atras.clicked.connect(lambda: atras(ventanaConcesionario, ventanaAdmin))
+            ui_ventana4_ui.atras.clicked.connect(lambda: atras2(ventanaConcesionario, ventanaAdmin))
             ui_ventana4_ui.botonAniadirModificar.clicked.connect(funcionConcesionarios)
             ui_ventana4_ui.botonEliminar.clicked.connect(funcionConcesionarios)
             ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.tablaYbusquedaVisibilidad)
@@ -117,13 +115,13 @@ def sync_checkbox_state(state, origin, target):
     target.setCheckState(state)
     #caso ventanaAdmin-VentanaConcesionario
     if origin == ui_ventana3_ui.checkBox and target == ui_ventana4_ui.checkBox:
-        modoClOs(ui_ventana4_ui.checkBox, ui_ventana4_ui.label, ui_ventana4_ui.lista, ui_ventana4_ui.listaFrames, ui_ventana4_ui.listaTexto)
+        modoClOs(ui_ventana4_ui.checkBox, ui_ventana4_ui.label, ui_ventana4_ui.lista, ui_ventana4_ui.listaFrames, ui_ventana4_ui.listaTexto, ui_ventana4_ui.ayuda)
     elif origin == ui_ventana4_ui.checkBox and target == ui_ventana3_ui.checkBox:
         modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
 
     #caso ventanaAdmin-VentanaTrabajadores
     elif origin == ui_ventana3_ui.checkBox and target == ui_ventana5_ui.checkBox:
-        modoClOs(ui_ventana5_ui.checkBox, ui_ventana5_ui.label, ui_ventana5_ui.lista, ui_ventana5_ui.frameAniaidir, ui_ventana5_ui.frame2)
+        modoClOs(ui_ventana5_ui.checkBox, ui_ventana5_ui.label, ui_ventana5_ui.lista, ui_ventana5_ui.listaFrames, ui_ventana5_ui.listaTexto, ui_ventana5_ui.ayuda)
     elif origin == ui_ventana5_ui.checkBox and target == ui_ventana3_ui.checkBox:
         modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
     target.blockSignals(False)
@@ -184,7 +182,7 @@ if __name__ == "__main__":
     ventana_principal.show()
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
     
-    ui_ventana3_ui.atras.clicked.connect(lambda: atras(ventanaAdmin, ventanaIniciarSesion))
+    ui_ventana3_ui.atras.clicked.connect(lambda: atras2(ventanaAdmin, ventanaIniciarSesion))
     
     
 

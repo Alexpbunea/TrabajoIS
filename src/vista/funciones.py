@@ -8,6 +8,85 @@ negro = "#282e2a"
 _translate = QtCore.QCoreApplication.translate
 
 
+
+#funcion atras presente en todas las ventanas
+def setAtras(centralWidget):
+    atras = QtWidgets.QPushButton(centralWidget)
+    atras.setGeometry(QtCore.QRect(1160, 640, 51, 51))
+    atras.setStyleSheet("#atras{\n"
+                        "border-image: url(:/direccion/botonAtrasBlanco.png);\n"
+                        "background-color: transparent;\n"
+                        "background: none;\n"
+                        "border: none;\n"
+                        "background-repeat: none;\n"
+                    "}\n"
+                    "#atras:pressed{\n"
+                        "border-image: url(:/direccion/bottonAtrasBlancoAzul.jpg);\n"
+                        "background-color: transparent;\n"
+                        "background: none;\n"
+                        "border: none;\n"
+                        "background-repeat: none;\n"
+                    "}")
+    atras.setText("")
+    atras.setObjectName("atras")
+    atras.setToolTip("Atras")
+    return atras
+
+def ayuda(centralwiddget, dondeEstoy=None):
+    textEdit = QtWidgets.QTextEdit(centralwiddget)
+    textEdit.setObjectName("textEdit")
+
+    if dondeEstoy == "Ventana concesionario":
+        textEdit.setGeometry(QtCore.QRect(110, 180, 221, 200))
+        textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                        "p, li { white-space: pre-wrap; }\n"
+                        "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Formato:</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre: Cofemotor + texto/num</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ej: &quot;Cofermotor20&quot;</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Direccion: texto sin restricciones</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ciudad: Texto sin restricciones</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Fecha: dd-mm-yyyy</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        return textEdit
+    
+    elif dondeEstoy == "Ventana trabajadores":
+        textEdit.setGeometry(QtCore.QRect(110, 170, 221, 265))
+        textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                        "p, li { white-space: pre-wrap; }\n"
+                        "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Formato:</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">IDtrabajador: DNI correcto</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre y appellidos: Mas de una letra</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Sueldo: numero</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Rol: administrador, jefeZona,</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">     jefeDepartamento, personal</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre: Cofemotor + texto/num</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ej: &quot;Cofermotor20&quot;</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        return textEdit
+
+
+
+###############################################################################################################################################
+###############################################################################################################################################
+###############################################################################################################################################
+###############################################################################################################################################
+
+
 def actualizarTextoIncorrecto2(incorrecto, color, nuevo_texto):
     estilo_html = "<html><head/><body><p align=\"center\"><span style=\" color:{};\">{}</span></p></body></html>"
     incorrecto.setText(QtCore.QCoreApplication.translate("MainWindow", estilo_html.format(color, nuevo_texto)))
@@ -23,6 +102,50 @@ def show_incorrecto_for_5_seconds(incorrecto):
 
     # Crear un temporizador que ocultará el QLabel después de 5 segundos
     QTimer.singleShot(5000, lambda: hide_incorrecto(incorrecto))
+
+
+
+#FUNCIONES DE LA VISIBILIDAD, OSCULTAR O MOSTRAR FRAMES
+def toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda=None):
+    if frame2.isVisible(): 
+        frame2_visibility(frame1, frame2, tabla, barra, ayuda)
+    elif tabla.isVisible():
+        tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda)
+    current_visibility = frame1.isVisible()
+    frame1.setVisible(not current_visibility)
+    if ayuda is None:
+        pass
+    else:
+        ayuda.setVisible(not current_visibility)
+    
+
+def frame2_visibility(frame1, frame2, tabla, barra, ayuda=None):
+    if frame1.isVisible():
+        toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda)
+    elif tabla.isVisible():
+        tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda=None)
+    current_visibility = frame2.isVisible()
+    frame2.setVisible(not current_visibility)
+    if ayuda is None:
+        pass
+    else:
+        ayuda.setVisible(not current_visibility)
+
+def tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda=None):
+    if frame1.isVisible():
+        toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda)
+    elif frame2.isVisible(): 
+        frame2_visibility(frame1, frame2, tabla, barra, ayuda)
+    current_visibility = tabla.isVisible()
+    tabla.setVisible(not current_visibility)
+    barra.setVisible(not current_visibility)
+    if ayuda is None:
+        pass
+    else:
+        ayuda.setVisible(False)
+
+def actualizarBotonFrame(palabra, boton):
+    boton.setText(palabra)
 
 
 
@@ -71,7 +194,7 @@ def estilosOscuro(lista):
 
 
 #BOTON MODO OSCURO
-def modoClOs(checkBox, imagen, lista, listaFrames = [], listaTexto =[]):
+def modoClOs(checkBox, imagen, lista, listaFrames = [], listaTexto =[], ayuda = None, tabla=None, barra=None):
     
     if checkBox.isChecked(): #modo oscuro
         #print("Hola1")
@@ -100,6 +223,53 @@ def modoClOs(checkBox, imagen, lista, listaFrames = [], listaTexto =[]):
             for i in listaTexto:
                 a = i.objectName()
                 i.setText(_translate("MainWindow", f"<html><head/><body><p><span style=\" font-weight:600; color:{blanco};\">{a}:</span></p></body></html>"))
+        
+        if ayuda == None:
+            pass
+        else:
+            ayuda.setStyleSheet("""
+                QTextEdit {
+                border-radius: 20px;      /* Bordes redondeados */
+                color: white;             /* Letra blanca */
+                background-color: "#282e2a";   /* Fondo oscuro para contraste */
+                }
+                """)
+        
+        if barra == None:
+            pass
+        else:
+            barra.setStyleSheet(f"""
+            QLineEdit {{
+                background-color: {negro};  /* Fondo negro */
+                color: white;             /* Letras blancas */
+                border: 2px solid white;  /* Borde blanco */
+                border-radius: 5px;       /* Bordes redondeados */
+            }}
+            """)
+
+        if tabla == None:
+            pass
+        else:
+            tabla.setStyleSheet(f"""
+            QTableWidget {{
+                gridline-color: {blanco};   /* Líneas de la cuadrícula blancas */
+            }}
+            QHeaderView::section {{
+                background-color: {negro};  /* Fondo negro en el encabezado */
+                color: {blanco};            /* Letras blancas en el encabezado */
+            }}
+            QTableWidget::item {{
+                background-color: {negro};  /* Fondo negro en las celdas */
+                color: {blanco};            /* Letras blancas en las celdas */
+            }}
+            QTableWidget::item:selected {{
+                background-color: {blanco}; /* Fondo blanco en las celdas seleccionadas */
+                color: {negro};             /* Letras negras en las celdas seleccionadas */
+            }}
+            QTableWidget QTableCornerButton::section {{
+                background-color: {negro};  /* Fondo negro en la esquina superior izquierda */
+            }}
+        """)
 
         
     else: #modo claro
@@ -129,5 +299,46 @@ def modoClOs(checkBox, imagen, lista, listaFrames = [], listaTexto =[]):
             for i in listaTexto:
                 a = i.objectName()
                 i.setText(_translate("MainWindow", f"<html><head/><body><p><span style=\" font-weight:600; color:{negro};\">{a}:</span></p></body></html>"))
+        
+        if ayuda == None:
+            pass
+        else:
+            ayuda.setStyleSheet("""
+                QTextEdit {
+                border-radius: 20px;      /* Bordes redondeados */
+                color: black;             /* Letra blanca */
+                background-color: #FFFFFF;   /* Fondo oscuro para contraste */
+                }
+                """)
+                
+        if barra == None:
+            pass
+        else:
+            barra.setStyleSheet(f"""
+            QLineEdit {{
+                background-color: {blanco};  /* Fondo negro */
+                color: black;             /* Letras blancas */
+                border: 2px solid black;  /* Borde blanco */
+                border-radius: 5px;       /* Bordes redondeados */
+            }}
+            """)
+
+        if tabla == None:
+            pass
+        else:
+            tabla.setStyleSheet(f"""
+            QTableWidget {{
+                background-color: {blanco};  /* Fondo negro */
+                color: black;             /* Letras blancas */
+                gridline-color: white;    /* Líneas de la cuadrícula blancas */
+            }}
+            QHeaderView::section {{
+                background-color: {blanco};  /* Fondo negro en el encabezado */
+                color: black;             /* Letras blancas en el encabezado */
+            }}
+            QTableWidget QTableCornerButton::section {{
+                background-color: {blanco};  /* Fondo negro en la esquina superior izquierda */
+            }}
+            """)
 
                 
