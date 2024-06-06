@@ -4,7 +4,7 @@
 # Arriba a la derecha borramos todo menos el central widget
 # guardamos la ventana en la carpeta vista
 import sys
-ruta_modulo = r'C:\Users\Dell XPS 9510\Desktop\Ingenieria del software\TrabajoFinal'
+ruta_modulo = r'C:\Users\NAÍN\Documents\GitHub\TrabajoIS'
 sys.path.append(ruta_modulo)
 
 
