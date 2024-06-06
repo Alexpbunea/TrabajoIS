@@ -12,12 +12,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QSortFilterProxyModel
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import QTimer
-from src.modelo.vo.ClienteVO  import Cliente
+from src.modelo.vo.VehiculosVO import Vehiculo
 from src.vista.funciones import *
 
 
 
-class Ui_MainWindow6(object):
+class Ui_MainWindow7(object):
     def __init__(self, coord=None):
         self.coordinador = coord
         self.rojo = "#ff0000"
@@ -42,22 +42,22 @@ class Ui_MainWindow6(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
-        self.aniadirCli = QtWidgets.QPushButton(self.centralwidget)
-        self.aniadirCli.setGeometry(QtCore.QRect(40, 650, 151, 41))
-        self.aniadirCli.setObjectName("aniadirCli")
+        self.aniadirVeh = QtWidgets.QPushButton(self.centralwidget)
+        self.aniadirVeh.setGeometry(QtCore.QRect(40, 650, 151, 41))
+        self.aniadirVeh.setObjectName("aniadirVeh")
         
-        self.eliminarCLi = QtWidgets.QPushButton(self.centralwidget)
-        self.eliminarCLi.setGeometry(QtCore.QRect(230, 650, 151, 41))
-        self.eliminarCLi.setObjectName("eliminarCli")
+        self.eliminarVeh = QtWidgets.QPushButton(self.centralwidget)
+        self.eliminarVeh.setGeometry(QtCore.QRect(230, 650, 151, 41))
+        self.eliminarVeh.setObjectName("eliminarVeh")
         
         
-        self.ModificarCli = QtWidgets.QPushButton(self.centralwidget)
-        self.ModificarCli.setGeometry(QtCore.QRect(420, 650, 151, 41))
-        self.ModificarCli.setObjectName("ModificarCli")
+        self.ModificarVeh = QtWidgets.QPushButton(self.centralwidget)
+        self.ModificarVeh.setGeometry(QtCore.QRect(420, 650, 151, 41))
+        self.ModificarVeh.setObjectName("ModificarVeh")
         
-        self.BuscarCli = QtWidgets.QPushButton(self.centralwidget)
-        self.BuscarCli.setGeometry(QtCore.QRect(620, 650, 151, 41))
-        self.BuscarCli.setObjectName("BuscarCli")
+        self.BuscarVeh = QtWidgets.QPushButton(self.centralwidget)
+        self.BuscarVeh.setGeometry(QtCore.QRect(620, 650, 151, 41))
+        self.BuscarVeh.setObjectName("BuscarVeh")
         
         self.frameAniaidir = QtWidgets.QFrame(self.centralwidget)
         self.frameAniaidir.setEnabled(True)
@@ -67,11 +67,11 @@ class Ui_MainWindow6(object):
         self.frameAniaidir.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frameAniaidir.setObjectName("frameAniaidir")
 
-        self.IDtrabajador = QtWidgets.QLabel(self.frameAniaidir)
-        self.IDtrabajador.setGeometry(QtCore.QRect(26, 10, 220, 50))
+        self.IDvehiculo = QtWidgets.QLabel(self.frameAniaidir)
+        self.IDvehiculo.setGeometry(QtCore.QRect(26, 10, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.IDtrabajador.setFont(font)
+        self.IDvehiculo.setFont(font)
         
         
         self.LineaID = QtWidgets.QLineEdit(self.frameAniaidir)
@@ -84,121 +84,120 @@ class Ui_MainWindow6(object):
 "\n"
 "")
         
-        self.Contrasenia = QtWidgets.QLabel(self.frameAniaidir)
-        self.Contrasenia.setGeometry(QtCore.QRect(26, 110, 220, 50))
+        self.marca = QtWidgets.QLabel(self.frameAniaidir)
+        self.marca.setGeometry(QtCore.QRect(26, 110, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Contrasenia.setFont(font)
+        self.marca.setFont(font)
         
         
-        self.LineaContra = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaContra.setGeometry(QtCore.QRect(26, 170, 220, 31))
-        self.LineaContra.setStyleSheet("background-color:white;\n"
+        self.LineaMarca = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaMarca.setGeometry(QtCore.QRect(26, 170, 220, 31))
+        self.LineaMarca.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaContra.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.LineaContra.setText("")
-        self.LineaContra.setObjectName("LineaContra")
+        self.LineaMarca.setText("")
+        self.LineaMarca.setObjectName("LineaMarca")
 
 
-        self.Nombre = QtWidgets.QLabel(self.frameAniaidir)
-        self.Nombre.setGeometry(QtCore.QRect(26, 210, 220, 50))
+        self.modelo = QtWidgets.QLabel(self.frameAniaidir)
+        self.modelo.setGeometry(QtCore.QRect(26, 210, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Nombre.setFont(font)
+        self.modelo.setFont(font)
         
         
-        self.LineaNombre = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaNombre.setGeometry(QtCore.QRect(26, 270, 220, 31))
-        self.LineaNombre.setStyleSheet("background-color:white;\n"
+        self.LineaModelo = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaModelo.setGeometry(QtCore.QRect(26, 270, 220, 31))
+        self.LineaModelo.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaNombre.setText("")
-        self.LineaNombre.setObjectName("LineaNombre")
+        self.LineaModelo.setText("")
+        self.LineaModelo.setObjectName("LineaModelo")
         
-        self.Apellido1 = QtWidgets.QLabel(self.frameAniaidir)
-        self.Apellido1.setGeometry(QtCore.QRect(26, 310, 220, 50))
+        self.anio = QtWidgets.QLabel(self.frameAniaidir)
+        self.anio.setGeometry(QtCore.QRect(26, 310, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Apellido1.setFont(font)
+        self.anio.setFont(font)
         
         
-        self.LineaApellido1 = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaApellido1.setGeometry(QtCore.QRect(26, 370, 220, 31))
-        self.LineaApellido1.setStyleSheet("background-color:white;\n"
+        self.LineaAnio = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaAnio.setGeometry(QtCore.QRect(26, 370, 220, 31))
+        self.LineaAnio.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaApellido1.setText("")
-        self.LineaApellido1.setObjectName("LineaApellido1")
+        self.LineaAnio.setText("")
+        self.LineaAnio.setObjectName("LineaAnio")
         
-        self.Apellido2 = QtWidgets.QLabel(self.frameAniaidir)
-        self.Apellido2.setGeometry(QtCore.QRect(273, 10, 220, 50))
+        self.combustible = QtWidgets.QLabel(self.frameAniaidir)
+        self.combustible.setGeometry(QtCore.QRect(273, 10, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Apellido2.setFont(font)
+        self.combustible.setFont(font)
         
         
-        self.LineaApellido2 = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaApellido2.setGeometry(QtCore.QRect(273, 70, 220, 31))
-        self.LineaApellido2.setStyleSheet("background-color:white;\n"
+        self.LineaCombus = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaCombus.setGeometry(QtCore.QRect(273, 70, 220, 31))
+        self.LineaCombus.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaApellido2.setText("")
-        self.LineaApellido2.setObjectName("LineaApellido2")
+        self.LineaCombus.setText("")
+        self.LineaCombus.setObjectName("LineaCombus")
 
-        self.Direccion = QtWidgets.QLabel(self.frameAniaidir)
-        self.Direccion.setGeometry(QtCore.QRect(273, 110, 220, 50))
+        self.kilometros = QtWidgets.QLabel(self.frameAniaidir)
+        self.kilometros.setGeometry(QtCore.QRect(273, 110, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Direccion.setFont(font)
+        self.kilometros.setFont(font)
         
         
-        self.LineaDir = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaDir.setGeometry(QtCore.QRect(273, 170, 220, 31))
-        self.LineaDir.setStyleSheet("background-color:white;\n"
+        self.LineaKm = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaKm.setGeometry(QtCore.QRect(273, 170, 220, 31))
+        self.LineaKm.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaDir.setText("")
-        self.LineaDir.setObjectName("LineaDir")
+        self.LineaKm.setText("")
+        self.LineaKm.setObjectName("LineaKm")
         
-        self.Email = QtWidgets.QLabel(self.frameAniaidir)
-        self.Email.setGeometry(QtCore.QRect(273, 210, 241, 50))
+        self.precio = QtWidgets.QLabel(self.frameAniaidir)
+        self.precio.setGeometry(QtCore.QRect(273, 210, 241, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Email.setFont(font)
+        self.precio.setFont(font)
         
 
-        self.LineaEmail = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaEmail.setGeometry(QtCore.QRect(273, 270, 220, 31))
-        self.LineaEmail.setStyleSheet("background-color:white;\n"
+        self.LineaPrecio = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaPrecio.setGeometry(QtCore.QRect(273, 270, 220, 31))
+        self.LineaPrecio.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaEmail.setText("")
-        self.LineaEmail.setObjectName("LineaEmail")
+        self.LineaPrecio.setText("")
+        self.LineaPrecio.setObjectName("LineaPrecio")
 
         self.Concesionario = QtWidgets.QLabel(self.frameAniaidir)
         self.Concesionario.setGeometry(QtCore.QRect(273, 310, 241, 50))
@@ -289,12 +288,12 @@ class Ui_MainWindow6(object):
         
         # Creación del QTableView para mostrar las columnas de la base de datos
         self.tableView = QtWidgets.QTableView(self.centralwidget)
-        self.tableView.setGeometry(QtCore.QRect(58, 235, 1125, 250))
+        self.tableView.setGeometry(QtCore.QRect(305, 235, 630, 250))
         self.tableView.setObjectName("tableView")
 
         # Barra de búsqueda
         self.searchBar = QtWidgets.QLineEdit(self.centralwidget)
-        self.searchBar.setGeometry(QtCore.QRect(58, 200, 220, 31))
+        self.searchBar.setGeometry(QtCore.QRect(305, 200, 220, 31))
         self.searchBar.setPlaceholderText("Buscar...")
         self.searchBar.setStyleSheet("background-color:white;\n"
                                      "border: 2px solid gray;\n"
@@ -322,7 +321,7 @@ class Ui_MainWindow6(object):
 
         #cargo el boton atras
         self.atras = setAtras(self.centralwidget)
-        self.ayuda = ayuda(self.centralwidget, "Ventana clientes")
+        self.ayuda = ayuda(self.centralwidget, "Ventana vehiculos")
 
 
 
@@ -331,27 +330,27 @@ class Ui_MainWindow6(object):
         
 
         #Nombres de cada texto (para el modo oscuro/claro)
-        self.IDtrabajador.setObjectName("IDcliente")
-        self.Contrasenia.setObjectName("Contraseña")
-        self.Nombre.setObjectName("Nombre")
-        self.Apellido1.setObjectName("Apellido1")
-        self.Apellido2.setObjectName("Apellido2")
-        self.Direccion.setObjectName("Direccion")
-        self.Email.setObjectName("Email")
+        self.IDvehiculo.setObjectName("IDvehiculo")
+        self.marca.setObjectName("Marca")
+        self.modelo.setObjectName("Modelo")
+        self.anio.setObjectName("Año")
+        self.combustible.setObjectName("Combustible")
+        self.kilometros.setObjectName("Kilometros")
+        self.precio.setObjectName("Precio")
         self.Concesionario.setObjectName("Concesionario")
-        self.Nombre2.setObjectName("IDcliente") #esto es para lo de eliminar
+        self.Nombre2.setObjectName("IDvehiculo") #esto es para lo de eliminar
 
 
         #muestra una pequenia ayuda al poner el raton sobre el boton
-        self.aniadirCli.setToolTip("Añadir cliente")
-        self.eliminarCLi.setToolTip("Eliminar cliente")
-        self.ModificarCli.setToolTip("Modificar cliente")
-        self.BuscarCli.setToolTip("Buscar cliente")
+        self.aniadirVeh.setToolTip("Añadir vehiculo")
+        self.eliminarVeh.setToolTip("Eliminar vehiculo")
+        self.ModificarVeh.setToolTip("Modificar vehiculo")
+        self.BuscarVeh.setToolTip("Buscar vehiculo")
 
 
-        self.lista = [self.aniadirCli, self.eliminarCLi, self.BuscarCli, self.ModificarCli, self.botonEliminar, self.Nombre2, self.botonAniadirModificar]
+        self.lista = [self.aniadirVeh, self.eliminarVeh, self.BuscarVeh, self.ModificarVeh, self.botonEliminar, self.Nombre2, self.botonAniadirModificar]
         self.listaFrames = [self.frameAniaidir, self.frame2]
-        self.listaTexto = [self.IDtrabajador, self.Contrasenia, self.Nombre, self.Apellido1, self.Apellido2, self.Direccion, self.Email, self.Concesionario, self.Nombre2]
+        self.listaTexto = [self.IDvehiculo, self.marca, self.modelo, self.anio, self.kilometros, self.precio, self.combustible, self.Concesionario, self.Nombre2]
         
         
         
@@ -370,15 +369,15 @@ class Ui_MainWindow6(object):
         self.searchBar.setVisible(False)
         self.ayuda.setVisible(False)
         
-        self.aniadirCli.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
-        self.aniadirCli.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
+        self.aniadirVeh.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.aniadirVeh.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
 
-        self.eliminarCLi.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.eliminarVeh.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         
-        self.ModificarCli.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
-        self.ModificarCli.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
+        self.ModificarVeh.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.ModificarVeh.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
         
-        self.BuscarCli.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.BuscarVeh.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
 
 
     def setCoordinador(self, coord):
@@ -387,11 +386,11 @@ class Ui_MainWindow6(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Clientes"))
-        self.aniadirCli.setText(_translate("MainWindow", "Añadir cliente"))
-        self.eliminarCLi.setText(_translate("MainWindow", "Eliminar cliente"))
-        self.ModificarCli.setText(_translate("MainWindow", "Modificar cliente"))
-        self.BuscarCli.setText(_translate("MainWindow", "Buscar cliente"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Vehiculos"))
+        self.aniadirVeh.setText(_translate("MainWindow", "Añadir vehiculo"))
+        self.eliminarVeh.setText(_translate("MainWindow", "Eliminar vehiculo"))
+        self.ModificarVeh.setText(_translate("MainWindow", "Modificar vehiculo"))
+        self.BuscarVeh.setText(_translate("MainWindow", "Buscar vehiculo"))
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 
@@ -403,25 +402,25 @@ class Ui_MainWindow6(object):
 
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
     def obtener_datos_ingresados(self):
-        anadirModificar = Cliente(
-           IDcliente=self.LineaID.text(),
-           Contrasenia=self.LineaContra.text(),
-           Nombre=self.LineaNombre.text(),
-           Apellido1=self.LineaApellido1.text(),
-           Apellido2=self.LineaApellido2.text(),
-           Direccion=self.LineaDir.text(),
-           Email=self.LineaEmail.text(),
-           Concesionario=self.LineaConc.text()
+        anadirModificar = Vehiculo(
+           IDvehiculo=self.LineaID.text(),
+           Marca=self.LineaMarca.text(),
+           Modelo=self.LineaModelo.text(),
+           Anio=self.LineaAnio.text(),
+           Combustible=self.LineaCombus.text(),
+           Kilometros=self.LineaKm.text(),
+           Precio=self.LineaPrecio.text(),
+           Concesionario=self.LineaConc.text(),
         )
 
-        eliminar = Cliente(
-            IDcliente=self.LineaNombre2.text()
+        eliminar = Vehiculo(
+            IDvehiculo=self.LineaNombre2.text()
         )
         
         
-        if anadirModificar.Nombre != "":
+        if anadirModificar.Marca != "":
             if self.botonAniadirModificar.text() == "Añadir":
-                a = self.coordinador.registrarCliente(anadirModificar, "aniadir") 
+                a = self.coordinador.registrarVehiculo(anadirModificar, "aniadir") 
                 if a[0] == "Error":
                     actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                     show_incorrecto_for_5_seconds(self.Incorrecto)
@@ -430,7 +429,7 @@ class Ui_MainWindow6(object):
                     show_incorrecto_for_5_seconds(self.Incorrecto)
                     
             elif self.botonAniadirModificar.text() == "Modificar":
-                a = self.coordinador.registrarCliente(anadirModificar, "modificar")
+                a = self.coordinador.registrarVehiculo(anadirModificar, "modificar")
                 if a[0] == "Error":
                     actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                     show_incorrecto_for_5_seconds(self.Incorrecto)
@@ -439,18 +438,18 @@ class Ui_MainWindow6(object):
                     show_incorrecto_for_5_seconds(self.Incorrecto)
             
             self.LineaID.setText("")
-            self.LineaContra.setText("")
-            self.LineaNombre.setText("")
-            self.LineaApellido1.setText("")
-            self.LineaApellido2.setText("")
-            self.LineaDir.setText("")
-            self.LineaEmail.setText("")
+            self.LineaMarca.setText("")
+            self.LineaModelo.setText("")
+            self.LineaAnio.setText("")
+            self.LineaCombus.setText("")
+            self.LineaKm.setText("")
+            self.LineaPrecio.setText("")
             self.LineaConc.setText("")
             
 
 
-        if eliminar.Nombre != "":
-            a = self.coordinador.registrarCliente(eliminar, "eliminar")
+        if eliminar.IDvehiculo != "":
+            a = self.coordinador.registrarVehiculo(eliminar, "eliminar")
             #print(a)
             if a[0] == "Error":
                 actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
@@ -466,22 +465,22 @@ class Ui_MainWindow6(object):
         
         
 
-    def mostrarClientes(self):
+    def mostrarVehiculos(self):
         self.model.removeRows(0, self.model.rowCount())
-        
-        a = self.coordinador.obtenerClientes()
+        #IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario
+        a = self.coordinador.obtenerVehiculos()
         #print(a)
-        columnas = ["IDcliente", "Contrasenia", "Nombre", "Apellido1", "Apellido2", "Direccion", "Email", "Concesionario"]
+        columnas = ["IDvehiculo", "Marca", "Modelo", "Año", "Combustible", "Kilometros", "Precio", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:
             items = [
-                QStandardItem(fila['IDcliente']),
-                QStandardItem(fila['Contrasenia']),
-                QStandardItem(fila['Nombre']),
-                QStandardItem(fila['Apellido1']),
-                QStandardItem(fila['Apellido2']),
-                QStandardItem(str(fila['Direccion'])),
-                QStandardItem(fila['Email']),
+                QStandardItem(fila['IDvehiculo']),
+                QStandardItem(fila['Marca']),
+                QStandardItem(fila['Modelo']),
+                QStandardItem(str(fila['Año'])),
+                QStandardItem(fila['Combustible']),
+                QStandardItem(str(fila['Kilometros'])),
+                QStandardItem(str(fila['Precio'])),
                 QStandardItem(fila['Concesionario']),
             ]
             self.model.appendRow(items)

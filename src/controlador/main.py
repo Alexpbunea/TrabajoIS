@@ -4,7 +4,7 @@
 # Arriba a la derecha borramos todo menos el central widget
 # guardamos la ventana en la carpeta vista
 import sys
-ruta_modulo = r'C:\Users\Dell XPS 9510\Desktop\Ingenieria del software\TrabajoFinal'
+ruta_modulo = "./"
 sys.path.append(ruta_modulo)
 
 
@@ -20,6 +20,7 @@ from src.vista.VentanaAdmin import Ui_MainWindow3
 from src.vista.VentanaConcesionario import Ui_MainWindow4
 from src.vista.VentanaTrabajadores import Ui_MainWindow5
 from src.vista.VentanaClientes import Ui_MainWindow6
+from src.vista.VentanaVehiculos import Ui_MainWindow7
 from src.vista.funciones import *
 
 import Imagespy.imagen_rc
@@ -96,6 +97,12 @@ def comprobarSesion():
             ui_ventana6_ui.botonAniadirModificar.clicked.connect(ui_ventana6_ui.obtener_datos_ingresados)
             ui_ventana6_ui.botonEliminar.clicked.connect(ui_ventana6_ui.obtener_datos_ingresados)
             ui_ventana6_ui.BuscarCli.clicked.connect(ui_ventana6_ui.mostrarClientes)
+
+            ui_ventana3_ui.vehiculos.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaVehiculos))
+            ui_ventana7_ui.atras.clicked.connect(lambda: atras2(ventanaVehiculos, ventanaAdmin))
+            ui_ventana7_ui.botonAniadirModificar.clicked.connect(ui_ventana7_ui.obtener_datos_ingresados)
+            ui_ventana7_ui.botonEliminar.clicked.connect(ui_ventana7_ui.obtener_datos_ingresados)
+            ui_ventana7_ui.BuscarVeh.clicked.connect(ui_ventana7_ui.mostrarVehiculos)
         
         elif a[0] == "jefeZona":
             pass
@@ -141,7 +148,13 @@ def sync_checkbox_state(state, origin, target):
     #caso ventanaAdmin-VentanaClientes
     elif origin == ui_ventana3_ui.checkBox and target == ui_ventana6_ui.checkBox:
         modoClOs(ui_ventana6_ui.checkBox, ui_ventana6_ui.label, ui_ventana5_ui.lista, ui_ventana6_ui.listaFrames, ui_ventana6_ui.listaTexto, ui_ventana6_ui.ayuda)
-    elif origin == ui_ventana5_ui.checkBox and target == ui_ventana3_ui.checkBox:
+    elif origin == ui_ventana6_ui.checkBox and target == ui_ventana3_ui.checkBox:
+        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+
+    #caso ventanaAdmin-VentanaVehiculos
+    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana7_ui.checkBox:
+        modoClOs(ui_ventana7_ui.checkBox, ui_ventana7_ui.label, ui_ventana7_ui.lista, ui_ventana7_ui.listaFrames, ui_ventana7_ui.listaTexto, ui_ventana7_ui.ayuda)
+    elif origin == ui_ventana7_ui.checkBox and target == ui_ventana3_ui.checkBox:
         modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
 
     target.blockSignals(False)
@@ -187,6 +200,11 @@ if __name__ == "__main__":
     ui_ventana6_ui.setupUi(ventanaClientes)
     ventanaClientes.hide()
 
+    ventanaVehiculos = QtWidgets.QMainWindow()
+    ui_ventana7_ui = Ui_MainWindow7()
+    ui_ventana7_ui.setupUi(ventanaVehiculos)
+    ventanaVehiculos.hide()
+
     # A cada ventada hay que asignarle un coordinador. Un mismo controlador puede controlar varias ventanas
     #ventanaRegistroConcesionario.setCoordinador(controlador)
     ui_ventana1.setCoordinador(controlador)
@@ -195,6 +213,7 @@ if __name__ == "__main__":
     ui_ventana4_ui.setCoordinador(controlador)
     ui_ventana5_ui.setCoordinador(controlador)
     ui_ventana6_ui.setCoordinador(controlador)
+    ui_ventana7_ui.setCoordinador(controlador)
 
 
     # Al coordinador hay que asignarle una ventana. Un coordinador puede tener referencias a varias ventanas
@@ -205,6 +224,7 @@ if __name__ == "__main__":
     controlador.setViewRegistroConcesionario(controlador)
     controlador.setViewVentanaTrabajadores(controlador)
     controlador.setViewVentanaClientes(controlador)
+    controlador.setViewVentanaVehiculos(controlador)
 
     ventana_principal.show()
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
@@ -231,7 +251,7 @@ if __name__ == "__main__":
                 connect_checkboxes(ui_elements[i], ui_elements[j])
 
     # En el código que cambia de ventana, conecta las casillas de verificación
-    ui_elements = [ui_ventana3_ui, ui_ventana4_ui, ui_ventana5_ui, ui_ventana6_ui]
+    ui_elements = [ui_ventana3_ui, ui_ventana4_ui, ui_ventana5_ui, ui_ventana6_ui, ui_ventana7_ui]
     connect_all_checkboxes(ui_elements)
 
 

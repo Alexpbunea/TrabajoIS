@@ -72,6 +72,13 @@ class Coordinador:
     def setViewVentanaClientes(self, view):
         self._viewVentanaClientes = view
 
+    
+    def getViewVentanaVehiculos(self):
+       return self._viewVentanaVehiculos
+    
+    def setViewVentanaVehiculos(self, view):
+       self._viewVentanaVehiculos = view
+
 
     def getViewRegistroConcesionario(self):
         return self._viewRegistroConcesionario
@@ -107,4 +114,12 @@ class Coordinador:
        return a
     def obtenerClientes(self):
        a = self._model.obtener_todos_clientes()
+       return a
+    
+
+    def registrarVehiculo(self, usuario, queHago):
+       a = self._model.validar_registro_vehiculos(usuario, queHago)
+       return a
+    def obtenerVehiculos(self):
+       a = self._model.obtener_todos_vehiculos()
        return a

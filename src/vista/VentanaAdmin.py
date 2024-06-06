@@ -102,6 +102,11 @@ class Ui_MainWindow3(object):
         self.Almacen.setObjectName("Almacen")
         self.Almacen.setToolTip("Almacen")
 
+        self.vehiculos = QtWidgets.QPushButton(self.centralwidget)
+        self.vehiculos.setGeometry(QtCore.QRect(940, 650, 151, 41))
+        self.vehiculos.setObjectName("Vehiculos")
+        self.vehiculos.setToolTip("Añade, elimina, modifica o busca vehiculos")
+
         #self.combo_box = QtWidgets.QComboBox(self.centralwidget)
         #self.combo_box.setGeometry(1040, 10, 180, 30)
         #self.combo_box.setStyleSheet("background-color: transparent; border: 2px solid white; color: white; border-radius: 10px;")
@@ -115,7 +120,7 @@ class Ui_MainWindow3(object):
         self.atras = setAtras(self.centralwidget)
         
         
-        self.lista = [self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen]
+        self.lista = [self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen, self.vehiculos]
         
         
         self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.imagen, self.lista))
@@ -137,6 +142,7 @@ class Ui_MainWindow3(object):
         self.Cliente.setText(_translate("MainWindow", "Clientes"))
         self.Concesionario.setText(_translate("MainWindow", "Concesionarios"))
         self.Almacen.setText(_translate("MainWindow", "Almacenes"))
+        self.vehiculos.setText(_translate("MainWindow", "Vehiculos"))
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 

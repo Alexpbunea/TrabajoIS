@@ -390,7 +390,7 @@ class Logica:
                         mi_trabajador_dao.updateTrabajador(trab)
                         mi_trabajador_dao.updateTrabajador(trab)
                         print(f"Modificado correctamente el trabajador --> {IDtrabajador}, {nombre}")
-                        return ("Correcto", "Concesionario modificado correctamente")
+                        return ("Correcto", "Trabajador modificado correctamente")
             
                 return ("Error", "El trabajador no esta registrado")
             except:
@@ -573,11 +573,11 @@ class Logica:
                         cli.setConcesionario(mi_cliente.getConcesionario())
                         mi_cliente_dao.updateCliente(cli)
                         print(f"Modificado correctamente el trabajador --> {Idcliente}, {nombre}")
-                        return ("Correcto", "Concesionario modificado correctamente")
+                        return ("Correcto", "Cliente modificado correctamente")
             
-                return ("Error", "El trabajador no esta registrado")
+                return ("Error", "El cliente no esta registrado")
             except:
-                messagebox.showwarning("Advertencia", "Error al modificar el trabajador")
+                messagebox.showwarning("Advertencia", "Error al modificar el cliente")
     
     def obtener_todos_clientes(self):
         try:
@@ -598,5 +598,151 @@ class Logica:
             return clientes_data
         except:
             messagebox.showwarning("Advertencia", "Error al buscar clientes")
+
+
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+
+
+
+    #FUNCIONES PARA LA VENTANA VEHICULOS
+    def validar_registro_vehiculos(self, mi_vehiculo: Vehiculo, queHago):
+        #comprobar combustible
+        def comprobarCombustible(combus):
+            print(combus)
+            if combus not in ['gasolina', 'electrico', 'diesel', 'hibrido']:
+                print("h")
+                return ("Error", "El combustible no es posible")
+            else:
+                print("Combustible correcto")
+                return ("Correcto", "Combustible correcto")
+            
+        def comprobarKilometros(km):
+            km = int(km)
+            if km < 0 or km > 2000000:
+                return ("Error", "O Km negativos o demasiados Km")
+            else:
+                print("Kms en rango correcto")
+                return ("Correcto", "Kms en rango correcto")
+
+        mi_vehiculo_dao = VehiculoDao()
+
+        if queHago == "aniadir" or queHago == "modificar":
+            try:
+                IDvehiculo = mi_vehiculo.getIDvehiculo()
+                marca = mi_vehiculo.getMarca()
+                modelo = mi_vehiculo.getModelo()
+                anio = mi_vehiculo.getAnio()
+                combustible = mi_vehiculo.getCombustible()
+                kilometros = mi_vehiculo.getKilometros()
+                precio = mi_vehiculo.getPrecio()
+                concesionario = mi_vehiculo.getConcesionario()
+                
+                
+                #Mayusculas
+                try:
+                    mi_vehiculo.setMarca(self.mayuscula(marca))
+                    mi_vehiculo.setModelo(self.mayuscula(modelo))
+                    print("Hola-2")
+                except:
+                    print("Hola-1")
+                    return ("Error", "Verifica marca y modelo")
+
+                print("Hola0")
+                a = comprobarCombustible(combustible)
+                if a[0] == "Error":
+                    print("Hola1")
+                    return a
+                
+                a = comprobarKilometros(kilometros)
+                if a[0] == "Error":
+                    print("Hola2")
+                    return a
+
+                #pasamos a int los necesarios
+
+
+                #Comprobando el formato del nombre del concesionario
+                conc = self.comprobarFormatoConcesionario(concesionario)
+                if conc[0] == "Error":
+                    return conc
+                elif conc[0] == "Corregido":
+                    concesionario = conc[1]
+                    mi_vehiculo.setConcesionario(concesionario)
+                else:
+                    pass #Esto significa que es correcto el formato del nombre
+
+                #compruebo si existe el concesionario en la base de datos
+                conc = self.comprobarExistenciaConcesionario(concesionario)
+                if conc is False:
+                    return ("Error", "El concesionario no existe")
+                
+                #####################################################################################
+                if queHago == "aniadir":
+                    print("Hola3")
+                    mi_vehiculo_dao.insertVehiculo(mi_vehiculo)
+                    return ("Correcto", "Has introducido bien los datos")
+                
+                #####################################################################################
+                elif queHago == "modificar":
+                    vehiculos = mi_vehiculo_dao.getVehiculos()
+
+                    for veh in vehiculos:
+                        if veh.getIDvehiculo() == IDvehiculo:
+                            veh.setMarca(mi_vehiculo.getIDvehiculo())
+                            veh.setModelo(mi_vehiculo.getMarca())
+                            veh.setAnio(mi_vehiculo.getModelo())
+                            veh.setCombustible(mi_vehiculo.getCombustible())
+                            veh.setPrecio(mi_vehiculo.getPrecio())
+                            veh.setKilometros(mi_vehiculo.getKilometros())
+                            veh.setConcesionario(mi_vehiculo.getConcesionario())
+                            mi_vehiculo_dao.modificarVehiculo(veh)
+                            print(f"Modificado correctamente el vehiculo --> {IDvehiculo}, {marca}, {modelo}")
+                            return ("Correcto", "Vehiculo modificado correctamente")
+                
+                    return ("Error", "El vehiculo no esta registrado")
+
+            except:
+                messagebox.showwarning("Advertencia", "Error al insertar o modificar el vehiculo")
+                return ("Error", "Error al insertar o modificar el vehiculo")
+
+        elif queHago == "eliminar":
+            try:
+                ID = mi_vehiculo.getIDvehiculo()
+                vehiculos = mi_vehiculo_dao.getVehiculos()
+
+                for veh in vehiculos:
+                    if veh.getIDvehiculo() == ID:
+                        print(f"Eliminando vehiculo --> {veh.getIDvehiculo()}, {veh.getMarca(), {veh.getModelo()}}")
+                        mi_vehiculo_dao.deteteVehiculo(ID)
+                        return ("Correcto", "Has introducido bien los datos")
+                    
+                return ("Error", "Ese vehiculo no esta registrado")
+            except:
+                messagebox.showwarning("Advertencia", "Error al eliminar el vehiculo")
+                return ("Error", "Error al insertar o modificar el vehiculo")
+    
+    def obtener_todos_vehiculos(self):
+        try:
+            mi_vehiculo_dao = VehiculoDao()
+            vehiculos = mi_vehiculo_dao.getVehiculos()
+            
+            vehiculos_data = []
+            for veh in vehiculos:
+                vehiculos_data.append({
+                    "IDvehiculo": veh.getIDvehiculo(),
+                    "Marca": veh.getMarca(),
+                    'Modelo': veh.getModelo(),
+                    'Año': veh.getAnio(),
+                    'Combustible': veh.getCombustible(),
+                    'Kilometros': veh.getKilometros(),
+                    'Precio': veh.getPrecio(),
+                    'Concesionario': veh.getConcesionario()
+                })
+            return vehiculos_data
+        except:
+            messagebox.showwarning("Advertencia", "Error al buscar vehiculos")
     
 

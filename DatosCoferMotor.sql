@@ -4,12 +4,12 @@ USE datoscofermotor;
 #insert into plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario)
 #VALUES ("71479447R", 1234, "Nain", "Miguel", "Sanchez", 1200, "administrador", "Cofermotor1"); 
 #select * FROM plantillatrabajadores;
-#SELECT * FROM clientes;
+SELECT * FROM clientes;
 #SELECT * FROM concesionario;
 #DROP TABLE plantillatrabajadores;
 #DESCRIBE clientes;
-#DROP TABLE clientes;
-ALTER TABLE clientes MODIFY COLUMN Contrasenia VARCHAR(65) NOT NULL;
+#DROP TABLE vehiculos;
+#ALTER TABLE clientes MODIFY COLUMN Contrasenia VARCHAR(65) NOT NULL;
 
 /*
 CREATE TABLE concesionario (
@@ -46,7 +46,7 @@ CREATE TABLE vehiculos (
     Kilometros INT NOT NULL CHECK (Kilometros >= 0 AND Kilometros <= 2000000),
     Precio DECIMAL(10, 2) NOT NULL,
     Concesionario VARCHAR(20) NOT NULL,
-    CONSTRAINT VehiculoConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
+    CONSTRAINT VehiculoConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */
 /*
