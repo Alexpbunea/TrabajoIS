@@ -15,6 +15,8 @@ class ClienteDao(ClienteInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
     SQL_SELECT = "SELECT IDcliente, Contrasenia, Nombre, Apellido1, Apellido2, Direccion, Email, Concesionario FROM Clientes"
     SQL_INSERT = "INSERT INTO Clientes(IDcliente, Contrasenia, Nombre, Apellido1, Apellido2, Direccion, Email, Concesionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE Clientes SET Contrasenia=?, Nombre=?, Apellido1=?, Apellido2=?, Direccion=?, Email=?, Concesionario=? WHERE IDcliente=?"
+    SQL_DELETE = "DELETE FROM Clientes WHERE IDcliente=?"
 
     def getClientes(self) -> List[Cliente]:
         conexion = self.getConnection()
@@ -79,6 +81,62 @@ class ClienteDao(ClienteInterface, Conexion):
 
         except Error as e:
             print("Error al insertar cliente:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+        self.close(conn)
+
+        return rows
+    
+    def updateCliente(self, cliente: Cliente) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion
+            
+            else:
+                print("La base de datos no esta disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_UPDATE, (cliente.getContrasenia(), cliente.getNombre(), cliente.getApellido1(), cliente.getApellido2(), cliente.getDireccion(), cliente.getEmail(), cliente.getConcesionario(), cliente.getIDcliente()))
+            
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al actualizar cliente:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+        self.close(conn)
+
+        return rows
+
+    def deleteCliente(self, id_cliente: str) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion
+            
+            else:
+                print("La base de datos no esta disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_DELETE, (id_cliente,))
+            
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al eliminar cliente:", e)
 
         finally:
             if cursor:

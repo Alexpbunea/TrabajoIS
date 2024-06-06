@@ -66,11 +66,12 @@ class Coordinador:
 
 
 
-    def getViewRegistroCliente(self):
+    def getViewVentanaCliente(self):
         return self._viewRegistroCliente
 
-    def setViewRegistroCliente(self, view):
-        self._viewRegistroCliente = view
+    def setViewVentanaClientes(self, view):
+        self._viewVentanaClientes = view
+
 
     def getViewRegistroConcesionario(self):
         return self._viewRegistroConcesionario
@@ -101,5 +102,9 @@ class Coordinador:
        return a
 
 
-    def registrarCliente(self, usuario: Cliente) -> None:
-       self._model.validar_registro_cliente(usuario)
+    def registrarCliente(self, usuario, queHago):
+       a = self._model.validar_registro_cliente(usuario, queHago)
+       return a
+    def obtenerClientes(self):
+       a = self._model.obtener_todos_clientes()
+       return a

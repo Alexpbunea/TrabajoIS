@@ -124,7 +124,7 @@ class Logica:
             
         try:   
             for cliente in clientes:
-                if cliente.getIDcliente() == mi_persona.getIDcliente() and cliente.getContrasenia() == mi_persona.getContrasenia():
+                if cliente.getIDcliente() == mi_persona.getIDcliente() and self.verificar_contrasenia(mi_persona.getContrasenia(), cliente.getContrasenia()):
                     print(f"Bienvenido/a cliente --> {cliente.getNombre()}")
                     return ('cliente',cliente.getNombre())
 
@@ -352,7 +352,7 @@ class Logica:
                     contrasenia = self.encriptar_contrasenia(contrasenia)
                     mi_trabajador.setContrasenia(contrasenia)
                 except:
-                    messagebox.showwarning("Advertencia", "Error en la libreria bcrypt o en sus funciones")
+                    return ("Error", "CONTACTA CON LOS PROGRAMADORES")
 
                 #Compruebo el rol
                 if rol not in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
@@ -426,12 +426,177 @@ class Logica:
 
 
     #FUNCIONES PARA LA VENTANA CLIENTES
-    def validar_registro_cliente(self, mi_persona: Cliente):
-        if '@' in mi_persona.getEmail():
-            mi_persona_dao = ClienteDao()
-            mi_persona_dao.insertCliente(mi_persona)
-        else:
-            messagebox.showwarning("Advertencia", "El email no es válido")
+    def validar_registro_cliente(self, mi_cliente: Cliente, queHago):
+        def arroba(email):
+            if '@' in email:
+                print("@ en el mail. Correcto")
+                return ("Correcto", "Email contiene @")
+            else:
+                return ("Error", "Falta el @ en el email")    
+            
+
+        if queHago == "aniadir":
+            try:
+                Idcliente = mi_cliente.getIDcliente()
+                contrasenia = mi_cliente.getContrasenia()
+                nombre = mi_cliente.getNombre()
+                apellido1 = mi_cliente.getApellido1()
+                apellido2 = mi_cliente.getApellido2()
+                dirreccion = mi_cliente.getDireccion()
+                email = mi_cliente.getEmail()
+                concesionario = mi_cliente.getConcesionario()
+                
+                #Comprobando si el dni es correcto o no
+                if self.funcionInsertarDNI(Idcliente) is False:
+                    print("El IDcliente es incorrecto, compruebalo")
+                    return ("Error", "El IDcliente es incorrecto")
+                
+                try:
+                    #Encripto la contrasenia
+                    contrasenia2 = self.encriptar_contrasenia(contrasenia)
+                    mi_cliente.setContrasenia(contrasenia2)
+                except:
+                    return ("Error", "CONTACTA CON LOS PROGRAMADORES")
+
+                #Mayusculas
+                try:
+                    mi_cliente.setNombre(self.mayuscula(nombre))
+                    mi_cliente.setApellido1(self.mayuscula(apellido1))
+                    mi_cliente.setApellido2(self.mayuscula(apellido2))
+                except:
+                    return ("Error", "Verifica nombre y apellidos")
+
+
+                #compruebo el @
+                a = arroba(email)
+                if a[0] == "Error":
+                    return a
+            
+                #Comprobando el formato del nombre del concesionario
+                conc = self.comprobarFormatoConcesionario(concesionario)
+                if conc[0] == "Error":
+                    return conc
+                elif conc[0] == "Corregido":
+                    concesionario = conc[1]
+                    mi_cliente.setConcesionario(concesionario)
+                else:
+                    pass #Esto significa que es correcto el formato del nombre
+
+                #compruebo si existe el concesionario en la base de datos
+                conc = self.comprobarExistenciaConcesionario(concesionario)
+                if conc is False:
+                    return ("Error", "El concesionario no existe")
+
+                mi_cliente_dao = ClienteDao()
+                mi_cliente_dao.insertCliente(mi_cliente)
+                return ("Correcto", "Has introducido bien los datos")
+            except:
+                messagebox.showwarning("Advertencia", "Error al insertar el cliente")
+
+        elif queHago == "eliminar":
+            try:
+                ID = mi_cliente.getIDcliente()
+        
+                mi_cliente_dao = ClienteDao()
+                clientes = mi_cliente_dao.getClientes()
+
+                for cli in clientes:
+                    if cli.getIDcliente() == ID:
+                        print(f"Eliminando cliente --> {cli.getIDcliente()}, {cli.getNombre()}")
+                        mi_cliente_dao.deleteCliente(ID)
+                        return ("Correcto", "Has introducido bien los datos")
+                    
+                return ("Error", "Ese cliente no esta registrado")
+            except:
+                messagebox.showwarning("Advertencia", "Error al eliminar el cliente")
+        
+        elif queHago == "modificar":
+            try:
+                Idcliente = mi_cliente.getIDcliente()
+                contrasenia = mi_cliente.getContrasenia()
+                nombre = mi_cliente.getNombre()
+                apellido1 = mi_cliente.getApellido1()
+                apellido2 = mi_cliente.getApellido2()
+                dirreccion = mi_cliente.getDireccion()
+                email = mi_cliente.getEmail()
+                concesionario = mi_cliente.getConcesionario()
+                
+                try:
+                #Encripto la contrasenia
+                     # Encripto la contrasenia solo si ha cambiado
+                    contrasenia = self.encriptar_contrasenia(contrasenia)
+                    mi_cliente.setContrasenia(contrasenia)
+                except:
+                    return ("Error", "CONTACTA CON LOS PROGRAMADORES")
+
+
+                #Mayusculas
+                try:
+                    mi_cliente.setNombre(self.mayuscula(nombre))
+                    mi_cliente.setApellido1(self.mayuscula(apellido1))
+                    mi_cliente.setApellido2(self.mayuscula(apellido2))
+                except:
+                    return ("Error", "Verifica nombre y apellidos")
+
+                #compruebo el @
+                a = arroba(email)
+                if a[0] == "Error":
+                    return a
+
+                #Comprobando el formato del nombre del concesionario
+                conc = self.comprobarFormatoConcesionario(concesionario)
+                if conc[0] == "Error":
+                    return conc
+                elif conc[0] == "Corregido":
+                    concesionario = conc[1]
+                    mi_cliente.setConcesionario(concesionario)
+                else:
+                    pass #Esto significa que es correcto el formato del nombre
+
+                #compruebo si existe el concesionario en la base de datos
+                conc = self.comprobarExistenciaConcesionario(concesionario)
+                if conc is False:
+                    return ("Error", "El concesionario no existe")
+
+
+                mi_cliente_dao = ClienteDao()
+                clientes = mi_cliente_dao.getClientes()
+
+                for cli in clientes:
+                    if cli.getIDcliente() == Idcliente:
+                        cli.setContrasenia(mi_cliente.getContrasenia())
+                        cli.setNombre(mi_cliente.getNombre())
+                        cli.setApellido1(mi_cliente.getApellido1())
+                        cli.setApellido2(mi_cliente.getApellido2())
+                        cli.setDireccion(mi_cliente.getDireccion())
+                        cli.setEmail(mi_cliente.getEmail())
+                        cli.setConcesionario(mi_cliente.getConcesionario())
+                        mi_cliente_dao.updateCliente(cli)
+                        print(f"Modificado correctamente el trabajador --> {Idcliente}, {nombre}")
+                        return ("Correcto", "Concesionario modificado correctamente")
+            
+                return ("Error", "El trabajador no esta registrado")
+            except:
+                messagebox.showwarning("Advertencia", "Error al modificar el trabajador")
     
+    def obtener_todos_clientes(self):
+        try:
+            mi_cliente_dao = ClienteDao()
+            clientes = mi_cliente_dao.getClientes()
+            clientes_data = []
+            for cli in clientes:
+                clientes_data.append({
+                    "IDcliente": cli.getIDcliente(),
+                    "Contrasenia": cli.getContrasenia(),
+                    'Nombre': cli.getNombre(),
+                    'Apellido1': cli.getApellido1(),
+                    'Apellido2': cli.getApellido2(),
+                    'Direccion': cli.getDireccion(),
+                    'Email': cli.getEmail(),
+                    'Concesionario': cli.getConcesionario()
+                })
+            return clientes_data
+        except:
+            messagebox.showwarning("Advertencia", "Error al buscar clientes")
     
 

@@ -291,7 +291,7 @@ class Ui_MainWindow4(object):
         self.aniadirCon.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.aniadirCon.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
 
-        self.eliminarCon.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar))
+        self.eliminarCon.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         #self.eliminarCon.clicked.connect(lambda: self.actualizarBotonFrame("Eliminar"))
 
         self.ModificarCon.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))

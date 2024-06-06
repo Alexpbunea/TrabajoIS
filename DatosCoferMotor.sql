@@ -5,9 +5,11 @@ USE datoscofermotor;
 #VALUES ("71479447R", 1234, "Nain", "Miguel", "Sanchez", 1200, "administrador", "Cofermotor1"); 
 #select * FROM plantillatrabajadores;
 #SELECT * FROM clientes;
-SELECT * FROM concesionario;
+#SELECT * FROM concesionario;
 #DROP TABLE plantillatrabajadores;
-#SELECT * FROM plantillatrabajadores;
+#DESCRIBE clientes;
+#DROP TABLE clientes;
+ALTER TABLE clientes MODIFY COLUMN Contrasenia VARCHAR(65) NOT NULL;
 
 /*
 CREATE TABLE concesionario (
@@ -25,13 +27,13 @@ CREATE TABLE clientes (
     Apellido1 VARCHAR(30) NOT NULL,
     Apellido2 VARCHAR(30) NOT NULL,
     Direccion VARCHAR(200) NOT NULL,
-    Email VARCHAR(50),
+    Email VARCHAR(50) NULL,
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT Check_ID CHECK(
         CHAR_LENGTH(IDcliente) = 9 AND
         IDcliente REGEXP '[0-9][A-Z]'
     ),
-    CONSTRAINT ClienteConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
+    CONSTRAINT ClienteConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */
 /*
@@ -46,7 +48,8 @@ CREATE TABLE vehiculos (
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT VehiculoConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
 );
-
+*/
+/*
 CREATE TABLE ventas (
     IDventa INT AUTO_INCREMENT PRIMARY KEY,
     FechaVenta DATE NOT NULL,
@@ -56,7 +59,8 @@ CREATE TABLE ventas (
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT VentasConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
 );
-
+*/
+/*
 CREATE TABLE almacen (
     Capacidad INT DEFAULT 50 NOT NULL,
     Piezas TEXT,

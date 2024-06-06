@@ -12,12 +12,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QSortFilterProxyModel
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import QTimer
-from src.modelo.vo.PlantillaTrabajadorVO import PlantillaTrabajadorVO
+from src.modelo.vo.ClienteVO  import Cliente
 from src.vista.funciones import *
 
 
 
-class Ui_MainWindow5(object):
+class Ui_MainWindow6(object):
     def __init__(self, coord=None):
         self.coordinador = coord
         self.rojo = "#ff0000"
@@ -42,22 +42,22 @@ class Ui_MainWindow5(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
-        self.aniadirTra = QtWidgets.QPushButton(self.centralwidget)
-        self.aniadirTra.setGeometry(QtCore.QRect(40, 650, 151, 41))
-        self.aniadirTra.setObjectName("aniadirTra")
+        self.aniadirCli = QtWidgets.QPushButton(self.centralwidget)
+        self.aniadirCli.setGeometry(QtCore.QRect(40, 650, 151, 41))
+        self.aniadirCli.setObjectName("aniadirCli")
         
-        self.eliminarTra = QtWidgets.QPushButton(self.centralwidget)
-        self.eliminarTra.setGeometry(QtCore.QRect(230, 650, 151, 41))
-        self.eliminarTra.setObjectName("eliminarTra")
+        self.eliminarCLi = QtWidgets.QPushButton(self.centralwidget)
+        self.eliminarCLi.setGeometry(QtCore.QRect(230, 650, 151, 41))
+        self.eliminarCLi.setObjectName("eliminarCli")
         
         
-        self.ModificarTra = QtWidgets.QPushButton(self.centralwidget)
-        self.ModificarTra.setGeometry(QtCore.QRect(420, 650, 151, 41))
-        self.ModificarTra.setObjectName("ModificarTra")
+        self.ModificarCli = QtWidgets.QPushButton(self.centralwidget)
+        self.ModificarCli.setGeometry(QtCore.QRect(420, 650, 151, 41))
+        self.ModificarCli.setObjectName("ModificarCli")
         
-        self.BuscarTra = QtWidgets.QPushButton(self.centralwidget)
-        self.BuscarTra.setGeometry(QtCore.QRect(620, 650, 151, 41))
-        self.BuscarTra.setObjectName("BuscarTra")
+        self.BuscarCli = QtWidgets.QPushButton(self.centralwidget)
+        self.BuscarCli.setGeometry(QtCore.QRect(620, 650, 151, 41))
+        self.BuscarCli.setObjectName("BuscarCli")
         
         self.frameAniaidir = QtWidgets.QFrame(self.centralwidget)
         self.frameAniaidir.setEnabled(True)
@@ -162,43 +162,43 @@ class Ui_MainWindow5(object):
         self.LineaApellido2.setText("")
         self.LineaApellido2.setObjectName("LineaApellido2")
 
-        self.Sueldo = QtWidgets.QLabel(self.frameAniaidir)
-        self.Sueldo.setGeometry(QtCore.QRect(273, 110, 220, 50))
+        self.Direccion = QtWidgets.QLabel(self.frameAniaidir)
+        self.Direccion.setGeometry(QtCore.QRect(273, 110, 220, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Sueldo.setFont(font)
+        self.Direccion.setFont(font)
         
         
-        self.LineaSueldo = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaSueldo.setGeometry(QtCore.QRect(273, 170, 220, 31))
-        self.LineaSueldo.setStyleSheet("background-color:white;\n"
+        self.LineaDir = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaDir.setGeometry(QtCore.QRect(273, 170, 220, 31))
+        self.LineaDir.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaSueldo.setText("")
-        self.LineaSueldo.setObjectName("LineaSueldo")
+        self.LineaDir.setText("")
+        self.LineaDir.setObjectName("LineaDir")
         
-        self.Rol = QtWidgets.QLabel(self.frameAniaidir)
-        self.Rol.setGeometry(QtCore.QRect(273, 210, 241, 50))
+        self.Email = QtWidgets.QLabel(self.frameAniaidir)
+        self.Email.setGeometry(QtCore.QRect(273, 210, 241, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.Rol.setFont(font)
+        self.Email.setFont(font)
         
 
-        self.LineaRol = QtWidgets.QLineEdit(self.frameAniaidir)
-        self.LineaRol.setGeometry(QtCore.QRect(273, 270, 220, 31))
-        self.LineaRol.setStyleSheet("background-color:white;\n"
+        self.LineaEmail = QtWidgets.QLineEdit(self.frameAniaidir)
+        self.LineaEmail.setGeometry(QtCore.QRect(273, 270, 220, 31))
+        self.LineaEmail.setStyleSheet("background-color:white;\n"
 "\n"
 "border: 2px solid gray;\n"
 "border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
 "padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
 "\n"
 "")
-        self.LineaRol.setText("")
-        self.LineaRol.setObjectName("LineaRol")
+        self.LineaEmail.setText("")
+        self.LineaEmail.setObjectName("LineaEmail")
 
         self.Concesionario = QtWidgets.QLabel(self.frameAniaidir)
         self.Concesionario.setGeometry(QtCore.QRect(273, 310, 241, 50))
@@ -322,7 +322,7 @@ class Ui_MainWindow5(object):
 
         #cargo el boton atras
         self.atras = setAtras(self.centralwidget)
-        self.ayuda = ayuda(self.centralwidget, "Ventana trabajadores")
+        self.ayuda = ayuda(self.centralwidget, "Ventana clientes")
 
 
 
@@ -331,27 +331,27 @@ class Ui_MainWindow5(object):
         
 
         #Nombres de cada texto (para el modo oscuro/claro)
-        self.IDtrabajador.setObjectName("IDtrabajador")
+        self.IDtrabajador.setObjectName("IDcliente")
         self.Contrasenia.setObjectName("Contraseña")
         self.Nombre.setObjectName("Nombre")
         self.Apellido1.setObjectName("Apellido1")
         self.Apellido2.setObjectName("Apellido2")
-        self.Sueldo.setObjectName("Sueldo")
-        self.Rol.setObjectName("Rol")
+        self.Direccion.setObjectName("Direccion")
+        self.Email.setObjectName("Email")
         self.Concesionario.setObjectName("Concesionario")
-        self.Nombre2.setObjectName("IDtrabajador") #esto es para lo de eliminar
+        self.Nombre2.setObjectName("IDcliente") #esto es para lo de eliminar
 
 
         #muestra una pequenia ayuda al poner el raton sobre el boton
-        self.aniadirTra.setToolTip("Añadir trabajador")
-        self.eliminarTra.setToolTip("Eliminar trabajador")
-        self.ModificarTra.setToolTip("Modificar trabajador")
-        self.BuscarTra.setToolTip("Buscar trabajador")
+        self.aniadirCli.setToolTip("Añadir cliente")
+        self.eliminarCLi.setToolTip("Eliminar cliente")
+        self.ModificarCli.setToolTip("Modificar cliente")
+        self.BuscarCli.setToolTip("Buscar cliente")
 
 
-        self.lista = [self.aniadirTra, self.eliminarTra, self.BuscarTra, self.ModificarTra, self.botonEliminar, self.Nombre2, self.botonAniadirModificar]
+        self.lista = [self.aniadirCli, self.eliminarCLi, self.BuscarCli, self.ModificarCli, self.botonEliminar, self.Nombre2, self.botonAniadirModificar]
         self.listaFrames = [self.frameAniaidir, self.frame2]
-        self.listaTexto = [self.IDtrabajador, self.Contrasenia, self.Nombre, self.Apellido1, self.Apellido2, self.Sueldo, self.Rol, self.Concesionario, self.Nombre2]
+        self.listaTexto = [self.IDtrabajador, self.Contrasenia, self.Nombre, self.Apellido1, self.Apellido2, self.Direccion, self.Email, self.Concesionario, self.Nombre2]
         
         
         
@@ -370,15 +370,15 @@ class Ui_MainWindow5(object):
         self.searchBar.setVisible(False)
         self.ayuda.setVisible(False)
         
-        self.aniadirTra.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
-        self.aniadirTra.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
+        self.aniadirCli.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.aniadirCli.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
 
-        self.eliminarTra.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.eliminarCLi.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         
-        self.ModificarTra.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
-        self.ModificarTra.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
+        self.ModificarCli.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.ModificarCli.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
         
-        self.BuscarTra.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
+        self.BuscarCli.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
 
 
     def setCoordinador(self, coord):
@@ -388,10 +388,10 @@ class Ui_MainWindow5(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Trabajadores"))
-        self.aniadirTra.setText(_translate("MainWindow", "Añadir trabajador"))
-        self.eliminarTra.setText(_translate("MainWindow", "Eliminar trabajador"))
-        self.ModificarTra.setText(_translate("MainWindow", "Modificar trabajador"))
-        self.BuscarTra.setText(_translate("MainWindow", "Buscar trabajador"))
+        self.aniadirCli.setText(_translate("MainWindow", "Añadir cliente"))
+        self.eliminarCLi.setText(_translate("MainWindow", "Eliminar cliente"))
+        self.ModificarCli.setText(_translate("MainWindow", "Modificar cliente"))
+        self.BuscarCli.setText(_translate("MainWindow", "Buscar cliente"))
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 
@@ -403,25 +403,25 @@ class Ui_MainWindow5(object):
 
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
     def obtener_datos_ingresados(self):
-        anadirModificar = PlantillaTrabajadorVO(
-           IDtrabajador=self.LineaID.text(),
-           Contraseña=self.LineaContra.text(),
+        anadirModificar = Cliente(
+           IDcliente=self.LineaID.text(),
+           Contrasenia=self.LineaContra.text(),
            Nombre=self.LineaNombre.text(),
            Apellido1=self.LineaApellido1.text(),
            Apellido2=self.LineaApellido2.text(),
-           Sueldo=self.LineaSueldo.text(),
-           Rol=self.LineaRol.text(),
+           Direccion=self.LineaDir.text(),
+           Email=self.LineaEmail.text(),
            Concesionario=self.LineaConc.text()
         )
 
-        eliminar = PlantillaTrabajadorVO(
-            IDtrabajador=self.LineaNombre2.text()
+        eliminar = Cliente(
+            IDcliente=self.LineaNombre2.text()
         )
         
         
         if anadirModificar.Nombre != "":
             if self.botonAniadirModificar.text() == "Añadir":
-                a = self.coordinador.registrarTrabajador(anadirModificar, "aniadir") 
+                a = self.coordinador.registrarCliente(anadirModificar, "aniadir") 
                 if a[0] == "Error":
                     actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                     show_incorrecto_for_5_seconds(self.Incorrecto)
@@ -430,7 +430,7 @@ class Ui_MainWindow5(object):
                     show_incorrecto_for_5_seconds(self.Incorrecto)
                     
             elif self.botonAniadirModificar.text() == "Modificar":
-                a = self.coordinador.registrarTrabajador(anadirModificar, "modificar")
+                a = self.coordinador.registrarCliente(anadirModificar, "modificar")
                 if a[0] == "Error":
                     actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                     show_incorrecto_for_5_seconds(self.Incorrecto)
@@ -443,14 +443,14 @@ class Ui_MainWindow5(object):
             self.LineaNombre.setText("")
             self.LineaApellido1.setText("")
             self.LineaApellido2.setText("")
-            self.LineaSueldo.setText("")
-            self.LineaRol.setText("")
+            self.LineaDir.setText("")
+            self.LineaEmail.setText("")
             self.LineaConc.setText("")
             
 
 
         if eliminar.Nombre != "":
-            a = self.coordinador.registrarTrabajador(eliminar, "eliminar")
+            a = self.coordinador.registrarCliente(eliminar, "eliminar")
             #print(a)
             if a[0] == "Error":
                 actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
@@ -466,22 +466,22 @@ class Ui_MainWindow5(object):
         
         
 
-    def mostrarTrabajadores(self):
+    def mostrarClientes(self):
         self.model.removeRows(0, self.model.rowCount())
-        #IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario
-        a = self.coordinador.obtenerTrabajadores()
+        
+        a = self.coordinador.obtenerClientes()
         #print(a)
-        columnas = ["IDtrabajador", "Contrasenia", "Nombre", "Apellido1", "Apellido2", "Sueldo", "Rol", "Concesionario"]
+        columnas = ["IDcliente", "Contrasenia", "Nombre", "Apellido1", "Apellido2", "Direccion", "Email", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:
             items = [
-                QStandardItem(fila['IDtrabajador']),
+                QStandardItem(fila['IDcliente']),
                 QStandardItem(fila['Contrasenia']),
                 QStandardItem(fila['Nombre']),
                 QStandardItem(fila['Apellido1']),
                 QStandardItem(fila['Apellido2']),
-                QStandardItem(fila['Sueldo']),
-                QStandardItem(fila['Rol']),
+                QStandardItem(str(fila['Direccion'])),
+                QStandardItem(fila['Email']),
                 QStandardItem(fila['Concesionario']),
             ]
             self.model.appendRow(items)

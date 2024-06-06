@@ -37,7 +37,7 @@ def ayuda(centralwiddget, dondeEstoy=None):
     textEdit.setObjectName("textEdit")
 
     if dondeEstoy == "Ventana concesionario":
-        textEdit.setGeometry(QtCore.QRect(110, 180, 221, 200))
+        textEdit.setGeometry(QtCore.QRect(200, 180, 221, 200))
         textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                         "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                         "p, li { white-space: pre-wrap; }\n"
@@ -67,12 +67,34 @@ def ayuda(centralwiddget, dondeEstoy=None):
                         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">IDtrabajador: DNI correcto</p>\n"
                         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre y appellidos: Mas de una letra</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre y apellidos: Mas de una letra</p>\n"
                         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Sueldo: numero</p>\n"
                         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Rol: administrador, jefeZona,</p>\n"
                         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">     jefeDepartamento, personal</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre: Cofemotor + texto/num</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ej: &quot;Cofermotor20&quot;</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        return textEdit
+    
+    elif dondeEstoy == "Ventana clientes":
+        textEdit.setGeometry(QtCore.QRect(110, 170, 221, 265))
+        textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                        "p, li { white-space: pre-wrap; }\n"
+                        "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Formato:</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">IDcliente: DNI correcto</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre y apellidos: Mas de una letra</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Direccion: texto sin formato</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Email: @ en él</p>\n"
                         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre: Cofemotor + texto/num</p>\n"
                         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ej: &quot;Cofermotor20&quot;</p>\n"
@@ -106,7 +128,7 @@ def show_incorrecto_for_5_seconds(incorrecto):
 
 
 #FUNCIONES DE LA VISIBILIDAD, OSCULTAR O MOSTRAR FRAMES
-def toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda=None):
+def toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda):
     if frame2.isVisible(): 
         frame2_visibility(frame1, frame2, tabla, barra, ayuda)
     elif tabla.isVisible():
@@ -119,19 +141,19 @@ def toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda=None):
         ayuda.setVisible(not current_visibility)
     
 
-def frame2_visibility(frame1, frame2, tabla, barra, ayuda=None):
+def frame2_visibility(frame1, frame2, tabla, barra, ayuda):
     if frame1.isVisible():
         toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda)
     elif tabla.isVisible():
-        tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda=None)
+        tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda)
     current_visibility = frame2.isVisible()
     frame2.setVisible(not current_visibility)
     if ayuda is None:
         pass
     else:
-        ayuda.setVisible(not current_visibility)
+        ayuda.setVisible(False)
 
-def tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda=None):
+def tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda):
     if frame1.isVisible():
         toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda)
     elif frame2.isVisible(): 
