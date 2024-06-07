@@ -6,36 +6,35 @@ Created on Thu Apr 25 12:51:21 2024
 """
 
 class AlmacenVO:
-    def __init__(self, capacidad=None, piezas=None, porcentajeOcupado = None, concesionario = None):
-        self.capacidad = capacidad
-        self.piezas = piezas
-        self.porcentajeOcupado = porcentajeOcupado
-        self.concesionario = concesionario
-        
-    def getCapacidad(self):
-        return self.capacidad
-    def setCapacidad(self, capacidad):
-        self.capacidad = capacidad
-    
-    def getPiezas(self):
-        return self.piezas
-    def setPiezas(self, piezas):
-        self.piezas = piezas
+    def __init__(self, Pieza=None, Cantidad=None, PrecioPieza=None, Concesionario=None):
+        self.Pieza = Pieza
+        self.Cantidad = Cantidad
+        self.PrecioPieza = PrecioPieza
+        self.Concesionario = Concesionario
 
-    def getPorcentajeOcupado(self):
-        return self.porcentajeOcupado
-    
-    def setPorcentajeOcupado(self, ocupado):
-        self.porcentajeOcupado = ocupado
-    
+    def getPieza(self):
+        return self.Pieza
+
+    def setPieza(self, pieza):
+        self.Pieza = pieza
+
+    def getCantidad(self):
+        return self.Cantidad
+
+    def setCantidad(self, cantidad):
+        self.Cantidad = cantidad
+
+    def getPrecioPieza(self):
+        return self.PrecioPieza
+
+    def setPrecioPieza(self, precio):
+        self.PrecioPieza = precio
+
     def getConcesionario(self):
-        return self.concesionario
-    
-    def setConcesionario(self, con):
-        self.concesionario = con
-        
-    def toString(self):
-        return f"Capacidad = {self.getCapacidad()}, piezas={self.getPiezas()}, porcentajeOcupado={self.getPorcentajeOcupado()}"
-    
+        return self.Concesionario
+
+    def setConcesionario(self, concesionario):
+        self.Concesionario = concesionario
+
     def __str__(self):
-        return self.toString()
+        return f"Pieza: {self.Pieza}, Cantidad: {self.Cantidad}, PrecioPieza: {self.PrecioPieza}, Concesionario: {self.Concesionario}"

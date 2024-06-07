@@ -4,12 +4,14 @@ USE datoscofermotor;
 #insert into plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario)
 #VALUES ("71479447R", 1234, "Nain", "Miguel", "Sanchez", 1200, "administrador", "Cofermotor1"); 
 #select * FROM plantillatrabajadores;
-SELECT * FROM clientes;
+SELECT * FROM plantillatrabajadores;	
 #SELECT * FROM concesionario;
 #DROP TABLE plantillatrabajadores;
-#DESCRIBE clientes;
+#DESCRIBE vehiculos;
 #DROP TABLE vehiculos;
 #ALTER TABLE clientes MODIFY COLUMN Contrasenia VARCHAR(65) NOT NULL;
+#ALTER TABLE plantillaTrabajadores DROP CONSTRAINT plantillatrabajadores_chk_1;
+
 
 /*
 CREATE TABLE concesionario (
@@ -49,31 +51,36 @@ CREATE TABLE vehiculos (
     CONSTRAINT VehiculoConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */
+#DROP TABLE pago;
+#DROP TABLE ventas;
 /*
 CREATE TABLE ventas (
     IDventa INT AUTO_INCREMENT PRIMARY KEY,
     FechaVenta DATE NOT NULL,
     IDvehiculo VARCHAR(18) NULL,
+    Repara varchar(2) NULL,
     IDcliente VARCHAR(9) NOT NULL,
     Piezas TEXT NULL,
+    Cantidad TEXT NULL,
     Concesionario VARCHAR(20) NOT NULL,
-    CONSTRAINT VentasConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
+    CONSTRAINT VentasConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */
+#DROP TABLE almacen
 /*
 CREATE TABLE almacen (
-    Capacidad INT DEFAULT 50 NOT NULL,
-    Piezas TEXT,
-    PorcentajeOcupado INT NOT NULL,
+    Pieza varchar(150) PRIMARY KEY,
+    Cantidad int NOT NULL,
+    PrecioPieza DECIMAL(10,2) NOT NULL,
     Concesionario VARCHAR(20) NOT NULL,
-    CONSTRAINT AlmacenConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
+    CONSTRAINT AlmacenConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
+/*
 CREATE TABLE taller (
     horario VARCHAR(20) NOT NULL,
     Maquinaria TEXT,
     Concesionario VARCHAR(20) NOT NULL,
-    CONSTRAINT TallerConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
+    CONSTRAINT TallerConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */
 /*
@@ -89,37 +96,15 @@ CREATE TABLE plantillaTrabajadores (
     CONSTRAINT TrabajadorConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */
+
 /*
-CREATE TABLE administrador (
-    IDadmin VARCHAR(9) PRIMARY KEY NOT NULL,
-    CONSTRAINT FK_IDtrabajador FOREIGN KEY (IDadmin) REFERENCES plantillaTrabajadores(IDtrabajador)
-);
-
-CREATE TABLE jefeZona (
-    IDjefeZona VARCHAR(9) PRIMARY KEY NOT NULL,
-    CONSTRAINT FK_IDtrabajador1 FOREIGN KEY (IDjefeZona) REFERENCES plantillaTrabajadores(IDtrabajador)
-);
-
-CREATE TABLE jefeDepartamento (
-    IDjefeDepart VARCHAR(9) PRIMARY KEY NOT NULL,
-    JefeZona VARCHAR(9) NOT NULL,
-    CONSTRAINT FK_IDtrabajador2 FOREIGN KEY (IDjefeDepart) REFERENCES plantillaTrabajadores(IDtrabajador),
-    CONSTRAINT JefeZonaJefeDepartamento FOREIGN KEY (JefeZona) REFERENCES jefeZona(IDjefeZona)
-);
-
-CREATE TABLE personal (
-    IDpersonal VARCHAR(9) PRIMARY KEY NOT NULL,
-    JefeDepartamento VARCHAR(9) NOT NULL,
-    CONSTRAINT FK_IDtrabajador3 FOREIGN KEY (IDpersonal) REFERENCES plantillaTrabajadores(IDtrabajador),
-    CONSTRAINT JefeDepartamentoPersonal FOREIGN KEY (JefeDepartamento) REFERENCES jefeDepartamento(IDjefeDepart)
-);
-
 CREATE TABLE pago (
     IDpago INT PRIMARY KEY NOT NULL,
-    FacturaPDF LONGBLOB,
-    CONSTRAINT VentaPago FOREIGN KEY (IDpago) REFERENCES ventas(IDventa),
+    #FacturaPDF LONGBLOB,
+    Precio DECIMAL(10, 2) NOT NULL,
+    CONSTRAINT VentaPago FOREIGN KEY (IDpago) REFERENCES ventas(IDventa) ON UPDATE CASCADE ON DELETE CASCADE,
 	Concesionario varchar(20),
-	CONSTRAINT FK_PagoConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre)
+	CONSTRAINT FK_PagoConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 
 );
 */

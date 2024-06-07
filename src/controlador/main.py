@@ -21,6 +21,9 @@ from src.vista.VentanaConcesionario import Ui_MainWindow4
 from src.vista.VentanaTrabajadores import Ui_MainWindow5
 from src.vista.VentanaClientes import Ui_MainWindow6
 from src.vista.VentanaVehiculos import Ui_MainWindow7
+from src.vista.VentanaVentas import Ui_MainWindow8
+from src.vista.VentanaAlmacen import Ui_MainWindow9
+from src.vista.VentanaParaClientes import Ui_MainWindowClientes
 from src.vista.funciones import *
 
 import Imagespy.imagen_rc
@@ -58,22 +61,18 @@ def comprobarSesion():
 
     elif a[0] == "cliente":
         ui_ventana2_ui.hacerVisible(False)
-        mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
-        ui_ventana3_ui.hola_2.setText(a[1])
-        ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
+        mostrar_ventana(ventanaIniciarSesion, ventanaParaClientes)
+        ui_ventana_Clientes.hola_2.setText(a[1])
+        ui_ventana_Clientes.concesionario.setText(a[2])
+        ui_ventana_Clientes.BuscarVeh.clicked.connect(lambda: ui_ventana_Clientes.mostrarVehiculos(a[2]))
+
+        ui_ventana_Clientes.botonComprarVeh.clicked.connect(ui_ventana_Clientes.obtener_datos_ingresados)
+        ui_ventana_Clientes.botonReparar.clicked.connect(ui_ventana_Clientes.obtener_datos_ingresados)
         
-        ui_ventana4_ui.atras.clicked.connect(lambda: atras2(ventanaConcesionario, ventanaAdmin))
-        ui_ventana4_ui.botonAniadirModificar.clicked.connect(ui_ventana4_ui.obtener_datos_ingresados)
-        ui_ventana4_ui.botonEliminar.clicked.connect(ui_ventana4_ui.obtener_datos_ingresados)
-        ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
+        
+        
 
-        ui_ventana3_ui.Trabajador.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaTrabajadores))
-        ui_ventana5_ui.atras.clicked.connect(lambda: atras2(ventanaTrabajadores, ventanaAdmin))
-        ui_ventana5_ui.botonAniadirModificar.clicked.connect(ui_ventana5_ui.obtener_datos_ingresados)
-        ui_ventana5_ui.botonEliminar.clicked.connect(ui_ventana5_ui.obtener_datos_ingresados)
-        ui_ventana5_ui.BuscarTra.clicked.connect(ui_ventana5_ui.mostrarTrabajadores)
-
-    elif a[0] in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
+    elif a[0] in ['administrador', 'jefeZona', 'personal', 'jefeVentas', 'jefeAlmacen', 'jefeTaller', 'jefeClientes']:
         ui_ventana2_ui.hacerVisible(False)
         if a[0] == "administrador":
             ui_ventana2_ui.hacerVisible(False)
@@ -103,11 +102,32 @@ def comprobarSesion():
             ui_ventana7_ui.botonAniadirModificar.clicked.connect(ui_ventana7_ui.obtener_datos_ingresados)
             ui_ventana7_ui.botonEliminar.clicked.connect(ui_ventana7_ui.obtener_datos_ingresados)
             ui_ventana7_ui.BuscarVeh.clicked.connect(ui_ventana7_ui.mostrarVehiculos)
+
+            ui_ventana3_ui.ventas.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaVentas))
+            ui_ventana8_ui.atras.clicked.connect(lambda: atras2(ventanaVentas, ventanaAdmin))
+            ui_ventana8_ui.botonAniadirModificar.clicked.connect(ui_ventana8_ui.obtener_datos_ingresados)
+            ui_ventana8_ui.botonEliminar.clicked.connect(ui_ventana8_ui.obtener_datos_ingresados)
+            ui_ventana8_ui.BuscarVen.clicked.connect(ui_ventana8_ui.mostrarVentas)
+
+            ui_ventana3_ui.Almacen.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaAlmacen))
+            ui_ventana9_ui.atras.clicked.connect(lambda: atras2(ventanaAlmacen, ventanaAdmin))
+            ui_ventana9_ui.botonAniadirModificar.clicked.connect(ui_ventana9_ui.obtener_datos_ingresados)
+            ui_ventana9_ui.botonEliminar.clicked.connect(ui_ventana9_ui.obtener_datos_ingresados)
+            ui_ventana9_ui.BuscarPieza.clicked.connect(ui_ventana9_ui.mostrarAlmacenes)
         
         elif a[0] == "jefeZona":
             pass
 
-        elif a[0] == "jefeDepartamento":
+        elif a[0] == "jefeVentas":
+            pass
+
+        elif a[0] == "jefeAlmacen":
+            pass
+        
+        elif a[0] == "jefeTaller":
+            pass
+
+        elif a[0] == "jefeClientes":
             pass
 
         elif a[0] == "personal":
@@ -155,6 +175,18 @@ def sync_checkbox_state(state, origin, target):
     elif origin == ui_ventana3_ui.checkBox and target == ui_ventana7_ui.checkBox:
         modoClOs(ui_ventana7_ui.checkBox, ui_ventana7_ui.label, ui_ventana7_ui.lista, ui_ventana7_ui.listaFrames, ui_ventana7_ui.listaTexto, ui_ventana7_ui.ayuda)
     elif origin == ui_ventana7_ui.checkBox and target == ui_ventana3_ui.checkBox:
+        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+
+    #caso ventanaAdmin-VentanaVentas
+    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana8_ui.checkBox:
+        modoClOs(ui_ventana8_ui.checkBox, ui_ventana8_ui.label, ui_ventana8_ui.lista, ui_ventana8_ui.listaFrames, ui_ventana8_ui.listaTexto, ui_ventana8_ui.ayuda)
+    elif origin == ui_ventana8_ui.checkBox and target == ui_ventana3_ui.checkBox:
+        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+
+    #caso ventanaAdmin-VentanaAlmacen
+    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana9_ui.checkBox:
+        modoClOs(ui_ventana9_ui.checkBox, ui_ventana9_ui.label, ui_ventana9_ui.lista, ui_ventana9_ui.listaFrames, ui_ventana9_ui.listaTexto, ui_ventana9_ui.ayuda)
+    elif origin == ui_ventana9_ui.checkBox and target == ui_ventana3_ui.checkBox:
         modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
 
     target.blockSignals(False)
@@ -205,6 +237,21 @@ if __name__ == "__main__":
     ui_ventana7_ui.setupUi(ventanaVehiculos)
     ventanaVehiculos.hide()
 
+    ventanaVentas = QtWidgets.QMainWindow()
+    ui_ventana8_ui = Ui_MainWindow8()
+    ui_ventana8_ui.setupUi(ventanaVentas)
+    ventanaVentas.hide()
+
+    ventanaAlmacen = QtWidgets.QMainWindow()
+    ui_ventana9_ui = Ui_MainWindow9()
+    ui_ventana9_ui.setupUi(ventanaAlmacen)
+    ventanaAlmacen.hide()
+
+    ventanaParaClientes = QtWidgets.QMainWindow()
+    ui_ventana_Clientes = Ui_MainWindowClientes()
+    ui_ventana_Clientes.setupUi(ventanaParaClientes)
+    ventanaParaClientes.hide()
+
     # A cada ventada hay que asignarle un coordinador. Un mismo controlador puede controlar varias ventanas
     #ventanaRegistroConcesionario.setCoordinador(controlador)
     ui_ventana1.setCoordinador(controlador)
@@ -214,6 +261,9 @@ if __name__ == "__main__":
     ui_ventana5_ui.setCoordinador(controlador)
     ui_ventana6_ui.setCoordinador(controlador)
     ui_ventana7_ui.setCoordinador(controlador)
+    ui_ventana8_ui.setCoordinador(controlador)
+    ui_ventana9_ui.setCoordinador(controlador)
+    ui_ventana_Clientes.setCoordinador(controlador)
 
 
     # Al coordinador hay que asignarle una ventana. Un coordinador puede tener referencias a varias ventanas
@@ -225,11 +275,15 @@ if __name__ == "__main__":
     controlador.setViewVentanaTrabajadores(controlador)
     controlador.setViewVentanaClientes(controlador)
     controlador.setViewVentanaVehiculos(controlador)
+    controlador.setViewVentanaParaClientes(controlador)
+    controlador.setViewVentanaAlmacen(controlador)
+    controlador.setViewRegistroVentas(controlador)
 
     ventana_principal.show()
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
     
     ui_ventana3_ui.atras.clicked.connect(lambda: atras2(ventanaAdmin, ventanaIniciarSesion))
+    ui_ventana_Clientes.atras.clicked.connect(lambda: atras2(ventanaParaClientes, ventanaIniciarSesion))
     
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -251,13 +305,15 @@ if __name__ == "__main__":
                 connect_checkboxes(ui_elements[i], ui_elements[j])
 
     # En el código que cambia de ventana, conecta las casillas de verificación
-    ui_elements = [ui_ventana3_ui, ui_ventana4_ui, ui_ventana5_ui, ui_ventana6_ui, ui_ventana7_ui]
+    ui_elements = [ui_ventana3_ui, ui_ventana4_ui, ui_ventana5_ui, ui_ventana6_ui, ui_ventana7_ui, ui_ventana8_ui, ui_ventana9_ui]
     connect_all_checkboxes(ui_elements)
 
+########################################################################################################################################################
+########################################################################################################################################################
+########################################################################################################################################################
+########################################################################################################################################################
 
-
-
-
+    #borra los pycache automaticamente al cerrar la aplicacion
     app.aboutToQuit.connect(lambda: borrar_pycache(directorio_proyecto))
 
     sys.exit(app.exec_())

@@ -11,32 +11,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from src.vista.funciones import *
 
-
-class BorderedTextLabel(QtWidgets.QLabel):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setStyleSheet("color: white;")  # Set text color to white
-        
-
-    def paintEvent(self, event):
-        painter = QtGui.QPainter(self)
-        pen = QtGui.QPen(QtCore.Qt.black, 2, QtCore.Qt.SolidLine)
-        painter.setPen(pen)
-
-        # Draw the text with a border
-        for dx in range(-1, 2):
-            for dy in range(-1, 2):
-                if dx != 0 or dy != 0:
-                    painter.drawText(self.rect().adjusted(dx, dy, dx, dy), QtCore.Qt.AlignCenter, self.text())
-
-        # Draw the text itself
-        pen.setColor(QtCore.Qt.white)
-        painter.setPen(pen)
-        painter.drawText(self.rect(), QtCore.Qt.AlignCenter, self.text())
-        painter.end()
-
-
-
 class Ui_MainWindow3(object):
     def __init__(self, coord=None):
         self.coordinador = coord
@@ -75,6 +49,7 @@ class Ui_MainWindow3(object):
         font.setWeight(75)
         self.hola_2.setFont(font)
         self.hola_2.setText("")
+        self.hola_2.setAlignment(Qt.AlignLeft) 
         self.hola_2.setObjectName("hola_2")
 
         self.Trabajador = QtWidgets.QPushButton(self.centralwidget)
@@ -107,6 +82,16 @@ class Ui_MainWindow3(object):
         self.vehiculos.setObjectName("Vehiculos")
         self.vehiculos.setToolTip("Añade, elimina, modifica o busca vehiculos")
 
+        self.ventas = QtWidgets.QPushButton(self.centralwidget)
+        self.ventas.setGeometry(QtCore.QRect(20, 580, 151, 41))
+        self.ventas.setObjectName("Ventas")
+        self.ventas.setToolTip("Añade, elimina, modifica o busca ventas")
+
+        self.pago = QtWidgets.QPushButton(self.centralwidget)
+        self.pago.setGeometry(QtCore.QRect(940, 580, 151, 41))
+        self.pago.setObjectName("Pagos")
+        self.pago.setToolTip("Añade, elimina, modifica o busca pagos")
+
         #self.combo_box = QtWidgets.QComboBox(self.centralwidget)
         #self.combo_box.setGeometry(1040, 10, 180, 30)
         #self.combo_box.setStyleSheet("background-color: transparent; border: 2px solid white; color: white; border-radius: 10px;")
@@ -120,7 +105,7 @@ class Ui_MainWindow3(object):
         self.atras = setAtras(self.centralwidget)
         
         
-        self.lista = [self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen, self.vehiculos]
+        self.lista = [self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen, self.vehiculos, self.ventas, self.pago]
         
         
         self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.imagen, self.lista))
@@ -143,6 +128,8 @@ class Ui_MainWindow3(object):
         self.Concesionario.setText(_translate("MainWindow", "Concesionarios"))
         self.Almacen.setText(_translate("MainWindow", "Almacenes"))
         self.vehiculos.setText(_translate("MainWindow", "Vehiculos"))
+        self.ventas.setText(_translate("MainWindow", "Ventas"))
+        self.pago.setText(_translate("MainWindow", "Pago"))
         self.checkBox.setText(_translate("MainWindow", "Modo oscuro"))
 
 

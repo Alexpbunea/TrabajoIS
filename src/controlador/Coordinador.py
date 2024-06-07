@@ -85,8 +85,36 @@ class Coordinador:
 
     def setViewRegistroConcesionario(self, view):
         self._viewRegistroConcesionario = view
+
+    def getViewRegistroVentas(self):
+        return self._ViewRegistroVentas
+
+    def setViewRegistroVentas(self, view):
+        self._viewRegistroVentas = view
+
+
+    def getViewVentanaAlmacen(self):
+        return self._ViewVentanaAlmacen
+
+    def setViewVentanaAlmacen(self, view):
+        self._ViewVentanaAlmacen = view
+   
+
+
+    def getViewVentanaParaCliente(self):
+        return self._viewRegistroCliente
+
+    def setViewVentanaParaClientes(self, view):
+        self._viewVentanaParaClientes = view
     
-    ##############################################
+    ##########################################################################################################################################
+    ##########################################################################################################################################
+    ##########################################################################################################################################
+    ##########################################################################################################################################
+    ##########################################################################################################################################
+    ##########################################################################################################################################
+
+
     def comprobarIniciarSesion(self, usuario, usuario2):
        a = self._model.comprobar_Dni_contrasenia(usuario, usuario2)
        return a
@@ -122,4 +150,25 @@ class Coordinador:
        return a
     def obtenerVehiculos(self):
        a = self._model.obtener_todos_vehiculos()
+       return a
+    
+    def registrarPieza(self, usuario, queHago):
+        a = self._model.validar_registro_piezas(usuario, queHago)
+        return a
+    def obtenerPiezas(self):
+       a = self._model.obtener_todas_piezas()
+       return a
+  
+
+    def registrarVenta(self, usuario, queHago):
+        a = self._model.validar_registro_ventas(usuario, queHago)
+        return a
+    def obtenerVentas(self):
+       a = self._model.obtener_todas_ventas()
+       return a
+
+    
+   #AQUI LOS CLIENTES ENVIARAN LA NOTIFICACION DE COMPRA AL PERSONAL
+    def registrarNotificacionCompra(self, usuario, queHago):
+       a = self._model.comprarReparaVehiculoCliente(usuario, queHago)
        return a

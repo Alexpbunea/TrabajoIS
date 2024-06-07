@@ -8,6 +8,34 @@ negro = "#282e2a"
 _translate = QtCore.QCoreApplication.translate
 
 
+#CLASE PARA QUE LAS LETRAS DE ARRIBA TENGAN UNA LINEA DE CONTORNO NEGRA POR SI NO SE VEN
+class BorderedTextLabel(QtWidgets.QLabel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setStyleSheet("color: white;")  # Set text color to white
+        
+
+    def paintEvent(self, event):
+        painter = QtGui.QPainter(self)
+        pen = QtGui.QPen(QtCore.Qt.black, 2, QtCore.Qt.SolidLine)
+        painter.setPen(pen)
+
+        # Draw the text with a border
+        for dx in range(-1, 2):
+            for dy in range(-1, 2):
+                if dx != 0 or dy != 0:
+                    painter.drawText(self.rect().adjusted(dx, dy, dx, dy), QtCore.Qt.AlignLeft, self.text())
+
+        # Draw the text itself
+        pen.setColor(QtCore.Qt.white)
+        painter.setPen(pen)
+        painter.drawText(self.rect(), QtCore.Qt.AlignLeft, self.text())
+        painter.end()
+
+
+
+
+
 
 #funcion atras presente en todas las ventanas
 def setAtras(centralWidget):
@@ -124,6 +152,60 @@ def ayuda(centralwiddget, dondeEstoy=None):
                         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ej: &quot;Cofermotor20&quot;</p>\n"
                         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         return textEdit
+    
+
+    elif dondeEstoy == "Ventana ventas":
+        textEdit.setGeometry(QtCore.QRect(110, 170, 221, 265))
+        textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                        "p, li { white-space: pre-wrap; }\n"
+                        "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Formato:</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">IDvehiculo: número bastidor idealmente</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Marca y modelo: Más de una letra</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Combustible: gasolina, eléctrico</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">             diésel, híbrido</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Km: Número positivo menor o</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    igual que 2000000</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre: Cofemotor + texto/num</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ej: &quot;Cofermotor20&quot;</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        return textEdit
+    
+    elif dondeEstoy == "Ventana almacen":
+        textEdit.setGeometry(QtCore.QRect(110, 170, 221, 265))
+        textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                        "p, li { white-space: pre-wrap; }\n"
+                        "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Formato:</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">IDvehiculo: número bastidor idealmente</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Marca y modelo: Más de una letra</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Combustible: gasolina, eléctrico</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">             diésel, híbrido</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Km: Número positivo menor o</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    igual que 2000000</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre: Cofemotor + texto/num</p>\n"
+                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ej: &quot;Cofermotor20&quot;</p>\n"
+                        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        return textEdit
+    
+    elif dondeEstoy == "Ventana para clientes":
+        textEdit.setGeometry(QtCore.QRect(200, 180, 221, 200))
+
+        return textEdit
 
 
 
@@ -152,7 +234,7 @@ def show_incorrecto_for_5_seconds(incorrecto):
 
 
 #FUNCIONES DE LA VISIBILIDAD, OSCULTAR O MOSTRAR FRAMES
-def toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda):
+def toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda=None):
     if frame2.isVisible(): 
         frame2_visibility(frame1, frame2, tabla, barra, ayuda)
     elif tabla.isVisible():
@@ -165,7 +247,7 @@ def toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda):
         ayuda.setVisible(not current_visibility)
     
 
-def frame2_visibility(frame1, frame2, tabla, barra, ayuda):
+def frame2_visibility(frame1, frame2, tabla, barra, ayuda=None):
     if frame1.isVisible():
         toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda)
     elif tabla.isVisible():
@@ -177,7 +259,7 @@ def frame2_visibility(frame1, frame2, tabla, barra, ayuda):
     else:
         ayuda.setVisible(False)
 
-def tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda):
+def tablaYbusquedaVisibilidad(frame1, frame2, tabla, barra, ayuda=None):
     if frame1.isVisible():
         toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda)
     elif frame2.isVisible(): 

@@ -7,16 +7,17 @@ Created on Fri May  3 13:19:20 2024
 
 from jaydebeapi import Error
 from typing import List
-from src.modelo.vo.AlmacenVO import AlmacenVO
+from src.modelo.vo.AlmacenVO import AlmacenVO as Almacen
 from src.modelo.conexion.conexionJava import Conexion
 from src.modelo.dao.AlmacenInterface import AlmacenInterface
 
 class AlmacenDao(AlmacenInterface, Conexion):
-    # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT Capacidad, Piezas, PorcentajeOcupado, Concesionario FROM Almacen"
-    SQL_INSERT = "INSERT INTO Almacen(Capacidad, Piezas, PorcentajeOcupado, Concesionario) VALUES (?, ?, ?, ?)"
+    SQL_SELECT = "SELECT Pieza, Cantidad, PrecioPieza, Concesionario FROM almacen"
+    SQL_INSERT = "INSERT INTO almacen (Pieza, Cantidad, PrecioPieza, Concesionario) VALUES (?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE almacen SET Cantidad=?, PrecioPieza=?, Concesionario=? WHERE Pieza=?"
+    SQL_DELETE = "DELETE FROM almacen WHERE Pieza=?"
 
-    def getAlmacenes(self) -> List[AlmacenVO]:
+    def getAlmacenes(self) -> List[Almacen]:
         conexion = self.getConnection()
         conn = None
         cursor = None
@@ -26,37 +27,25 @@ class AlmacenDao(AlmacenInterface, Conexion):
             if conexion:
                 conn = conexion             
             else:
-                print("La base de datos no esta disponible")            
-            # Crea un objeto para poder ejecutar consultas SQL sobre la conexion abierta
+                print("La base de datos no está disponible")            
             cursor = conn.cursor()
-            # Ejecuta la consulta SQL
             cursor.execute(self.SQL_SELECT)
-            # Obtiene todas las filas resultantes de la consulta
             rows = cursor.fetchall()
-            # Itera sobre todas las filas
             for row in rows:
-                capacidad, piezas , PorcentajeOcupado, concesionario = row
-                # Crea un objeto AlmacenVO para cada fila
-                almacen = AlmacenVO()
-                almacen.setCapacidad(capacidad)
-                almacen.setPiezas(piezas)
-                almacen.setPorcentajeOcupado(PorcentajeOcupado)
-                almacen.setConcesionario(concesionario)
+                Pieza, Cantidad, PrecioPieza, Concesionario = row
+                almacen = Almacen(Pieza, Cantidad, PrecioPieza, Concesionario)
                 almacenes.append(almacen)
 
         except Error as e:
             print("Error al seleccionar almacenes:", e)
-        # Se ejecuta siempre
         finally:
             if cursor:
-                # Cierra el cursor para liberar recursos
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        conexion = self.close(conn)
         return almacenes
-    
 
-    def insertAlmacen(self, almacen: AlmacenVO) -> int:
+    def insertAlmacen(self, almacen: Almacen) -> int:
         conexion = self.getConnection()
         conn = None
         cursor = None
@@ -65,21 +54,68 @@ class AlmacenDao(AlmacenInterface, Conexion):
         try:
             if conexion:
                 conn = conexion 
-            
             else:
-                print("La base de datos no esta disponible")
+                print("La base de datos no está disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_INSERT, (almacen.getCapacidad(), almacen.getPiezas(), almacen.getPorcentajeOcupado(), almacen.getConcesionario()))
-            
+            cursor.execute(self.SQL_INSERT, (almacen.getPieza(), almacen.getCantidad(), almacen.getPrecioPieza(), almacen.getConcesionario()))
             rows = cursor.rowcount
 
         except Error as e:
-            print("Error al insertar almacén:", e)
+            print("Error al insertar almacen:", e)
 
         finally:
             if cursor:
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        conexion = self.close(conn)
+        return rows
 
+    def updateAlmacen(self, almacen: Almacen) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion 
+            else:
+                print("La base de datos no está disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_UPDATE, (almacen.getCantidad(), almacen.getPrecioPieza(), almacen.getConcesionario(), almacen.getPieza()))
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al actualizar almacen:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+        conexion = self.close(conn)
+        return rows
+
+    def deleteAlmacen(self, pieza: str) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion 
+            else:
+                print("La base de datos no está disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_DELETE, (pieza,))
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al eliminar almacen:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+        conexion = self.close(conn)
         return rows

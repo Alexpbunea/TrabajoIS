@@ -125,8 +125,8 @@ class Logica:
         try:   
             for cliente in clientes:
                 if cliente.getIDcliente() == mi_persona.getIDcliente() and self.verificar_contrasenia(mi_persona.getContrasenia(), cliente.getContrasenia()):
-                    print(f"Bienvenido/a cliente --> {cliente.getNombre()}")
-                    return ('cliente',cliente.getNombre())
+                    print(f"Bienvenido/a cliente --> {cliente.getNombre()}, {cliente.getConcesionario()}")
+                    return ('cliente',cliente.getNombre(), cliente.getConcesionario())
 
             for trab in trabajadores:
                 if trab.getIDtrabajador() == mi_trabajador.getIDtrabajador() and self.verificar_contrasenia(mi_trabajador.getContrasenia(), trab.getContrasenia()):
@@ -135,7 +135,7 @@ class Logica:
             
             else:
                 print("No existe ningun trabajador ni ningun cliente con esas credenciales")
-                return 'invalido'
+                return ("Error",'invalido')
         except:    
             messagebox.showwarning("Advertencia", "Error al iniciar sesion")
 
@@ -260,7 +260,7 @@ class Logica:
 
     #FUNCIONES PARA LA VENTANA TRABAJADOR
     def validar_registro_trabajador(self, mi_trabajador: PlantillaTrabajadorVO, queHago):
-        if queHago == "aniadir":
+        if queHago == "aniadir" or queHago == "modificar":
             try:
                 IDtrabajador = mi_trabajador.getIDtrabajador()
                 contrasenia = str(mi_trabajador.getContrasenia())
@@ -292,8 +292,10 @@ class Logica:
                 except:
                     return ("Error", "Verifica nombre y apellidos")
 
+                print(rol)
                 #Compruebo el rol
-                if rol not in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
+                if rol not in ['administrador', 'jefeZona', 'personal', 'jefeVentas', 'jefeAlmacen', 'jefeTaller', 'jefeClientes']:
+                    
                     print("El rol escrito no es posible en la empresa")
                     return ("Error", "El rol escrito no es posible en la empresa")
 
@@ -313,10 +315,31 @@ class Logica:
                     return ("Error", "El concesionario no existe")
 
                 mi_trabajador_dao = TrabajadorDao()
-                mi_trabajador_dao.insertTrabajador(mi_trabajador)
-                return ("Correcto", "Has introducido bien los datos")
+
+                if queHago == "aniadir":
+                    mi_trabajador_dao.insertTrabajador(mi_trabajador)
+                    return ("Correcto", "Has introducido bien los datos")
+                
+                elif queHago == "modificar":
+                    trabajadores = mi_trabajador_dao.getTrabajadores()
+                    for trab in trabajadores:
+                        if trab.getIDtrabajador() == IDtrabajador:
+                            trab.setContrasenia(mi_trabajador.getContrasenia())
+                            trab.setNombre(mi_trabajador.getNombre())
+                            trab.setApellido1(mi_trabajador.getApellido1())
+                            trab.setApellido2(mi_trabajador.getApellido2())
+                            trab.setSueldo(mi_trabajador.getSueldo())
+                            trab.setRol(mi_trabajador.getRol())
+                            trab.setConcesionario(mi_trabajador.getConcesionario())
+                            mi_trabajador_dao.updateTrabajador(trab)
+                            mi_trabajador_dao.updateTrabajador(trab)
+                            print(f"Modificado correctamente el trabajador --> {IDtrabajador}, {nombre}")
+                            return ("Correcto", "Trabajador modificado correctamente")
+                
+                    return ("Error", "El trabajador no esta registrado")
+
             except:
-                messagebox.showwarning("Advertencia", "Error al insertar el trabajador")
+                messagebox.showwarning("Advertencia", "Error al insertar o modificar el trabajador")
 
         elif queHago == "eliminar":
             try:
@@ -335,66 +358,6 @@ class Logica:
             except:
                 messagebox.showwarning("Advertencia", "Error al eliminar el trabajador")
         
-        elif queHago == "modificar":
-            try:
-                IDtrabajador = mi_trabajador.getIDtrabajador()
-                contrasenia = mi_trabajador.getContrasenia()
-                nombre = mi_trabajador.getNombre()
-                apellido1 = mi_trabajador.getApellido1()
-                apellido2 = mi_trabajador.getApellido2()
-                sueldo = mi_trabajador.getSueldo()
-                rol = mi_trabajador.getRol()
-                concesionario = mi_trabajador.getConcesionario()
-                
-                try:
-                #Encripto la contrasenia
-                     # Encripto la contrasenia solo si ha cambiado
-                    contrasenia = self.encriptar_contrasenia(contrasenia)
-                    mi_trabajador.setContrasenia(contrasenia)
-                except:
-                    return ("Error", "CONTACTA CON LOS PROGRAMADORES")
-
-                #Compruebo el rol
-                if rol not in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
-                    print("El rol escrito no es posible en la empresa")
-                    return ("Error", "El rol escrito no es posible en la empresa")
-
-                #Comprobando el formato del nombre del concesionario
-                conc = self.comprobarFormatoConcesionario(concesionario)
-                if conc[0] == "Error":
-                    return conc
-                elif conc[0] == "Corregido":
-                    concesionario = conc[1]
-                    mi_trabajador.setConcesionario(concesionario)
-                else:
-                    pass #Esto significa que es correcto el formato del nombre
-
-                #compruebo si existe el concesionario en la base de datos
-                conc = self.comprobarExistenciaConcesionario(concesionario)
-                if conc is False:
-                    return ("Error", "El concesionario no existe")
-
-
-                mi_trabajador_dao = TrabajadorDao()
-                trabajadores = mi_trabajador_dao.getTrabajadores()
-
-                for trab in trabajadores:
-                    if trab.getIDtrabajador() == IDtrabajador:
-                        trab.setContrasenia(mi_trabajador.getContrasenia())
-                        trab.setNombre(mi_trabajador.getNombre())
-                        trab.setApellido1(mi_trabajador.getApellido1())
-                        trab.setApellido2(mi_trabajador.getApellido2())
-                        trab.setSueldo(mi_trabajador.getSueldo())
-                        trab.setRol(mi_trabajador.getRol())
-                        trab.setConcesionario(mi_trabajador.getConcesionario())
-                        mi_trabajador_dao.updateTrabajador(trab)
-                        mi_trabajador_dao.updateTrabajador(trab)
-                        print(f"Modificado correctamente el trabajador --> {IDtrabajador}, {nombre}")
-                        return ("Correcto", "Trabajador modificado correctamente")
-            
-                return ("Error", "El trabajador no esta registrado")
-            except:
-                messagebox.showwarning("Advertencia", "Error al modificar el trabajador")
     
     def obtener_todos_trabajadores(self):
         try:
@@ -681,7 +644,6 @@ class Logica:
                 
                 #####################################################################################
                 if queHago == "aniadir":
-                    print("Hola3")
                     mi_vehiculo_dao.insertVehiculo(mi_vehiculo)
                     return ("Correcto", "Has introducido bien los datos")
                 
@@ -691,9 +653,9 @@ class Logica:
 
                     for veh in vehiculos:
                         if veh.getIDvehiculo() == IDvehiculo:
-                            veh.setMarca(mi_vehiculo.getIDvehiculo())
-                            veh.setModelo(mi_vehiculo.getMarca())
-                            veh.setAnio(mi_vehiculo.getModelo())
+                            veh.setMarca(mi_vehiculo.getMarca())
+                            veh.setModelo(mi_vehiculo.getModelo())
+                            veh.setAnio(mi_vehiculo.getAnio())
                             veh.setCombustible(mi_vehiculo.getCombustible())
                             veh.setPrecio(mi_vehiculo.getPrecio())
                             veh.setKilometros(mi_vehiculo.getKilometros())
@@ -744,5 +706,263 @@ class Logica:
             return vehiculos_data
         except:
             messagebox.showwarning("Advertencia", "Error al buscar vehiculos")
+
+
+
+
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+
+
+
+    #FUNCIONES PARA LA VENTANA VENTAS
+    def validar_registro_ventas(self, mi_venta: Venta, queHago):
+        
+        mi_venta_dao = VentaDao()
+
+        if queHago == "aniadir" or queHago == "modificar":
+            try:
+                IDventa = mi_venta.getIDventa()
+                IDvehiculo = mi_venta.getIDvehiculo()
+                repara = mi_venta.getRepara()
+                IDcliente = mi_venta.getIDcliente()
+                piezas = mi_venta.getPiezas()
+                cantidad = mi_venta.getCantidad()
+                fecha = mi_venta.getFechaVenta()
+                concesionario = mi_venta.getConcesionario()
+                
+                # Paso la fecha al formato correcto
+                fecha_obj = datetime.strptime(fecha, '%d-%m-%Y')
+                fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
+                mi_venta.setFechaVenta(fecha_mysql)
+
+                # Compruebo números negativos
+                if cantidad and int(cantidad) < 0:
+                    return ("Error", "Cantidad menor a 0")
+
+                # Mayúsculas
+                if repara:
+                    repara = self.mayuscula(repara)
+                    if repara == "Error":
+                        return ("Error", "Error en repara")
+                    elif repara not in ["Si", "No"]:
+                        return ("Error", "Repara solo es 'Si' o 'No'")
+                    elif repara == "NO" and not IDvehiculo:
+                        return ("Error", "Estas comprando un vehiculo?")
+                    mi_venta.setRepara(repara)
+
+                # Comprobando el formato del nombre del concesionario
+                if concesionario:
+                    conc = self.comprobarFormatoConcesionario(concesionario)
+                    if conc[0] == "Error":
+                        return conc
+                    elif conc[0] == "Corregido":
+                        concesionario = conc[1]
+                        mi_venta.setConcesionario(concesionario)
+
+                    # Compruebo si existe el concesionario en la base de datos
+                    conc = self.comprobarExistenciaConcesionario(concesionario)
+                    if not conc:
+                        return ("Error", "El concesionario no existe")
+
+                # Realizar la inserción o modificación de la venta según el caso
+                if queHago == "aniadir":
+                    mi_venta_dao.insertVenta(mi_venta)
+                    return ("Correcto", "Has introducido bien los datos")
+                
+                elif queHago == "modificar":
+                    ventas = mi_venta_dao.getVentas()
+
+                    for ven in ventas:
+                        if ven.getIDventa() == int(IDventa):
+                            ven.setFechaVenta(mi_venta.getFechaVenta())
+                            ven.setIDvehiculo(mi_venta.getIDvehiculo())
+                            ven.setRepara(mi_venta.getRepara())
+                            ven.setIDcliente(mi_venta.getIDcliente())
+                            ven.setPiezas(mi_venta.getPiezas())
+                            ven.setCantidad(mi_venta.getCantidad())
+                            ven.setConcesionario(mi_venta.getConcesionario())
+                            mi_venta_dao.updateVenta(ven)
+                            print(f"Modificado correctamente la venta --> {IDventa}")
+                            return ("Correcto", "Venta modificado correctamente")
+                    
+                    return ("Error", "La venta no está registrada")
+
+            except Exception as e:
+                messagebox.showwarning("Advertencia", f"Error al insertar o modificar una venta: {str(e)}")
+                return ("Error", "Error al insertar o modificar una venta")
+
+        elif queHago == "eliminar":
+            try:
+                ID = mi_venta.getIDventa()
+                ventas = mi_venta_dao.getVentas()
+                print(ID)
+
+                for ven in ventas:
+                    if ven.getIDventa() == int(ID):
+                        print(f"Eliminando venta --> {ven.getIDventa()}")
+                        mi_venta_dao.deleteVenta(ID)
+                        return ("Correcto", "Has introducido bien los datos")
+                    
+                return ("Error", "Esa venta no está registrada")
+            except Exception as e:
+                messagebox.showwarning("Advertencia", f"Error al eliminar la venta: {str(e)}")
+                return ("Error", "Error al eliminar la venta")
+
+    def obtener_todas_ventas(self):
+        try:
+            mi_venta_dao = VentaDao()
+            ventas = mi_venta_dao.getVentas()
+            
+            ventas_data = []
+            for ven in ventas:
+                ventas_data.append({
+                    "IDventa": ven.getIDventa(),
+                    "FechaVenta": ven.getFechaVenta(),
+                    'IDvehiculo': ven.getIDvehiculo(),
+                    'Repara': ven.getRepara(),
+                    'IDcliente': ven.getIDcliente(),
+                    'Piezas': ven.getPiezas(),
+                    'Cantidad': ven.getCantidad(),
+                    'Concesionario': ven.getConcesionario()
+                })
+            return ventas_data
+        except Exception as e:
+            messagebox.showwarning("Advertencia", f"Error al buscar ventas: {str(e)}")
+
+
+
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+
+
+
+    #FUNCIONES PARA LA VENTANA VENTAS
+    def validar_registro_piezas(self, mi_almacen: AlmacenVO, queHago):
+        
+        mi_almacen_dao = AlmacenDao()
+
+        if queHago == "aniadir" or queHago == "modificar":
+            try:
+                pieza = mi_almacen.getPieza()
+                cantidad = mi_almacen.getCantidad()
+                precio_pieza = mi_almacen.getPrecioPieza()
+                concesionario = mi_almacen.getConcesionario()
+                
+
+                # Compruebo números negativos
+                if not cantidad:
+                    return ("Error", "Falta la cantidad")
+                elif int(cantidad) < 0:
+                    return ("Error", "Cantidad menor a 0")
+                
+                if not precio_pieza:
+                    return ("Error", "Falta el precio")
+                elif int(precio_pieza) < 0:
+                    return ("Error", "Precio negativo")
+
+
+                # Comprobando el formato del nombre del concesionario
+                if concesionario:
+                    conc = self.comprobarFormatoConcesionario(concesionario)
+                    if conc[0] == "Error":
+                        return conc
+                    elif conc[0] == "Corregido":
+                        concesionario = conc[1]
+                        mi_almacen.setConcesionario(concesionario)
+                else:
+                    return ("Error", "Falta el concesionario")
+
+                # Compruebo si existe el concesionario en la base de datos
+                conc = self.comprobarExistenciaConcesionario(concesionario)
+                if not conc:
+                    return ("Error", "El concesionario no existe")
+
+                # Realizar la inserción o modificación de la venta según el caso
+                if queHago == "aniadir":
+                    mi_almacen_dao.insertAlmacen(mi_almacen)
+                    return ("Correcto", "Has introducido bien los datos")
+                
+                elif queHago == "modificar":
+                    almacen = mi_almacen_dao.getAlmacenes()
+
+                    for a in almacen:
+                        if a.getPieza() == pieza:
+                            a.setCantidad(mi_almacen.getCantidad())
+                            a.setPrecioPieza(mi_almacen.getPrecioPieza())
+                            a.setConcesionario(mi_almacen.getConcesionario())
+                            mi_almacen_dao.updateAlmacen(a)
+                            print(f"Modificado correctamente la pieza --> {pieza}")
+                            return ("Correcto", "Pieza modificado correctamente")
+                    
+                    return ("Error", "La pieza no está registrada")
+
+            except Exception as e:
+                messagebox.showwarning("Advertencia", f"Error al insertar o modificar una pieza: {str(e)}")
+                return ("Error", "Error al insertar o modificar una pieza")
+
+        elif queHago == "eliminar":
+            try:
+                pieza = mi_almacen.getPieza()
+                almacen = mi_almacen_dao.getAlmacenes()
+
+                for a in almacen:
+                    if a.getPieza() == pieza:
+                        print(f"Eliminando venta --> {a.getPieza()}")
+                        mi_almacen_dao.deleteAlmacen(pieza)
+                        return ("Correcto", "Has introducido bien los datos")
+                    
+                return ("Error", "Esa pieza no está registrada")
+            except Exception as e:
+                messagebox.showwarning("Advertencia", f"Error al eliminar la pieza: {str(e)}")
+                return ("Error", "Error al eliminar la pieza")
+
+    def obtener_todas_piezas(self):
+        try:
+            mi_almacen_dao = AlmacenDao()
+            almacen = mi_almacen_dao.getAlmacenes()
+            
+            almacen_data = []
+            for a in almacen:
+                almacen_data.append({
+                    "Pieza": a.getPieza(),
+                    "Cantidad": a.getCantidad(),
+                    'Precio': a.getPrecioPieza(),
+                    'Concesionario': a.getConcesionario()
+                })
+            return almacen_data
+        except Exception as e:
+            messagebox.showwarning("Advertencia", f"Error al buscar piezas: {str(e)}")
+
+
+
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+
+    def comprarReparaVehiculoCliente(self, mi_vehiculo: Vehiculo, queHago):
+        try:
+            mi_vehiculo_dao = VehiculoDao()
+            if queHago == "Comprar":
+                vehiculos = mi_vehiculo_dao.getVehiculos()
+
+                for veh in vehiculos:
+                    if mi_vehiculo.getIDvehiculo() == veh.getIDvehiculo():
+                        print(f"Notificando al personal sobre tu compra --> {veh.getMarca()}, {veh.getModelo()}")
+                        return ("Correcto", "Notificando al personal")
+                return ("Error", "El ID introducido no es correcto")
+            
+            elif queHago == "Reparar":
+                print(f"Notificando al personal sobre tu repacacion --> {mi_vehiculo.IDvehiculo()}")
+                return ("Correcto", "Notificando al personal")
+        except:
+            messagebox.showwarning("Advertencia", "Error al buscar vehiculos")
+            return ("Error", "Envio de notificacion fallido")
+
     
 
