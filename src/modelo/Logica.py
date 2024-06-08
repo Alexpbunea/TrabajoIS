@@ -131,7 +131,7 @@ class Logica:
             for trab in trabajadores:
                 if trab.getIDtrabajador() == mi_trabajador.getIDtrabajador() and self.verificar_contrasenia(mi_trabajador.getContrasenia(), trab.getContrasenia()):
                     print(f"Bienvenido/a trabajador/a --> {trab.getNombre()}")
-                    return (trab.getRol(),trab.getNombre())
+                    return (trab.getRol(),trab.getNombre(), trab.getConcesionario())
             
             else:
                 print("No existe ningun trabajador ni ningun cliente con esas credenciales")
@@ -300,7 +300,7 @@ class Logica:
                     return ("Error", "El rol escrito no es posible en la empresa")
                 
                 if rol == "administrador":
-                    mi_trabajador.setRol("CofermotorTodos")
+                    mi_trabajador.setConcesionario("CofermotorTodos")
 
                 #Comprobando el formato del nombre del concesionario
                 conc = self.comprobarFormatoConcesionario(concesionario)

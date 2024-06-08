@@ -365,7 +365,7 @@ class Ui_MainWindow4(object):
         
         
 
-    def mostrasConcesionarios(self):
+    def mostrasConcesionarios(self, dondeEstoy=None, quienSoy=None):
         self.model.removeRows(0, self.model.rowCount())
 
         a = self.coordinador.obtenerConcesionarios()

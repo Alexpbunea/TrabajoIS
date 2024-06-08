@@ -375,6 +375,7 @@ class Ui_MainWindow5(object):
         self.aniadirTra.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.aniadirTra.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
 
+
         self.eliminarTra.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         
         self.ModificarTra.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))

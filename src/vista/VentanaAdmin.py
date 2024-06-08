@@ -52,6 +52,8 @@ class Ui_MainWindow3(object):
         self.hola_2.setAlignment(Qt.AlignLeft) 
         self.hola_2.setObjectName("hola_2")
 
+        self.c = concesionario(self.centralwidget)
+
         self.Trabajador = QtWidgets.QPushButton(self.centralwidget)
         self.Trabajador.setGeometry(QtCore.QRect(400, 650, 151, 41))
         self.Trabajador.setObjectName("Trabajador")

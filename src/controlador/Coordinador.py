@@ -120,6 +120,13 @@ class Coordinador:
 
     def setViewVentanaParaClientes(self, view):
         self._viewVentanaParaClientes = view
+      
+      
+    def getViewVentanaParaJefeZona(self):
+        return self._viewRegistroCliente
+
+    def setViewVentanaParaJefeZona(self, view):
+        self._viewVentanaParaClientes = view
     
     ##########################################################################################################################################
     ##########################################################################################################################################
@@ -138,8 +145,8 @@ class Coordinador:
        a = self._model.validar_registro_concesionario(usuario, queHago)
        #print(a)
        return a
-    def obtenerConcesionarios(self):
-       a = self._model.obtener_todos_concesionarios()
+    def obtenerConcesionarios(self, dondeEstoy=None, quienSoy=None):
+       a = self._model.obtener_todos_concesionarios(dondeEstoy, quienSoy)
        return a
 
 

@@ -10,10 +10,10 @@ _translate = QtCore.QCoreApplication.translate
 
 #CLASE PARA QUE LAS LETRAS DE ARRIBA TENGAN UNA LINEA DE CONTORNO NEGRA POR SI NO SE VEN
 class BorderedTextLabel(QtWidgets.QLabel):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, alignment=QtCore.Qt.AlignLeft):
         super().__init__(parent)
         self.setStyleSheet("color: white;")  # Set text color to white
-        
+        self.alignment = alignment  # Alineación por defecto
 
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
@@ -24,20 +24,20 @@ class BorderedTextLabel(QtWidgets.QLabel):
         for dx in range(-1, 2):
             for dy in range(-1, 2):
                 if dx != 0 or dy != 0:
-                    painter.drawText(self.rect().adjusted(dx, dy, dx, dy), QtCore.Qt.AlignLeft, self.text())
+                    painter.drawText(self.rect().adjusted(dx, dy, dx, dy), self.alignment, self.text())
 
         # Draw the text itself
         pen.setColor(QtCore.Qt.white)
         painter.setPen(pen)
-        painter.drawText(self.rect(), QtCore.Qt.AlignLeft, self.text())
+        painter.drawText(self.rect(), self.alignment, self.text())
         painter.end()
 
 
 
 
 def concesionario(centralWidget):
-    concesionario = BorderedTextLabel(centralWidget)
-    concesionario.setGeometry(QtCore.QRect(1020, 10, 211, 41))
+    concesionario = BorderedTextLabel(centralWidget, QtCore.Qt.AlignRight)
+    concesionario.setGeometry(QtCore.QRect(980, 10, 245, 41))
     font = QtGui.QFont()
     font.setPointSize(17)
     font.setBold(True)
