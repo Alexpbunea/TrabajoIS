@@ -86,6 +86,7 @@ class Coordinador:
     def setViewRegistroConcesionario(self, view):
         self._viewRegistroConcesionario = view
 
+    
     def getViewRegistroVentas(self):
         return self._ViewRegistroVentas
 
@@ -98,7 +99,20 @@ class Coordinador:
 
     def setViewVentanaAlmacen(self, view):
         self._ViewVentanaAlmacen = view
-   
+
+    
+    def getViewVentanaTaller(self):
+        return self._ViewVentanaTaller
+
+    def setViewVentanaTaller(self, view):
+        self._ViewVentanaTaller = view
+
+
+    def getViewVentanaPago(self):
+        return self._ViewVentanaPago
+
+    def setViewVentanaPago(self, view):
+        self._ViewVentanaPago = view
 
 
     def getViewVentanaParaCliente(self):
@@ -158,6 +172,14 @@ class Coordinador:
     def obtenerPiezas(self):
        a = self._model.obtener_todas_piezas()
        return a
+    
+
+    def registrarMaquinaria(self, usuario, queHago):
+        a = self._model.validar_registro_maquinaria(usuario, queHago)
+        return a
+    def obtenerMaquinaria(self):
+       a = self._model.obtener_todas_maquinas()
+       return a
   
 
     def registrarVenta(self, usuario, queHago):
@@ -165,6 +187,14 @@ class Coordinador:
         return a
     def obtenerVentas(self):
        a = self._model.obtener_todas_ventas()
+       return a
+    
+
+    def registrarPago(self, usuario, queHago):
+        a = self._model.validar_registro_pagos(usuario, queHago)
+        return a
+    def obtenerPagos(self):
+       a = self._model.obtener_todos_pagos()
        return a
 
     

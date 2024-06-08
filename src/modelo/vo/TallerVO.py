@@ -6,16 +6,17 @@ Created on Thu May  2 21:02:38 2024
 """
 
 class Taller:
-    def __init__(self, horario=None, Maquinaria=None, Concesionario=None):
-        self.horario = horario
+    def __init__(self, IDmaquinaria=None, Maquinaria=None, Cantidad=None, Concesionario=None):
+        self.IDmaquinaria = IDmaquinaria
         self.Maquinaria = Maquinaria
+        self.Cantidad = Cantidad
         self.Concesionario = Concesionario
 
-    def getHorario(self):
-        return self.horario
+    def getIDmaquinaria(self):
+        return self.IDmaquinaria
 
-    def setHorario(self, horario):
-        self.horario = horario
+    def setIDmaquinaria(self, id_maquinaria):
+        self.IDmaquinaria = id_maquinaria
 
     def getMaquinaria(self):
         return self.Maquinaria
@@ -23,14 +24,17 @@ class Taller:
     def setMaquinaria(self, maquinaria):
         self.Maquinaria = maquinaria
 
+    def getCantidad(self):
+        return self.Cantidad
+
+    def setCantidad(self, cantidad):
+        self.Cantidad = cantidad
+
     def getConcesionario(self):
         return self.Concesionario
 
     def setConcesionario(self, concesionario):
         self.Concesionario = concesionario
 
-    def toString(self):
-        return f"Horario = {self.getHorario()}, Maquinaria = {self.getMaquinaria()}, Concesionario = {self.getConcesionario()}"
-
     def __str__(self):
-        return self.toString()
+        return f"IDmaquinaria: {self.IDmaquinaria}, Maquinaria: {self.Maquinaria}, Cantidad: {self.Cantidad}, Concesionario: {self.Concesionario}"

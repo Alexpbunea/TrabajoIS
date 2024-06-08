@@ -24,6 +24,8 @@ from src.vista.VentanaVehiculos import Ui_MainWindow7
 from src.vista.VentanaVentas import Ui_MainWindow8
 from src.vista.VentanaAlmacen import Ui_MainWindow9
 from src.vista.VentanaParaClientes import Ui_MainWindowClientes
+from src.vista.VentanaTaller import Ui_MainWindow10
+from src.vista.VentanaPago import Ui_MainWindow11
 from src.vista.funciones import *
 
 import Imagespy.imagen_rc
@@ -114,7 +116,19 @@ def comprobarSesion():
             ui_ventana9_ui.botonAniadirModificar.clicked.connect(ui_ventana9_ui.obtener_datos_ingresados)
             ui_ventana9_ui.botonEliminar.clicked.connect(ui_ventana9_ui.obtener_datos_ingresados)
             ui_ventana9_ui.BuscarPieza.clicked.connect(ui_ventana9_ui.mostrarAlmacenes)
-        
+
+            ui_ventana3_ui.Taller.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaTaller))
+            ui_ventana10_ui.atras.clicked.connect(lambda: atras2(ventanaTaller, ventanaAdmin))
+            ui_ventana10_ui.botonAniadirModificar.clicked.connect(ui_ventana10_ui.obtener_datos_ingresados)
+            ui_ventana10_ui.botonEliminar.clicked.connect(ui_ventana10_ui.obtener_datos_ingresados)
+            ui_ventana10_ui.BuscarMaquinaria.clicked.connect(ui_ventana10_ui.mostrarTaller)
+
+            ui_ventana3_ui.pago.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaPagos))
+            ui_ventana11_ui.atras.clicked.connect(lambda: atras2(ventanaPagos, ventanaAdmin))
+            ui_ventana11_ui.botonAniadirModificar.clicked.connect(ui_ventana11_ui.obtener_datos_ingresados)
+            ui_ventana11_ui.botonEliminar.clicked.connect(ui_ventana11_ui.obtener_datos_ingresados)
+            ui_ventana11_ui.BuscarPago.clicked.connect(ui_ventana11_ui.mostrarPagos)
+
         elif a[0] == "jefeZona":
             pass
 
@@ -189,6 +203,18 @@ def sync_checkbox_state(state, origin, target):
     elif origin == ui_ventana9_ui.checkBox and target == ui_ventana3_ui.checkBox:
         modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
 
+    #caso ventanaAdmin-VentanaTaller
+    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana10_ui.checkBox:
+        modoClOs(ui_ventana10_ui.checkBox, ui_ventana10_ui.label, ui_ventana10_ui.lista, ui_ventana10_ui.listaFrames, ui_ventana10_ui.listaTexto, ui_ventana10_ui.ayuda)
+    elif origin == ui_ventana10_ui.checkBox and target == ui_ventana3_ui.checkBox:
+        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+    
+    #caso ventanaAdmin-VetanaPago
+    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana11_ui.checkBox:
+        modoClOs(ui_ventana11_ui.checkBox, ui_ventana11_ui.label, ui_ventana11_ui.lista, ui_ventana11_ui.listaFrames, ui_ventana11_ui.listaTexto, ui_ventana11_ui.ayuda)
+    elif origin == ui_ventana11_ui.checkBox and target == ui_ventana3_ui.checkBox:
+        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+
     target.blockSignals(False)
     
 
@@ -247,6 +273,16 @@ if __name__ == "__main__":
     ui_ventana9_ui.setupUi(ventanaAlmacen)
     ventanaAlmacen.hide()
 
+    ventanaTaller = QtWidgets.QMainWindow()
+    ui_ventana10_ui = Ui_MainWindow10()
+    ui_ventana10_ui.setupUi(ventanaTaller)
+    ventanaTaller.hide()
+
+    ventanaPagos = QtWidgets.QMainWindow()
+    ui_ventana11_ui = Ui_MainWindow11()
+    ui_ventana11_ui.setupUi(ventanaPagos)
+    ventanaPagos.hide()
+
     ventanaParaClientes = QtWidgets.QMainWindow()
     ui_ventana_Clientes = Ui_MainWindowClientes()
     ui_ventana_Clientes.setupUi(ventanaParaClientes)
@@ -263,6 +299,8 @@ if __name__ == "__main__":
     ui_ventana7_ui.setCoordinador(controlador)
     ui_ventana8_ui.setCoordinador(controlador)
     ui_ventana9_ui.setCoordinador(controlador)
+    ui_ventana10_ui.setCoordinador(controlador)
+    ui_ventana11_ui.setCoordinador(controlador)
     ui_ventana_Clientes.setCoordinador(controlador)
 
 
@@ -277,6 +315,8 @@ if __name__ == "__main__":
     controlador.setViewVentanaVehiculos(controlador)
     controlador.setViewVentanaParaClientes(controlador)
     controlador.setViewVentanaAlmacen(controlador)
+    controlador.setViewVentanaTaller(controlador)
+    controlador.setViewVentanaPago(controlador)
     controlador.setViewRegistroVentas(controlador)
 
     ventana_principal.show()
@@ -305,7 +345,7 @@ if __name__ == "__main__":
                 connect_checkboxes(ui_elements[i], ui_elements[j])
 
     # En el código que cambia de ventana, conecta las casillas de verificación
-    ui_elements = [ui_ventana3_ui, ui_ventana4_ui, ui_ventana5_ui, ui_ventana6_ui, ui_ventana7_ui, ui_ventana8_ui, ui_ventana9_ui]
+    ui_elements = [ui_ventana3_ui, ui_ventana4_ui, ui_ventana5_ui, ui_ventana6_ui, ui_ventana7_ui, ui_ventana8_ui, ui_ventana9_ui, ui_ventana10_ui, ui_ventana11_ui]
     connect_all_checkboxes(ui_elements)
 
 ########################################################################################################################################################

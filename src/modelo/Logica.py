@@ -608,9 +608,8 @@ class Logica:
                 try:
                     mi_vehiculo.setMarca(self.mayuscula(marca))
                     mi_vehiculo.setModelo(self.mayuscula(modelo))
-                    print("Hola-2")
+                    
                 except:
-                    print("Hola-1")
                     return ("Error", "Verifica marca y modelo")
 
                 print("Hola0")
@@ -841,7 +840,7 @@ class Logica:
 
 
 
-    #FUNCIONES PARA LA VENTANA VENTAS
+    #FUNCIONES PARA LA VENTANA ALMACEN
     def validar_registro_piezas(self, mi_almacen: AlmacenVO, queHago):
         
         mi_almacen_dao = AlmacenDao()
@@ -937,6 +936,268 @@ class Logica:
             return almacen_data
         except Exception as e:
             messagebox.showwarning("Advertencia", f"Error al buscar piezas: {str(e)}")
+
+
+
+
+
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+
+
+
+    #FUNCIONES PARA LA VENTANA PAGOS
+    def validar_registro_pagos(self, mi_pago: Pago, queHago):
+        
+        mi_pago_dao = PagoDao()
+        mi_venta_dao = VentaDao()
+        mi_vehiculo_dao = VehiculoDao()
+        mi_almacen_dao = AlmacenDao()
+
+        def precioCalculo(idventa):
+            ventas = mi_venta_dao.getVentas()
+            vehiculos = mi_vehiculo_dao.getVehiculos()
+            piezas = mi_almacen_dao.getAlmacenes()
+            
+            idvehiculo = 0
+            pieza = ""
+            cantidadPiezas = 0
+            precioPieza = 0
+            print("Hola0")
+            for i in ventas:
+                if int(i.getIDventa()) == int(idventa):
+                    print("Llego")
+                    if i.getRepara() == "No":
+                        print("Hola1")
+                        idvehiculo = int(i.getIDvehiculo())        
+                    
+                    elif i.getRepara() == "Si":
+                        print("Hola")
+                        pieza = i.getPiezas()
+                        cantidadPiezas = int(i.getCantidad())
+            if idvehiculo != 0:
+                print("hola3")
+                for i in vehiculos:
+                    if idvehiculo == int(i.IDvehiculo()):
+                        return i.getPrecio()
+                    
+            elif pieza != "":
+                print("Hola4")
+                for i in piezas:
+                    if pieza == i.getPieza():
+                        precioPieza = int(i.getPrecioPieza())
+                
+                return cantidadPiezas * precioPieza
+            
+            
+            return "Error"
+
+            
+
+        if queHago == "aniadir" or queHago == "modificar":
+            try:
+                IDpago = mi_pago.getIDpago()
+                precio = mi_pago.getPrecio()
+                Idventa = mi_pago.getIDventa()
+                concesionario = mi_pago.getConcesionario()
+                
+
+                # Compruebo números negativos
+                if not Idventa:
+                    return ("Error", "Falta el IDventa")
+                elif int(Idventa) < 0:
+                    return ("Error", "IDventa menor a 0")
+            
+                if not precio:
+                    precio = precioCalculo(Idventa)
+                    print(precio)
+                    if precio == "Error":
+                        return ("Error", "Error al calcular el precio")
+                    else:
+                        mi_pago.setPrecio(precio)
+
+                # Comprobando el formato del nombre del concesionario
+                if concesionario:
+                    conc = self.comprobarFormatoConcesionario(concesionario)
+                    if conc[0] == "Error":
+                        return conc
+                    elif conc[0] == "Corregido":
+                        concesionario = conc[1]
+                        mi_pago.setConcesionario(concesionario)
+                else:
+                    return ("Error", "Falta el concesionario")
+
+                # Compruebo si existe el concesionario en la base de datos
+                conc = self.comprobarExistenciaConcesionario(concesionario)
+                if not conc:
+                    return ("Error", "El concesionario no existe")
+
+                # Realizar la inserción o modificación de la venta según el caso
+                if queHago == "aniadir":
+                    mi_pago_dao.insertPago(mi_pago)
+                    return ("Correcto", "Has introducido bien los datos")
+                
+                elif queHago == "modificar":
+                    pagos = mi_pago_dao.getPagos()
+
+                    for a in pagos:
+                        if a.getIDpago() == int(IDpago):
+                            a.setPrecio(mi_pago.getCantidad())
+                            a.setIDventa(mi_pago.getPrecioPieza())
+                            a.setConcesionario(mi_pago.getConcesionario())
+                            mi_pago_dao.updatePago(a)
+                            print(f"Modificado correctamente el pago --> {IDpago}")
+                            return ("Correcto", "Pago modificado correctamente")
+                    
+                    return ("Error", "El pago no está registrado")
+
+            except Exception as e:
+                messagebox.showwarning("Advertencia", f"Error al insertar o modificar un pago: {str(e)}")
+                return ("Error", "Error al insertar o modificar un pago")
+
+        elif queHago == "eliminar":
+            try:
+                pago = mi_pago.getIDpago()
+                pagos = mi_pago_dao.getPagos()
+
+                for a in pagos:
+                    if a.getIDpago() == int(pago):
+                        print(f"Eliminando pago --> {a.getIDpago()}")
+                        mi_almacen_dao.deleteAlmacen(pago)
+                        return ("Correcto", "Has introducido bien los datos")
+                    
+                return ("Error", "Ese pago no está registrado")
+            except Exception as e:
+                messagebox.showwarning("Advertencia", f"Error al eliminar el pago: {str(e)}")
+                return ("Error", "Error al eliminar el pago")
+
+    def obtener_todos_pagos(self):
+        try:
+            mi_pago_dao = PagoDao()
+            pagos = mi_pago_dao.getPagos()
+            
+            pagos_data = []
+            for a in pagos:
+                pagos_data.append({
+                    "IDpago": a.getIDpago(),
+                    "Precio": a.getPrecio(),
+                    'IDventa': a.getIDventa(),
+                    'Concesionario': a.getConcesionario()
+                })
+            return pagos_data
+        except Exception as e:
+            messagebox.showwarning("Advertencia", f"Error al buscar pagos: {str(e)}")
+
+
+
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+##################################################################################################################################################
+
+
+
+    #FUNCIONES PARA LA VENTANA VENTAS
+    def validar_registro_maquinaria(self, mi_taller: Taller, queHago):
+        
+        mi_taller_dao = TallerDao()
+
+        if queHago == "aniadir" or queHago == "modificar":
+            try:
+                IDmaquinaria = mi_taller.getIDmaquinaria()
+                cantidad = mi_taller.getCantidad()
+                nombre = mi_taller.getMaquinaria()
+                concesionario = mi_taller.getConcesionario()
+                
+
+                # Compruebo números negativos
+                if not cantidad:
+                    return ("Error", "Falta la cantidad")
+                elif int(cantidad) < 0:
+                    return ("Error", "Cantidad menor a 0")
+
+                if not nombre:
+                    return ("Error", "Falta el nombre")
+                
+                #Mayusculas
+                try:
+                    mi_taller.setMaquinaria(self.mayuscula(nombre))                    
+                except:
+                    return ("Error", "Verifica el nombre")
+
+                # Comprobando el formato del nombre del concesionario
+                if concesionario:
+                    conc = self.comprobarFormatoConcesionario(concesionario)
+                    if conc[0] == "Error":
+                        return conc
+                    elif conc[0] == "Corregido":
+                        concesionario = conc[1]
+                        mi_taller.setConcesionario(concesionario)
+                else:
+                    return ("Error", "Falta el concesionario")
+
+                # Compruebo si existe el concesionario en la base de datos
+                conc = self.comprobarExistenciaConcesionario(concesionario)
+                if not conc:
+                    return ("Error", "El concesionario no existe")
+
+                # Realizar la inserción o modificación de la venta según el caso
+                if queHago == "aniadir":
+                    mi_taller_dao.insertTaller(mi_taller)
+                    return ("Correcto", "Has introducido bien los datos")
+                
+                elif queHago == "modificar":
+                    taller = mi_taller_dao.getTalleres()
+                    
+                    for a in taller:
+                        if a.getIDmaquinaria() == int(IDmaquinaria):
+                            a.setCantidad(mi_taller.getCantidad())
+                            a.setMaquinaria(mi_taller.getMaquinaria())
+                            a.setConcesionario(mi_taller.getConcesionario())
+                            mi_taller_dao.updateTaller(a)
+                            print(f"Modificado correctamente la maquina --> {mi_taller.getMaquinaria()}")
+                            return ("Correcto", "Maquina modificada correctamente")
+                    
+                    return ("Error", "La maquina no está registrada")
+
+            except Exception as e:
+                messagebox.showwarning("Advertencia", f"Error al insertar o modificar una maquina: {str(e)}")
+                return ("Error", "Error al insertar o modificar una maquina")
+
+        elif queHago == "eliminar":
+            try:
+                ID = mi_taller.getIDmaquinaria() 
+                taller = mi_taller_dao.getTalleres()
+
+                for a in taller:
+                    if a.getIDmaquinaria() == int(ID):
+                        print(f"Eliminando maquina --> {ID}")
+                        mi_taller_dao.deleteTaller(ID)
+                        return ("Correcto", "Has introducido bien los datos")
+                    
+                return ("Error", "Esa maquina no está registrada")
+            except Exception as e:
+                messagebox.showwarning("Advertencia", f"Error al eliminar la maquina: {str(e)}")
+                return ("Error", "Error al eliminar la maquina")
+
+    def obtener_todas_maquinas(self):
+        try:
+            mi_taller_dao = TallerDao()
+            taller = mi_taller_dao.getTalleres()
+            
+            taller_data = []
+            for a in taller:
+                taller_data.append({
+                    "IDmaquinaria": a.getIDmaquinaria(),
+                    "Maquinaria": a.getMaquinaria(),
+                    "Cantidad": a.getCantidad(),
+                    'Concesionario': a.getConcesionario()
+                })
+            return taller_data
+        except Exception as e:
+            messagebox.showwarning("Advertencia", f"Error al buscar maquinaria: {str(e)}")
 
 
 

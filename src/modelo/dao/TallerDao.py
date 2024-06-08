@@ -13,8 +13,11 @@ from src.modelo.dao.TallerInterface import TallerInterface
 
 class TallerDao(TallerInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT horario, Maquinaria, Concesionario FROM Talleres"
-    SQL_INSERT = "INSERT INTO Talleres(horario, Maquinaria, Concesionario) VALUES (?, ?, ?)"
+    SQL_SELECT = "SELECT IDmaquinaria, Maquinaria, Cantidad, Concesionario FROM taller"
+    SQL_INSERT = "INSERT INTO taller (Maquinaria, Cantidad, Concesionario) VALUES (?, ?, ?)"
+    SQL_UPDATE = "UPDATE taller SET Maquinaria=?, Cantidad=?, Concesionario=? WHERE IDmaquinaria=?"
+    SQL_DELETE = "DELETE FROM taller WHERE IDmaquinaria=?"
+
 
     def getTalleres(self) -> List[Taller]:
         conexion = self.getConnection()
@@ -26,34 +29,23 @@ class TallerDao(TallerInterface, Conexion):
             if conexion:
                 conn = conexion             
             else:
-                print("La base de datos no esta disponible")            
-            # Crea un objeto para poder ejecutar consultas SQL sobre la conexion abierta
+                print("La base de datos no está disponible")            
             cursor = conn.cursor()
-            # Ejecuta la consulta SQL
             cursor.execute(self.SQL_SELECT)
-            # Obtiene todas las filas resultantes de la consulta
             rows = cursor.fetchall()
-            # Itera sobre todas las filas
             for row in rows:
-                horario, Maquinaria, Concesionario = row
-                # Crea un objeto Taller para cada fila
-                taller = Taller()
-                taller.setHorario(horario)
-                taller.setMaquinaria(Maquinaria)
-                taller.setConcesionario(Concesionario)
+                IDmaquinaria, Maquinaria, Cantidad, Concesionario = row
+                taller = Taller(IDmaquinaria, Maquinaria, Cantidad, Concesionario)
                 talleres.append(taller)
 
         except Error as e:
             print("Error al seleccionar talleres:", e)
-        # Se ejecuta siempre
         finally:
             if cursor:
-                # Cierra el cursor para liberar recursos
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        conexion = self.close(conn)
         return talleres
-    
 
     def insertTaller(self, taller: Taller) -> int:
         conexion = self.getConnection()
@@ -64,12 +56,10 @@ class TallerDao(TallerInterface, Conexion):
         try:
             if conexion:
                 conn = conexion 
-            
             else:
-                print("La base de datos no esta disponible")
+                print("La base de datos no está disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_INSERT, (taller.getHorario(), taller.getMaquinaria(), taller.getConcesionario()))
-    
+            cursor.execute(self.SQL_INSERT, (taller.getMaquinaria(), taller.getCantidad(), taller.getConcesionario()))
             rows = cursor.rowcount
 
         except Error as e:
@@ -79,6 +69,55 @@ class TallerDao(TallerInterface, Conexion):
             if cursor:
                 cursor.close()
 
-        conexion = self.closeConnection(conn)
+        conexion = self.close(conn)
+        return rows
 
+    def updateTaller(self, taller: Taller) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion 
+            else:
+                print("La base de datos no está disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_UPDATE, (taller.getMaquinaria(), taller.getCantidad(), taller.getConcesionario(), taller.getIDmaquinaria()))
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al actualizar taller:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+        conexion = self.close(conn)
+        return rows
+
+    def deleteTaller(self, id_maquinaria: int) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion 
+            else:
+                print("La base de datos no está disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_DELETE, (id_maquinaria,))
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al eliminar taller:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+        conexion = self.close(conn)
         return rows

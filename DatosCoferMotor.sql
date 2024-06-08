@@ -1,6 +1,6 @@
 USE datoscofermotor;
 
-#SHOW TABLES;
+SHOW TABLES;
 #insert into plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario)
 #VALUES ("71479447R", 1234, "Nain", "Miguel", "Sanchez", 1200, "administrador", "Cofermotor1"); 
 #select * FROM plantillatrabajadores;
@@ -75,10 +75,13 @@ CREATE TABLE almacen (
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT AlmacenConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
+*/
+#DROP TABLE taller
 /*
 CREATE TABLE taller (
-    horario VARCHAR(20) NOT NULL,
+    IDmaquinaria INT AUTO_INCREMENT PRIMARY KEY,
     Maquinaria TEXT,
+    Cantidad Int NOT NULL,
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT TallerConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -96,13 +99,14 @@ CREATE TABLE plantillaTrabajadores (
     CONSTRAINT TrabajadorConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */
-
+#DROP TABLE pago
 /*
 CREATE TABLE pago (
-    IDpago INT PRIMARY KEY NOT NULL,
+    IDpago INT AUTO_INCREMENT PRIMARY KEY,
     #FacturaPDF LONGBLOB,
     Precio DECIMAL(10, 2) NOT NULL,
-    CONSTRAINT VentaPago FOREIGN KEY (IDpago) REFERENCES ventas(IDventa) ON UPDATE CASCADE ON DELETE CASCADE,
+    IDventa INT NOT NULL,
+    CONSTRAINT VentaPago FOREIGN KEY (IDventa) REFERENCES ventas(IDventa) ON UPDATE CASCADE ON DELETE CASCADE,
 	Concesionario varchar(20),
 	CONSTRAINT FK_PagoConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 

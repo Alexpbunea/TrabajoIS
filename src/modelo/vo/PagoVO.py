@@ -6,10 +6,11 @@ Created on Thu May  2 21:06:23 2024
 """
 
 class Pago:
-    def __init__(self, IDpago=None, FacturaPDF=None, Concesionario=None):
+    def __init__(self, IDpago=None, Precio=None, IDventa=None, Concesionario=None):
         self.IDpago = IDpago
-        self.FacturaPDF = FacturaPDF
-        self.concesionario = Concesionario
+        self.Precio = Precio
+        self.IDventa = IDventa
+        self.Concesionario = Concesionario
 
     def getIDpago(self):
         return self.IDpago
@@ -17,20 +18,26 @@ class Pago:
     def setIDpago(self, ID):
         self.IDpago = ID
 
-    def getFacturaPDF(self):
-        return self.FacturaPDF
+    def getPrecio(self):
+        return self.Precio
 
-    def setFacturaPDF(self, factura):
-        self.FacturaPDF = factura
-    
+    def setPrecio(self, precio):
+        self.Precio = precio
+
+    def getIDventa(self):
+        return self.IDventa
+
+    def setIDventa(self, ID):
+        self.IDventa = ID
+
     def getConcesionario(self):
-        return self.concesionario
-    
-    def setConcesionario(self, con):
-        self.concesionario = con
+        return self.Concesionario
+
+    def setConcesionario(self, nombre):
+        self.Concesionario = nombre
 
     def toString(self):
-        return f"IDpago = {self.getIDpago()}, FacturaPDF = {self.getFacturaPDF()}, Concesionario = {self.getConcesionario}"
+        return f"IDpago = {self.getIDpago()}, Precio = {self.getPrecio()}, IDventa = {self.getIDventa()}, Concesionario = {self.getConcesionario()}"
 
     def __str__(self):
         return self.toString()

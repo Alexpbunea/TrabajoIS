@@ -13,8 +13,10 @@ from src.modelo.dao.PagoInterface import PagoInterface
 
 class PagoDao(PagoInterface, Conexion):
     # Todas las operaciones CRUD que sean necesarias
-    SQL_SELECT = "SELECT IDpago, FacturaPDF, Concesionario FROM Pagos"
-    SQL_INSERT = "INSERT INTO Pagos(IDpago, FacturaPDF, Concesionario) VALUES (?, ?, ?)"
+    SQL_SELECT = "SELECT IDpago, Precio, IDventa, Concesionario FROM pago"
+    SQL_INSERT = "INSERT INTO pago(Precio, IDventa, Concesionario) VALUES (?, ?, ?)"
+    SQL_UPDATE = "UPDATE pago SET Precio = ?, IDventa = ?, Concesionario = ? WHERE IDpago = ?"
+    SQL_DELETE = "DELETE FROM pago WHERE IDpago = ?"
 
     def getPagos(self) -> List[Pago]:
         conexion = self.getConnection()
@@ -26,32 +28,26 @@ class PagoDao(PagoInterface, Conexion):
             if conexion:
                 conn = conexion             
             else:
-                print("La base de datos no esta disponible")            
-            # Crea un objeto para poder ejecutar consultas SQL sobre la conexion abierta
+                print("La base de datos no está disponible")            
             cursor = conn.cursor()
-            # Ejecuta la consulta SQL
             cursor.execute(self.SQL_SELECT)
-            # Obtiene todas las filas resultantes de la consulta
             rows = cursor.fetchall()
-            # Itera sobre todas las filas
             for row in rows:
-                IDpago, FacturaPDF, Concesionario = row
-                # Crea un objeto Pago para cada fila
+                IDpago, Precio, IDventa, Concesionario = row
                 pago = Pago()
                 pago.setIDpago(IDpago)
-                pago.setFacturaPDF(FacturaPDF)
+                pago.setPrecio(Precio)
+                pago.setIDventa(IDventa)
                 pago.setConcesionario(Concesionario)
                 pagos.append(pago)
 
         except Error as e:
             print("Error al seleccionar pagos:", e)
-        # Se ejecuta siempre
         finally:
             if cursor:
-                # Cierra el cursor para liberar recursos
                 cursor.close()
+            self.close(conn)
 
-        conexion = self.closeConnection(conn)
         return pagos
     
 
@@ -64,21 +60,65 @@ class PagoDao(PagoInterface, Conexion):
         try:
             if conexion:
                 conn = conexion 
-            
             else:
-                print("La base de datos no esta disponible")
+                print("La base de datos no está disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_INSERT, (pago.getIDpago(), pago.getFacturaPDF(), pago.getConcesionario()))
-            
+            cursor.execute(self.SQL_INSERT, (pago.getPrecio(), pago.getIDventa(), pago.getConcesionario()))
             rows = cursor.rowcount
 
         except Error as e:
             print("Error al insertar pago:", e)
-
         finally:
             if cursor:
                 cursor.close()
+            self.close(conn)
 
-        conexion = self.closeConnection(conn)
+        return rows
+
+    def updatePago(self, pago: Pago) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion
+            else:
+                print("La base de datos no está disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_UPDATE, (pago.getPrecio(), pago.getIDventa(), pago.getConcesionario(), pago.getIDpago()))
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al actualizar pago:", e)
+        finally:
+            if cursor:
+                cursor.close()
+            self.close(conn)
+
+        return rows
+
+    def deletePago(self, IDpago: int) -> int:
+        conexion = self.getConnection()
+        conn = None
+        cursor = None
+        rows = 0
+
+        try:
+            if conexion:
+                conn = conexion
+            else:
+                print("La base de datos no está disponible")
+            cursor = conn.cursor()
+            cursor.execute(self.SQL_DELETE, (IDpago,))
+            rows = cursor.rowcount
+
+        except Error as e:
+            print("Error al eliminar pago:", e)
+        finally:
+            if cursor:
+                cursor.close()
+            self.close(conn)
 
         return rows
