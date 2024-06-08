@@ -42,6 +42,8 @@ class Ui_MainWindow8(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
+        self.c = concesionario(self.centralwidget)
+
         self.aniadirVen = QtWidgets.QPushButton(self.centralwidget)
         self.aniadirVen.setGeometry(QtCore.QRect(40, 650, 151, 41))
         self.aniadirVen.setObjectName("aniadirVen")

@@ -63,15 +63,7 @@ class Ui_MainWindowClientes(object):
         self.hola_2.setAlignment(Qt.AlignLeft) 
         self.hola_2.setObjectName("hola_2")
 
-        self.concesionario = BorderedTextLabel(self.centralwidget)
-        self.concesionario.setGeometry(QtCore.QRect(1020, 10, 211, 41))
-        font = QtGui.QFont()
-        font.setPointSize(17)
-        font.setBold(True)
-        font.setWeight(75)
-        self.concesionario.setFont(font)
-        self.concesionario.setText("")
-        self.concesionario.setObjectName("concesionario")
+        self.concesionario = concesionario(self.centralwidget)
 
 
         self.comprarVeh = QtWidgets.QPushButton(self.centralwidget)

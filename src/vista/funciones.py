@@ -35,7 +35,17 @@ class BorderedTextLabel(QtWidgets.QLabel):
 
 
 
-
+def concesionario(centralWidget):
+    concesionario = BorderedTextLabel(centralWidget)
+    concesionario.setGeometry(QtCore.QRect(1020, 10, 211, 41))
+    font = QtGui.QFont()
+    font.setPointSize(17)
+    font.setBold(True)
+    font.setWeight(75)
+    concesionario.setFont(font)
+    concesionario.setText("")
+    concesionario.setObjectName("etiquetaConcesionario")
+    return concesionario
 
 #funcion atras presente en todas las ventanas
 def setAtras(centralWidget):

@@ -42,6 +42,8 @@ class Ui_MainWindow7(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
+        self.c = concesionario(self.centralwidget)
+
         self.aniadirVeh = QtWidgets.QPushButton(self.centralwidget)
         self.aniadirVeh.setGeometry(QtCore.QRect(40, 650, 151, 41))
         self.aniadirVeh.setObjectName("aniadirVeh")

@@ -39,6 +39,9 @@ class Ui_MainWindow10(object):
         #self.label.setPixmap(QtGui.QPixmap(":/direccion/nissan_skyline_gt_r_r34-HD2.jpg"))
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
+
+        self.c = concesionario(self.centralwidget)
+
         self.aniadirMaquinaria = QtWidgets.QPushButton(self.centralwidget)
         self.aniadirMaquinaria.setGeometry(QtCore.QRect(40, 650, 151, 41))
         self.aniadirMaquinaria.setObjectName("aniadirMaquinaria")

@@ -42,6 +42,8 @@ class Ui_MainWindow5(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
+        self.c = concesionario(self.centralwidget)
+
         self.aniadirTra = QtWidgets.QPushButton(self.centralwidget)
         self.aniadirTra.setGeometry(QtCore.QRect(40, 650, 151, 41))
         self.aniadirTra.setObjectName("aniadirTra")

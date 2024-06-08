@@ -42,6 +42,8 @@ class Ui_MainWindow6(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
+        self.c = concesionario(self.centralwidget)
+
         self.aniadirCli = QtWidgets.QPushButton(self.centralwidget)
         self.aniadirCli.setGeometry(QtCore.QRect(40, 650, 151, 41))
         self.aniadirCli.setObjectName("aniadirCli")
