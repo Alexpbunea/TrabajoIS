@@ -403,7 +403,7 @@ class Ui_MainWindow7(object):
 
 
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
-    def obtener_datos_ingresados(self):
+    def obtener_datos_ingresados(self, dondeEstoy =None):
         anadirModificar = Vehiculo(
            IDvehiculo=self.LineaID.text(),
            Marca=self.LineaMarca.text(),
@@ -446,7 +446,8 @@ class Ui_MainWindow7(object):
             self.LineaCombus.setText("")
             self.LineaKm.setText("")
             self.LineaPrecio.setText("")
-            self.LineaConc.setText("")
+            if dondeEstoy is None:
+                self.LineaConc.setText("")
             
 
 
@@ -467,11 +468,18 @@ class Ui_MainWindow7(object):
         
         
 
-    def mostrarVehiculos(self):
+    def mostrarVehiculos(self, dondeEstoy = None, quienSoy = None):
         self.model.removeRows(0, self.model.rowCount())
         #IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario
         a = self.coordinador.obtenerVehiculos()
         #print(a)
+
+        if dondeEstoy is not None:
+            a = [vehiculo for vehiculo in a if vehiculo['Concesionario'] == dondeEstoy]
+        if quienSoy in ['dad']:
+            pass
+
+
         columnas = ["IDvehiculo", "Marca", "Modelo", "Año", "Combustible", "Kilometros", "Precio", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:

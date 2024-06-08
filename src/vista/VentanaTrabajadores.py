@@ -405,7 +405,7 @@ class Ui_MainWindow5(object):
 
 
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
-    def obtener_datos_ingresados(self):
+    def obtener_datos_ingresados(self, dondeEstoy = None):
         anadirModificar = PlantillaTrabajadorVO(
            IDtrabajador=self.LineaID.text(),
            Contraseña=self.LineaContra.text(),
@@ -448,7 +448,8 @@ class Ui_MainWindow5(object):
             self.LineaApellido2.setText("")
             self.LineaSueldo.setText("")
             self.LineaRol.setText("")
-            self.LineaConc.setText("")
+            if dondeEstoy is None:
+                self.LineaConc.setText("")
             
 
 
@@ -469,12 +470,18 @@ class Ui_MainWindow5(object):
         
         
 
-    def mostrarTrabajadores(self):
+    def mostrarTrabajadores(self, dondeEstoy = None, quienSoy = None):
         self.model.removeRows(0, self.model.rowCount())
         #IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario
         a = self.coordinador.obtenerTrabajadores()
         #print(a)
         columnas = ["IDtrabajador", "Contrasenia", "Nombre", "Apellido1", "Apellido2", "Sueldo", "Rol", "Concesionario"]
+
+        if dondeEstoy is not None:
+            a = [trabajador for trabajador in a if trabajador['Concesionario'] == dondeEstoy]
+        if quienSoy in ['dad']:
+            pass
+
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:
             items = [

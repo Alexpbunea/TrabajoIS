@@ -320,7 +320,7 @@ class Ui_MainWindow11(object):
 
     
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
-    def obtener_datos_ingresados(self):
+    def obtener_datos_ingresados(self, dondeEstoy=None):
         anadirModificar = Pago(
             IDpago=self.LineaIDpago.text(),
             Precio=self.LineaPrecio.text(),
@@ -355,7 +355,8 @@ class Ui_MainWindow11(object):
             self.LineaIDpago.setText("")
             self.LineaPrecio.setText("")
             self.LineaIDventa.setText("")
-            self.LineaConc.setText("")
+            if dondeEstoy is None:
+                self.LineaConc.setText("")
 
 
         if eliminar.IDpago != "":
@@ -375,11 +376,18 @@ class Ui_MainWindow11(object):
         
         
 
-    def mostrarPagos(self):
+    def mostrarPagos(self, dondeEstoy = None, quienSoy = None):
         self.model.removeRows(0, self.model.rowCount())
 
         a = self.coordinador.obtenerPagos()
         #print(a)
+
+        if dondeEstoy is not None:
+            a = [pago for pago in a if pago['Concesionario'] == dondeEstoy]
+        if quienSoy in ['dad']:
+            pass
+
+
         columnas = ["IDpago", "Precio", "IDventa", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:

@@ -404,7 +404,7 @@ class Ui_MainWindow6(object):
 
 
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
-    def obtener_datos_ingresados(self):
+    def obtener_datos_ingresados(self, dondeEstoy=None):
         anadirModificar = Cliente(
            IDcliente=self.LineaID.text(),
            Contrasenia=self.LineaContra.text(),
@@ -447,7 +447,8 @@ class Ui_MainWindow6(object):
             self.LineaApellido2.setText("")
             self.LineaDir.setText("")
             self.LineaEmail.setText("")
-            self.LineaConc.setText("")
+            if dondeEstoy is None:
+                self.LineaConc.setText("")
             
 
 
@@ -468,10 +469,15 @@ class Ui_MainWindow6(object):
         
         
 
-    def mostrarClientes(self):
+    def mostrarClientes(self, dondeEstoy=None, quienSoy=None):
         self.model.removeRows(0, self.model.rowCount())
         
         a = self.coordinador.obtenerClientes()
+
+        if dondeEstoy is not None:
+            a = [cliente for cliente in a if cliente['Concesionario'] == dondeEstoy]
+        if quienSoy in ['dad']:
+            pass
         #print(a)
         columnas = ["IDcliente", "Contrasenia", "Nombre", "Apellido1", "Apellido2", "Direccion", "Email", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)

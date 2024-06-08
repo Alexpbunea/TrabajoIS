@@ -314,7 +314,7 @@ class Ui_MainWindow10(object):
 
     
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
-    def obtener_datos_ingresados(self):
+    def obtener_datos_ingresados(self, dondeEstoy=None):
         anadirModificar = Taller(
             IDmaquinaria=self.LineaID.text(),
             Cantidad=self.LineaCantidad.text(),
@@ -349,7 +349,8 @@ class Ui_MainWindow10(object):
             self.LineaID.setText("")
             self.LineaCantidad.setText("")
             self.LineaNombre.setText("")
-            self.LineaConc.setText("")
+            if dondeEstoy is None:
+                self.LineaConc.setText("")
 
 
         if eliminar.IDmaquinaria != "":
@@ -369,11 +370,17 @@ class Ui_MainWindow10(object):
         
         
 
-    def mostrarTaller(self):
+    def mostrarTaller(self, dondeEstoy=None, quienSoy=None):
         self.model.removeRows(0, self.model.rowCount())
 
         a = self.coordinador.obtenerMaquinaria()
         #print(a)
+
+        if dondeEstoy is not None:
+            a = [taller for taller in a if taller['Concesionario'] == dondeEstoy]
+        if quienSoy in ['dad']:
+            pass
+
         columnas = ["IDmaquinaria", "Maquinaria", "Cantidad", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:

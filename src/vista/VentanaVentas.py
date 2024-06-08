@@ -418,7 +418,7 @@ class Ui_MainWindow8(object):
 
 
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
-    def obtener_datos_ingresados(self):
+    def obtener_datos_ingresados(self, dondeEstoy=None):
         anadirModificar = Venta(
            IDventa= self.LineaID.text(),
            FechaVenta= self.LineafechaVenta.text(),
@@ -461,7 +461,8 @@ class Ui_MainWindow8(object):
             self.LineaIDcliente.setText("")
             self.LineaPiezas.setText("")
             self.Lineacantidad.setText("")
-            self.LineaConc.setText("")
+            if dondeEstoy is None:
+                self.LineaConc.setText("")
             
 
 
@@ -482,9 +483,14 @@ class Ui_MainWindow8(object):
         
         
 
-    def mostrarVentas(self):
+    def mostrarVentas(self, dondeEstoy=None, quienSoy=None):
         self.model.removeRows(0, self.model.rowCount())
         a = self.coordinador.obtenerVentas()
+
+        if dondeEstoy is not None:
+            a = [venta for venta in a if venta['Concesionario'] == dondeEstoy]
+        if quienSoy in ['dad']:
+            pass
 
         columnas = ["IDventa", "FechaVenta", "IDvehiculo", "Repara", "IDcliente", "Piezas", "Cantidad", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
