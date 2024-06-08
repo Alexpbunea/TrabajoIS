@@ -166,56 +166,40 @@ def comprobarSesion():
 def sync_checkbox_state(state, origin, target):
     target.blockSignals(True)
     target.setCheckState(state)
-    #caso ventanaAdmin-VentanaConcesionario
-    if origin == ui_ventana3_ui.checkBox and target == ui_ventana4_ui.checkBox:
-        modoClOs(ui_ventana4_ui.checkBox, ui_ventana4_ui.label, ui_ventana4_ui.lista, ui_ventana4_ui.listaFrames, ui_ventana4_ui.listaTexto, ui_ventana4_ui.ayuda)
-    elif origin == ui_ventana4_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
 
-    #caso ventanaAdmin-VentanaTrabajadores
-    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana5_ui.checkBox:
-        modoClOs(ui_ventana5_ui.checkBox, ui_ventana5_ui.label, ui_ventana5_ui.lista, ui_ventana5_ui.listaFrames, ui_ventana5_ui.listaTexto, ui_ventana5_ui.ayuda)
-    elif origin == ui_ventana5_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+    # Diccionario que mapea (origin, target) a los argumentos de modoClOs
+    sync_map = {
+        (ui_ventana3_ui.checkBox, ui_ventana4_ui.checkBox): (ui_ventana4_ui.checkBox, ui_ventana4_ui.label, ui_ventana4_ui.lista, ui_ventana4_ui.listaFrames, ui_ventana4_ui.listaTexto, ui_ventana4_ui.ayuda),
+        (ui_ventana4_ui.checkBox, ui_ventana3_ui.checkBox): (ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista),
 
+        (ui_ventana3_ui.checkBox, ui_ventana5_ui.checkBox): (ui_ventana5_ui.checkBox, ui_ventana5_ui.label, ui_ventana5_ui.lista, ui_ventana5_ui.listaFrames, ui_ventana5_ui.listaTexto, ui_ventana5_ui.ayuda),
+        (ui_ventana5_ui.checkBox, ui_ventana3_ui.checkBox): (ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista),
 
-    #caso ventanaAdmin-VentanaClientes
-    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana6_ui.checkBox:
-        modoClOs(ui_ventana6_ui.checkBox, ui_ventana6_ui.label, ui_ventana5_ui.lista, ui_ventana6_ui.listaFrames, ui_ventana6_ui.listaTexto, ui_ventana6_ui.ayuda)
-    elif origin == ui_ventana6_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+        (ui_ventana3_ui.checkBox, ui_ventana6_ui.checkBox): (ui_ventana6_ui.checkBox, ui_ventana6_ui.label, ui_ventana6_ui.lista, ui_ventana6_ui.listaFrames, ui_ventana6_ui.listaTexto, ui_ventana6_ui.ayuda),
+        (ui_ventana6_ui.checkBox, ui_ventana3_ui.checkBox): (ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista),
 
-    #caso ventanaAdmin-VentanaVehiculos
-    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana7_ui.checkBox:
-        modoClOs(ui_ventana7_ui.checkBox, ui_ventana7_ui.label, ui_ventana7_ui.lista, ui_ventana7_ui.listaFrames, ui_ventana7_ui.listaTexto, ui_ventana7_ui.ayuda)
-    elif origin == ui_ventana7_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+        (ui_ventana3_ui.checkBox, ui_ventana7_ui.checkBox): (ui_ventana7_ui.checkBox, ui_ventana7_ui.label, ui_ventana7_ui.lista, ui_ventana7_ui.listaFrames, ui_ventana7_ui.listaTexto, ui_ventana7_ui.ayuda),
+        (ui_ventana7_ui.checkBox, ui_ventana3_ui.checkBox): (ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista),
 
-    #caso ventanaAdmin-VentanaVentas
-    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana8_ui.checkBox:
-        modoClOs(ui_ventana8_ui.checkBox, ui_ventana8_ui.label, ui_ventana8_ui.lista, ui_ventana8_ui.listaFrames, ui_ventana8_ui.listaTexto, ui_ventana8_ui.ayuda)
-    elif origin == ui_ventana8_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+        (ui_ventana3_ui.checkBox, ui_ventana8_ui.checkBox): (ui_ventana8_ui.checkBox, ui_ventana8_ui.label, ui_ventana8_ui.lista, ui_ventana8_ui.listaFrames, ui_ventana8_ui.listaTexto, ui_ventana8_ui.ayuda),
+        (ui_ventana8_ui.checkBox, ui_ventana3_ui.checkBox): (ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista),
 
-    #caso ventanaAdmin-VentanaAlmacen
-    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana9_ui.checkBox:
-        modoClOs(ui_ventana9_ui.checkBox, ui_ventana9_ui.label, ui_ventana9_ui.lista, ui_ventana9_ui.listaFrames, ui_ventana9_ui.listaTexto, ui_ventana9_ui.ayuda)
-    elif origin == ui_ventana9_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+        (ui_ventana3_ui.checkBox, ui_ventana9_ui.checkBox): (ui_ventana9_ui.checkBox, ui_ventana9_ui.label, ui_ventana9_ui.lista, ui_ventana9_ui.listaFrames, ui_ventana9_ui.listaTexto, ui_ventana9_ui.ayuda),
+        (ui_ventana9_ui.checkBox, ui_ventana3_ui.checkBox): (ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista),
 
-    #caso ventanaAdmin-VentanaTaller
-    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana10_ui.checkBox:
-        modoClOs(ui_ventana10_ui.checkBox, ui_ventana10_ui.label, ui_ventana10_ui.lista, ui_ventana10_ui.listaFrames, ui_ventana10_ui.listaTexto, ui_ventana10_ui.ayuda)
-    elif origin == ui_ventana10_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
-    
-    #caso ventanaAdmin-VetanaPago
-    elif origin == ui_ventana3_ui.checkBox and target == ui_ventana11_ui.checkBox:
-        modoClOs(ui_ventana11_ui.checkBox, ui_ventana11_ui.label, ui_ventana11_ui.lista, ui_ventana11_ui.listaFrames, ui_ventana11_ui.listaTexto, ui_ventana11_ui.ayuda)
-    elif origin == ui_ventana11_ui.checkBox and target == ui_ventana3_ui.checkBox:
-        modoClOs(ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista)
+        (ui_ventana3_ui.checkBox, ui_ventana10_ui.checkBox): (ui_ventana10_ui.checkBox, ui_ventana10_ui.label, ui_ventana10_ui.lista, ui_ventana10_ui.listaFrames, ui_ventana10_ui.listaTexto, ui_ventana10_ui.ayuda),
+        (ui_ventana10_ui.checkBox, ui_ventana3_ui.checkBox): (ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista),
+
+        (ui_ventana3_ui.checkBox, ui_ventana11_ui.checkBox): (ui_ventana11_ui.checkBox, ui_ventana11_ui.label, ui_ventana11_ui.lista, ui_ventana11_ui.listaFrames, ui_ventana11_ui.listaTexto, ui_ventana11_ui.ayuda),
+        (ui_ventana11_ui.checkBox, ui_ventana3_ui.checkBox): (ui_ventana3_ui.checkBox, ui_ventana3_ui.imagen, ui_ventana3_ui.lista),
+    }
+
+    # Llamar a modoClOs con los argumentos correspondientes
+    if (origin, target) in sync_map:
+        modoClOs(*sync_map[(origin, target)])
 
     target.blockSignals(False)
+
     
 
 if __name__ == "__main__":

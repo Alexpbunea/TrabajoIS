@@ -292,12 +292,15 @@ class Logica:
                 except:
                     return ("Error", "Verifica nombre y apellidos")
 
-                print(rol)
+                
                 #Compruebo el rol
                 if rol not in ['administrador', 'jefeZona', 'personal', 'jefeVentas', 'jefeAlmacen', 'jefeTaller', 'jefeClientes']:
                     
                     print("El rol escrito no es posible en la empresa")
                     return ("Error", "El rol escrito no es posible en la empresa")
+                
+                if rol == "administrador":
+                    mi_trabajador.setRol("CofermotorTodos")
 
                 #Comprobando el formato del nombre del concesionario
                 conc = self.comprobarFormatoConcesionario(concesionario)
@@ -603,7 +606,9 @@ class Logica:
                 precio = mi_vehiculo.getPrecio()
                 concesionario = mi_vehiculo.getConcesionario()
                 
-                
+                if not IDvehiculo:
+                    return ("Error", "Falta el ID")
+
                 #Mayusculas
                 try:
                     mi_vehiculo.setMarca(self.mayuscula(marca))
@@ -732,6 +737,10 @@ class Logica:
                 fecha = mi_venta.getFechaVenta()
                 concesionario = mi_venta.getConcesionario()
                 
+                #ESTO ES PARA QUE NO DE ERROR CON EL TEXTO "SE ASIGNA AUTOMATICAMENTE"
+                IDventa = ""
+                mi_venta.setIDventa("")
+
                 # Paso la fecha al formato correcto
                 fecha_obj = datetime.strptime(fecha, '%d-%m-%Y')
                 fecha_mysql = fecha_obj.strftime('%Y-%m-%d')
@@ -965,26 +974,20 @@ class Logica:
             pieza = ""
             cantidadPiezas = 0
             precioPieza = 0
-            print("Hola0")
             for i in ventas:
                 if int(i.getIDventa()) == int(idventa):
-                    print("Llego")
                     if i.getRepara() == "No":
-                        print("Hola1")
                         idvehiculo = int(i.getIDvehiculo())        
                     
                     elif i.getRepara() == "Si":
-                        print("Hola")
                         pieza = i.getPiezas()
                         cantidadPiezas = int(i.getCantidad())
             if idvehiculo != 0:
-                print("hola3")
                 for i in vehiculos:
                     if idvehiculo == int(i.IDvehiculo()):
                         return i.getPrecio()
                     
             elif pieza != "":
-                print("Hola4")
                 for i in piezas:
                     if pieza == i.getPieza():
                         precioPieza = int(i.getPrecioPieza())
@@ -1003,6 +1006,8 @@ class Logica:
                 Idventa = mi_pago.getIDventa()
                 concesionario = mi_pago.getConcesionario()
                 
+                IDpago = ""
+                mi_pago.setIDpago(IDpago)
 
                 # Compruebo números negativos
                 if not Idventa:
@@ -1010,7 +1015,7 @@ class Logica:
                 elif int(Idventa) < 0:
                     return ("Error", "IDventa menor a 0")
             
-                if not precio:
+                if not precio or precio=="Se calcula automaticamente":
                     precio = precioCalculo(Idventa)
                     print(precio)
                     if precio == "Error":
@@ -1044,8 +1049,8 @@ class Logica:
 
                     for a in pagos:
                         if a.getIDpago() == int(IDpago):
-                            a.setPrecio(mi_pago.getCantidad())
-                            a.setIDventa(mi_pago.getPrecioPieza())
+                            a.setPrecio(mi_pago.getPrecio())
+                            a.setIDventa(mi_pago.getIDventa())
                             a.setConcesionario(mi_pago.getConcesionario())
                             mi_pago_dao.updatePago(a)
                             print(f"Modificado correctamente el pago --> {IDpago}")
@@ -1065,7 +1070,7 @@ class Logica:
                 for a in pagos:
                     if a.getIDpago() == int(pago):
                         print(f"Eliminando pago --> {a.getIDpago()}")
-                        mi_almacen_dao.deleteAlmacen(pago)
+                        mi_pago_dao.deletePago(pago)
                         return ("Correcto", "Has introducido bien los datos")
                     
                 return ("Error", "Ese pago no está registrado")

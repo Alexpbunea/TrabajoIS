@@ -321,7 +321,7 @@ class Ui_MainWindowClientes(object):
         vehiculos = self.coordinador.obtenerVehiculos()
 
         # Definir las columnas del modelo
-        columnas = ["IDvehiculo", "Marca", "Modelo", "Año", "Combustible", "Kilometros", "Precio", "Concesionario"]
+        columnas = ["IDvehiculo", "Marca", "Modelo", "Año", "Combustible", "Kilometros", "Precio"] #"Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
 
         # Filtrar los vehículos por el concesionario especificado
@@ -338,7 +338,7 @@ class Ui_MainWindowClientes(object):
                 QStandardItem(vehiculo['Combustible']),
                 QStandardItem(str(vehiculo['Kilometros'])),
                 QStandardItem(str(vehiculo['Precio'])),
-                QStandardItem(vehiculo['Concesionario']),
+                #QStandardItem(vehiculo['Concesionario']),
             ]
             self.model.appendRow(items)
 

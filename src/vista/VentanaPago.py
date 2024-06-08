@@ -284,7 +284,7 @@ class Ui_MainWindow11(object):
 ######################################################################################################################################################
 ######################################################################################################################################################
 
-
+        self.t = "Se asigna automaticamente"
     #FUNCIONES ESTETICAS
     def visible(self):
         self.frameAniaidir.setVisible(False)
@@ -295,12 +295,17 @@ class Ui_MainWindow11(object):
         
         self.aniadirPago.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.aniadirPago.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
+        self.aniadirPago.clicked.connect(lambda: self.LineaIDpago.setText("Se asigna automaticamente"))
+        self.aniadirPago.clicked.connect(lambda: self.LineaPrecio.setText("Se calcula automaticamente"))
+        
 
         self.eliminarPago.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         
 
         self.ModificarPago.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.ModificarPago.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
+        self.ModificarPago.clicked.connect(lambda: self.LineaIDpago.setText(""))
+        self.ModificarPago.clicked.connect(lambda: self.LineaPrecio.setText(""))
 
         self.BuscarPago.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
 

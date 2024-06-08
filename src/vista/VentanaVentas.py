@@ -383,12 +383,15 @@ class Ui_MainWindow8(object):
         
         self.aniadirVen.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.aniadirVen.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
+        self.aniadirVen.clicked.connect(lambda: self.LineaID.setText("Se asigna automaticamente"))
+
 
         self.eliminarVen.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         
         self.ModificarVen.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.ModificarVen.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
-        
+        self.ModificarVen.clicked.connect(lambda: self.LineaID.setText(""))
+
         self.BuscarVen.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
 
 

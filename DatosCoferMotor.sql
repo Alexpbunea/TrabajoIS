@@ -4,10 +4,11 @@ SHOW TABLES;
 #insert into plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario)
 #VALUES ("71479447R", 1234, "Nain", "Miguel", "Sanchez", 1200, "administrador", "Cofermotor1"); 
 #select * FROM plantillatrabajadores;
-SELECT * FROM plantillatrabajadores;	
+SELECT * FROM pagos;	
 #SELECT * FROM concesionario;
 #DROP TABLE plantillatrabajadores;
 #DESCRIBE vehiculos;
+
 #DROP TABLE vehiculos;
 #ALTER TABLE clientes MODIFY COLUMN Contrasenia VARCHAR(65) NOT NULL;
 #ALTER TABLE plantillaTrabajadores DROP CONSTRAINT plantillatrabajadores_chk_1;
