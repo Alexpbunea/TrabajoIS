@@ -380,7 +380,7 @@ class Ui_MainWindow10(object):
             a = [taller for taller in a if taller['Concesionario'] == dondeEstoy]
         if quienSoy in ['dad']:
             pass
-
+        print(a)
         columnas = ["IDmaquinaria", "Maquinaria", "Cantidad", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:
