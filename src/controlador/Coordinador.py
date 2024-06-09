@@ -1,8 +1,6 @@
 from src.modelo.vo.ClienteVO import Cliente
-from src.vista.RegistroClienteVentana import RegistroClienteVentana
 
 from src.modelo.vo.ConcesionarioVO import Concesionario
-from src.vista.RegistroConcesionarioVentana import RegistroConcesionarioVentana
 
 from src.modelo.vo.AlmacenVO import AlmacenVO
 #from src.modelo.dao.AlmacenDao import AlmacenDao
@@ -128,6 +126,13 @@ class Coordinador:
     def setViewVentanaParaJefeZona(self, view):
         self._viewVentanaParaClientes = view
     
+    def getViewVentanaParaPersonal(self):
+       return self._viewVentanaPersonal
+    
+    def setViewVentanaParaPersonal(self, view):
+       self._viewVentanaPersonal = view
+       
+    
     ##########################################################################################################################################
     ##########################################################################################################################################
     ##########################################################################################################################################
@@ -189,8 +194,8 @@ class Coordinador:
        return a
   
 
-    def registrarVenta(self, usuario, queHago):
-        a = self._model.validar_registro_ventas(usuario, queHago)
+    def registrarVenta(self, usuario, queHago, quienSoy=None):
+        a = self._model.validar_registro_ventas(usuario, queHago, quienSoy)
         return a
     def obtenerVentas(self):
        a = self._model.obtener_todas_ventas()
@@ -204,8 +209,12 @@ class Coordinador:
        a = self._model.obtener_todos_pagos()
        return a
 
+
+    def obtenerNotificaciones(self):
+       a = self._model.obtenerTodasNotificaciones()
+       return a
     
    #AQUI LOS CLIENTES ENVIARAN LA NOTIFICACION DE COMPRA AL PERSONAL
-    def registrarNotificacionCompra(self, usuario, queHago):
-       a = self._model.comprarReparaVehiculoCliente(usuario, queHago)
+    def registrarNotificacionCompra(self, usuario, queHago, dondeEstoy, quienSoy):
+       a = self._model.comprarReparaVehiculoCliente(usuario, queHago, dondeEstoy, quienSoy)
        return a

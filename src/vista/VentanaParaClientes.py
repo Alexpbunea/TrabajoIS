@@ -272,7 +272,7 @@ class Ui_MainWindowClientes(object):
 ######################################################################################################################################################
 
 
-    def obtener_datos_ingresados(self):
+    def obtener_datos_ingresados(self, dondeEstoy, quienSoy=None):
         compraVehiculo = Vehiculo(
             IDvehiculo=self.LineaID.text()
         )
@@ -282,7 +282,7 @@ class Ui_MainWindowClientes(object):
         )
 
         if compraVehiculo.IDvehiculo != "":
-            a = self.coordinador.registrarNotificacionCompra(compraVehiculo, "Comprar")
+            a = self.coordinador.registrarNotificacionCompra(compraVehiculo, "Comprar", dondeEstoy, quienSoy)
             if a[0] == "Error":
                 actualizarTextoIncorrecto2(self.Incorrecto, self.rojo, a[1])
                 show_incorrecto_for_5_seconds(self.Incorrecto)
@@ -292,7 +292,7 @@ class Ui_MainWindowClientes(object):
             self.LineaID.setText("")
 
         elif reparaVehiculo.IDvehiculo != "":
-            a = self.coordinador.registrarNotificacionCompra(compraVehiculo, "Reparar")
+            a = self.coordinador.registrarNotificacionCompra(compraVehiculo, "Reparar", dondeEstoy, quienSoy)
             if a[0] == "Error":
                 actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
                 show_incorrecto_for_5_seconds(self.Incorrecto2)

@@ -4,7 +4,7 @@ SHOW TABLES;
 #insert into plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario)
 #VALUES ("71479447R", 1234, "Nain", "Miguel", "Sanchez", 1200, "administrador", "Cofermotor1"); 
 #select * FROM plantillatrabajadores;
-SELECT * FROM pago;	
+SELECT * FROM clientes;	
 #SELECT * FROM concesionario;
 #DROP TABLE plantillatrabajadores;
 #DESCRIBE vehiculos;
@@ -111,5 +111,17 @@ CREATE TABLE pago (
 	Concesionario varchar(20),
 	CONSTRAINT FK_PagoConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 
+);
+*/
+#DROP TABLE notificaciones;
+
+/*
+CREATE TABLE notificaciones(
+	IDnotificacion INT PRIMARY KEY,
+    IDcliente varchar(9) NOT NULL,
+    Tipo varchar(30) NOT NULL,
+    Estado varchar(40) NOT NULL,
+    Concesionario varchar(20) NOT NULL,
+    CONSTRAINT FK_NotiConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
 */

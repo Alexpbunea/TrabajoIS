@@ -36,6 +36,9 @@ from src.modelo.dao.VehiculosDao import VehiculoDao
 from src.modelo.vo.VentasVO import Venta
 from src.modelo.dao.VentasDao import VentaDao
 
+from src.modelo.vo.NotificacionesVO import NotificacionVO
+from src.modelo.dao.NotificacionesDao import NotificacionDao
+
 
 class Logica:
     def __init__(self):
@@ -125,8 +128,8 @@ class Logica:
         try:   
             for cliente in clientes:
                 if cliente.getIDcliente() == mi_persona.getIDcliente() and self.verificar_contrasenia(mi_persona.getContrasenia(), cliente.getContrasenia()):
-                    print(f"Bienvenido/a cliente --> {cliente.getNombre()}, {cliente.getConcesionario()}")
-                    return ('cliente',cliente.getNombre(), cliente.getConcesionario())
+                    print(f"Bienvenido/a cliente --> {cliente.getNombre()}, {cliente.getConcesionario()}, {cliente.getIDcliente()}")
+                    return ('cliente',cliente.getNombre(), cliente.getConcesionario(), cliente.getIDcliente())
 
             for trab in trabajadores:
                 if trab.getIDtrabajador() == mi_trabajador.getIDtrabajador() and self.verificar_contrasenia(mi_trabajador.getContrasenia(), trab.getContrasenia()):
@@ -722,9 +725,12 @@ class Logica:
 
 
     #FUNCIONES PARA LA VENTANA VENTAS
-    def validar_registro_ventas(self, mi_venta: Venta, queHago):
+    def validar_registro_ventas(self, mi_venta: Venta, queHago, quienSoy=None):
         
         mi_venta_dao = VentaDao()
+        mi_notifacion_dao = NotificacionDao()
+        mi_notificacion = NotificacionVO()
+        notifiaciones = mi_notifacion_dao.getNotificaciones()
 
         if queHago == "aniadir" or queHago == "modificar":
             try:
@@ -777,7 +783,39 @@ class Logica:
 
                 # Realizar la inserción o modificación de la venta según el caso
                 if queHago == "aniadir":
+                    if quienSoy is not None and quienSoy=="personal":
+                        #PERSONAL VALIDA LA COMPRA
+                        print("Hola")
+                        id = 0
+                        for i in notifiaciones:
+                            if int(i.getID()) == int(IDvehiculo):
+                                print("Hola2")
+                                mi_notificacion.setID(i.getID())
+                                mi_notificacion.setIDcliente(i.getIDcliente())
+                                mi_notificacion.setTipo(i.getTipo())
+                                mi_notificacion.setConcesionario(i.getConcesionario())
+                                mi_notificacion.setEstado("Procesado")
+                                id = mi_notificacion.getID()
+                                mi_notifacion_dao.updateNotificacion(mi_notificacion)
+
                     mi_venta_dao.insertVenta(mi_venta)
+                    
+
+                    mis_ventas = mi_venta_dao.getVentas()
+                    #GENERA AUTOMATICAMENTE EL PAGO
+                    for i in mis_ventas:
+                        if int(i.getIDvehiculo()) == int(id):
+                            mi_venta.setIDventa(i.getIDventa())
+                            mi_venta.setConcesionario(i.getConcesionario())
+                    
+                    pago = Pago(
+                        IDpago="",
+                        Precio="",
+                        IDventa=mi_venta.getIDventa(),
+                        Concesionario=mi_venta.getConcesionario()
+                    )
+                    self.validar_registro_pagos(pago, "aniadir")
+
                     return ("Correcto", "Has introducido bien los datos")
                 
                 elif queHago == "modificar":
@@ -977,15 +1015,15 @@ class Logica:
             for i in ventas:
                 if int(i.getIDventa()) == int(idventa):
                     if i.getRepara() == "No":
-                        idvehiculo = int(i.getIDvehiculo())        
+                        idvehiculo = int(i.getIDvehiculo())
                     
                     elif i.getRepara() == "Si":
                         pieza = i.getPiezas()
                         cantidadPiezas = int(i.getCantidad())
             if idvehiculo != 0:
                 for i in vehiculos:
-                    if idvehiculo == int(i.IDvehiculo()):
-                        return i.getPrecio()
+                    if idvehiculo == int(i.getIDvehiculo()):
+                        return int(i.getPrecio())
                     
             elif pieza != "":
                 for i in piezas:
@@ -1008,14 +1046,16 @@ class Logica:
                 
                 IDpago = ""
                 mi_pago.setIDpago(IDpago)
-
+                
+                print("Hola0")
                 # Compruebo números negativos
                 if not Idventa:
                     return ("Error", "Falta el IDventa")
                 elif int(Idventa) < 0:
                     return ("Error", "IDventa menor a 0")
-            
-                if not precio or precio=="Se calcula automaticamente":
+
+                print("Hola1")
+                if not precio or precio=="Se calcula automaticamente" or precio=="":
                     precio = precioCalculo(Idventa)
                     print(precio)
                     if precio == "Error":
@@ -1023,6 +1063,7 @@ class Logica:
                     else:
                         mi_pago.setPrecio(precio)
 
+                print("Hola2")
                 # Comprobando el formato del nombre del concesionario
                 if concesionario:
                     conc = self.comprobarFormatoConcesionario(concesionario)
@@ -1038,9 +1079,10 @@ class Logica:
                 conc = self.comprobarExistenciaConcesionario(concesionario)
                 if not conc:
                     return ("Error", "El concesionario no existe")
-
+                print("Hola3")
                 # Realizar la inserción o modificación de la venta según el caso
                 if queHago == "aniadir":
+                    print("Hola4")
                     mi_pago_dao.insertPago(mi_pago)
                     return ("Correcto", "Has introducido bien los datos")
                 
@@ -1211,24 +1253,57 @@ class Logica:
 ##################################################################################################################################################
 ##################################################################################################################################################
 
-    def comprarReparaVehiculoCliente(self, mi_vehiculo: Vehiculo, queHago):
+    def comprarReparaVehiculoCliente(self, mi_vehiculo: Vehiculo, queHago, dondeEstoy, quienSoy=None):
         try:
+            mi_notificacion = NotificacionVO()
+            mi_notificacion_dao = NotificacionDao()
             mi_vehiculo_dao = VehiculoDao()
-            if queHago == "Comprar":
-                vehiculos = mi_vehiculo_dao.getVehiculos()
-
-                for veh in vehiculos:
-                    if mi_vehiculo.getIDvehiculo() == veh.getIDvehiculo():
-                        print(f"Notificando al personal sobre tu compra --> {veh.getMarca()}, {veh.getModelo()}")
-                        return ("Correcto", "Notificando al personal")
-                return ("Error", "El ID introducido no es correcto")
+            vehiculos = mi_vehiculo_dao.getVehiculos()
             
-            elif queHago == "Reparar":
-                print(f"Notificando al personal sobre tu repacacion --> {mi_vehiculo.IDvehiculo()}")
-                return ("Correcto", "Notificando al personal")
-        except:
-            messagebox.showwarning("Advertencia", "Error al buscar vehiculos")
+
+            for veh in vehiculos:
+                if mi_vehiculo.getIDvehiculo() == veh.getIDvehiculo():
+                    print(f"Notificando al personal sobre tu compra --> {veh.getMarca()}, {veh.getModelo()}")
+                    print(mi_vehiculo.getIDvehiculo())
+                    mi_notificacion.setID(veh.getIDvehiculo())
+
+                    if quienSoy is not None:
+                        mi_notificacion.setIDcliente(quienSoy)
+
+                    if queHago == "Comprar":
+                        mi_notificacion.setTipo("Venta")
+                    elif queHago == "Reparar":
+                        mi_notificacion.setTipo("Reparacion")
+                    mi_notificacion.setEstado("En proceso")
+                    mi_notificacion.setConcesionario(dondeEstoy)
+                    mi_notificacion_dao.insertNotificacion(mi_notificacion)
+
+                    return ("Correcto", "Notificando al personal")
+            return ("Error", "El ID introducido no es correcto")
+        except Exception as e:
+            messagebox.showwarning("Advertencia", f"Error al buscar vehiculos ---> {e}")
             return ("Error", "Envio de notificacion fallido")
+        
+
+    def obtenerTodasNotificaciones(self):
+        try:
+            notificacionDao = NotificacionDao()
+            notificaciones = notificacionDao.getNotificaciones()
+            
+            notificaciones_data = []
+            for notificacion in notificaciones:
+                notificaciones_data.append({
+                    "IDnotificacion": notificacion.getID(),
+                    "IDcliente": notificacion.getIDcliente(),
+                    "Tipo": notificacion.getTipo(),
+                    "Estado": notificacion.getEstado(),
+                    'Concesionario': notificacion.getConcesionario()
+                })
+            return notificaciones_data
+        except Exception as e:
+            messagebox.showwarning("Advertencia", f"Error al buscar notificaciones: {str(e)}")
+            return ("Error", "Error al buscar notificaciones")
+
 
     
 

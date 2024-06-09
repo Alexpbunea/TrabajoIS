@@ -27,6 +27,7 @@ from src.vista.VentanaParaClientes import Ui_MainWindowClientes
 from src.vista.VentanaTaller import Ui_MainWindow10
 from src.vista.VentanaPago import Ui_MainWindow11
 from src.vista.VentanaJefeZona import Ui_MainWindow_JefeZona
+from src.vista.VentanaPersonal import Ui_MainWindow_Personal
 from src.vista.funciones import *
 
 import Imagespy.imagen_rc
@@ -37,11 +38,10 @@ import Imagespy.botonAtrasBlanco
 import Imagespy.botonAtrasBlancoAzul
 
 #RESTO
-from src.vista.RegistroClienteVentana import RegistroClienteVentana
 from src.controlador.Coordinador import Coordinador
 from src.modelo.Logica import Logica
 
-from src.vista.RegistroConcesionarioVentana import RegistroConcesionarioVentana
+
 
 
 def mostrar_ventana(ventanaInicial, ventanaFinal):
@@ -75,8 +75,8 @@ def comprobarSesion():
         ui_ventana_Clientes.concesionario.setText(a[2])
         ui_ventana_Clientes.BuscarVeh.clicked.connect(lambda: ui_ventana_Clientes.mostrarVehiculos(a[2]))
 
-        ui_ventana_Clientes.botonComprarVeh.clicked.connect(ui_ventana_Clientes.obtener_datos_ingresados)
-        ui_ventana_Clientes.botonReparar.clicked.connect(ui_ventana_Clientes.obtener_datos_ingresados)
+        ui_ventana_Clientes.botonComprarVeh.clicked.connect(lambda: ui_ventana_Clientes.obtener_datos_ingresados(a[2], a[3]))
+        ui_ventana_Clientes.botonReparar.clicked.connect(lambda: ui_ventana_Clientes.obtener_datos_ingresados(a[2], a[3]))
         
         
         
@@ -199,14 +199,15 @@ def comprobarSesion():
             pass
 
         elif a[0] == "personal":
-            mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
-            ui_ventana3_ui.hola_2.setText(a[1])
-            ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
-            
-            ui_ventana4_ui.atras.clicked.connect(lambda: atras2(ventanaConcesionario, ventanaAdmin))
-            ui_ventana4_ui.botonAniadirModificar.clicked.connect(ui_ventana4_ui.obtener_datos_ingresados)
-            ui_ventana4_ui.botonEliminar.clicked.connect(ui_ventana4_ui.obtener_datos_ingresados)
-            ui_ventana4_ui.BuscarCon.clicked.connect(ui_ventana4_ui.mostrasConcesionarios)
+            mostrar_ventana(ventanaIniciarSesion, ventanaPersonal)
+            ui_ventana_personal.hola_2.setText(a[1])
+            ui_ventana_personal.c.setText(a[2])
+            ui_ventana_personal.Notificaciones.clicked.connect(lambda: ui_ventana_personal.mostrarNotificaciones(a[2]))
+            ui_ventana_personal.taller.clicked.connect(lambda: ui_ventana_personal.mostrarTaller(a[2]))
+            ui_ventana_personal.Almacen.clicked.connect(lambda: ui_ventana_personal.mostrarAlmacenes(a[2]))
+
+            ui_ventana_personal.vender.clicked.connect(lambda: ui_ventana_personal.LineaConc.setText(a[2]))
+            ui_ventana_personal.botonAniadirModificar.clicked.connect(lambda: ui_ventana_personal.obtener_datos_ingresados(a[2], a[0]))
 
         else:
             return "Error"
@@ -354,6 +355,11 @@ if __name__ == "__main__":
     ui_ventana_jefeZona.setupUi(ventanaJefeZona)
     ventanaJefeZona.hide()
 
+    ventanaPersonal =  QtWidgets.QMainWindow()
+    ui_ventana_personal = Ui_MainWindow_Personal()
+    ui_ventana_personal.setupUi(ventanaPersonal)
+    ventanaPersonal.hide()
+
     # A cada ventada hay que asignarle un coordinador. Un mismo controlador puede controlar varias ventanas
     #ventanaRegistroConcesionario.setCoordinador(controlador)
     ui_ventana1.setCoordinador(controlador)
@@ -369,6 +375,7 @@ if __name__ == "__main__":
     ui_ventana11_ui.setCoordinador(controlador)
     ui_ventana_Clientes.setCoordinador(controlador)
     ui_ventana_jefeZona.setCoordinador(controlador)
+    ui_ventana_personal.setCoordinador(controlador)
 
 
     # Al coordinador hay que asignarle una ventana. Un coordinador puede tener referencias a varias ventanas
@@ -386,6 +393,7 @@ if __name__ == "__main__":
     controlador.setViewVentanaPago(controlador)
     controlador.setViewRegistroVentas(controlador)
     controlador.setViewVentanaParaJefeZona(controlador)
+    controlador.setViewVentanaParaPersonal(controlador)
 
     ventana_principal.show()
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
@@ -393,6 +401,7 @@ if __name__ == "__main__":
     ui_ventana3_ui.atras.clicked.connect(lambda: atras2(ventanaAdmin, ventanaIniciarSesion))
     ui_ventana_Clientes.atras.clicked.connect(lambda: atras2(ventanaParaClientes, ventanaIniciarSesion))
     ui_ventana_jefeZona.atras.clicked.connect(lambda: atras2(ventanaJefeZona, ventanaIniciarSesion))
+    ui_ventana_personal.atras.clicked.connect(lambda: atras2(ventanaPersonal, ventanaIniciarSesion))
     
 ########################################################################################################################################################
 ########################################################################################################################################################

@@ -285,6 +285,9 @@ def show_incorrecto_for_5_seconds(incorrecto):
 
 
 #FUNCIONES DE LA VISIBILIDAD, OSCULTAR O MOSTRAR FRAMES
+
+
+
 def toggle_frame_visibility(frame1, frame2, tabla, barra, ayuda=None):
     if frame2.isVisible(): 
         frame2_visibility(frame1, frame2, tabla, barra, ayuda)
