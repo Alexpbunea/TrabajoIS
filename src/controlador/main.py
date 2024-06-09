@@ -187,16 +187,56 @@ def comprobarSesion():
             ui_ventana11_ui.BuscarPago.clicked.connect(lambda:ui_ventana11_ui.mostrarPagos(a[2]))
 
         elif a[0] == "jefeVentas":
-            pass
+            mostrar_ventana(ventanaIniciarSesion, ventanaVentas)
+            #funcionA(ui_ventana6_ui, ui_ventana_jefeZona, 'aniadirCli', 'ModificarCli')
+            ui_ventana8_ui.hola.setText("Hola de nuevo")
+            ui_ventana8_ui.hola_2.setText(a[1])
+            ui_ventana8_ui.c.setText(a[2])
+            ui_ventana8_ui.LineaConc.setText(a[2])
+            ui_ventana8_ui.LineaConc.setReadOnly(True)
+            ui_ventana8_ui.atras.clicked.connect(lambda: atras2(ventanaVentas, ventanaIniciarSesion))
+            ui_ventana8_ui.botonAniadirModificar.clicked.connect(lambda: ui_ventana8_ui.obtener_datos_ingresados(a[2]))
+            ui_ventana8_ui.botonEliminar.clicked.connect(lambda: ui_ventana8_ui.obtener_datos_ingresados(a[2]))
+            ui_ventana8_ui.BuscarVen.clicked.connect(lambda:ui_ventana8_ui.mostrarVentas(a[2]))
 
         elif a[0] == "jefeAlmacen":
-            pass
+            mostrar_ventana(ventanaIniciarSesion, ventanaAlmacen)
+            #funcionA(ui_ventana6_ui, ui_ventana_jefeZona, 'aniadirCli', 'ModificarCli')
+            ui_ventana9_ui.hola.setText("Hola de nuevo")
+            ui_ventana9_ui.hola_2.setText(a[1])
+            ui_ventana9_ui.c.setText(a[2])
+            ui_ventana9_ui.LineaConc.setText(a[2])
+            ui_ventana9_ui.LineaConc.setReadOnly(True)
+            ui_ventana9_ui.atras.clicked.connect(lambda: atras2(ventanaAlmacen, ventanaIniciarSesion))
+            ui_ventana9_ui.botonAniadirModificar.clicked.connect(lambda: ui_ventana9_ui.obtener_datos_ingresados(a[2]))
+            ui_ventana9_ui.botonEliminar.clicked.connect(lambda: ui_ventana9_ui.obtener_datos_ingresados(a[2]))
+            ui_ventana9_ui.BuscarPieza.clicked.connect(lambda:ui_ventana9_ui.mostrarAlmacenes(a[2]))
         
         elif a[0] == "jefeTaller":
-            pass
+            mostrar_ventana(ventanaIniciarSesion, ventanaTaller)
+            #funcionA(ui_ventana6_ui, ui_ventana_jefeZona, 'aniadirCli', 'ModificarCli')
+            ui_ventana10_ui.hola.setText("Hola de nuevo")
+            ui_ventana10_ui.hola_2.setText(a[1])
+            ui_ventana10_ui.c.setText(a[2])
+            ui_ventana10_ui.LineaConc.setText(a[2])
+            ui_ventana10_ui.LineaConc.setReadOnly(True)
+            ui_ventana10_ui.atras.clicked.connect(lambda: atras2(ventanaTaller, ventanaIniciarSesion))
+            ui_ventana10_ui.botonAniadirModificar.clicked.connect(lambda: ui_ventana10_ui.obtener_datos_ingresados(a[2]))
+            ui_ventana10_ui.botonEliminar.clicked.connect(lambda: ui_ventana10_ui.obtener_datos_ingresados(a[2]))
+            ui_ventana10_ui.BuscarMaquinaria.clicked.connect(lambda:ui_ventana10_ui.mostrarTaller(a[2]))
 
         elif a[0] == "jefeClientes":
-            pass
+            mostrar_ventana(ventanaIniciarSesion, ventanaClientes)
+            #funcionA(ui_ventana6_ui, ui_ventana_jefeZona, 'aniadirCli', 'ModificarCli')
+            ui_ventana6_ui.hola.setText("Hola de nuevo")
+            ui_ventana6_ui.hola_2.setText(a[1])
+            ui_ventana6_ui.c.setText(a[2])
+            ui_ventana6_ui.LineaConc.setText(a[2])
+            ui_ventana6_ui.LineaConc.setReadOnly(True)
+            ui_ventana6_ui.atras.clicked.connect(lambda: atras2(ventanaClientes, ventanaIniciarSesion))
+            ui_ventana6_ui.botonAniadirModificar.clicked.connect(lambda: ui_ventana6_ui.obtener_datos_ingresados(a[2]))
+            ui_ventana6_ui.botonEliminar.clicked.connect(lambda: ui_ventana6_ui.obtener_datos_ingresados(a[2]))
+            ui_ventana6_ui.BuscarCli.clicked.connect(lambda:ui_ventana6_ui.mostrarClientes(a[2]))
 
         elif a[0] == "personal":
             mostrar_ventana(ventanaIniciarSesion, ventanaPersonal)
@@ -398,10 +438,10 @@ if __name__ == "__main__":
     ventana_principal.show()
     ui_ventana2_ui.IniciarSesion.clicked.connect(comprobarSesion)
     
-    ui_ventana3_ui.atras.clicked.connect(lambda: atras2(ventanaAdmin, ventanaIniciarSesion))
-    ui_ventana_Clientes.atras.clicked.connect(lambda: atras2(ventanaParaClientes, ventanaIniciarSesion))
-    ui_ventana_jefeZona.atras.clicked.connect(lambda: atras2(ventanaJefeZona, ventanaIniciarSesion))
-    ui_ventana_personal.atras.clicked.connect(lambda: atras2(ventanaPersonal, ventanaIniciarSesion))
+    #ui_ventana3_ui.atras.clicked.connect(lambda: atras2(ventanaAdmin, ventanaIniciarSesion))
+    #ui_ventana_Clientes.atras.clicked.connect(lambda: atras2(ventanaParaClientes, ventanaIniciarSesion))
+    #ui_ventana_jefeZona.atras.clicked.connect(lambda: atras2(ventanaJefeZona, ventanaIniciarSesion))
+    #ui_ventana_personal.atras.clicked.connect(lambda: atras2(ventanaPersonal, ventanaIniciarSesion))
     
 ########################################################################################################################################################
 ########################################################################################################################################################

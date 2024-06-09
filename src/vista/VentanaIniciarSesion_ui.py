@@ -156,7 +156,7 @@ class Ui_MainWindow2(object):
 
         if a[0] == "cliente":
             return a
-        elif a[0] in ['administrador', 'jefeZona', 'jefeDepartamento', 'personal']:
+        elif a[0] in ['administrador', 'jefeZona', 'personal', 'jefeVentas', 'jefeAlmacen', 'jefeTaller', 'jefeClientes']:
             return a
         else:
             print("Error en el DNI o la contrasenia")

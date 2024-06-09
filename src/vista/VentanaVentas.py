@@ -42,6 +42,29 @@ class Ui_MainWindow8(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
+
+        self.hola = BorderedTextLabel(self.centralwidget)
+        self.hola.setGeometry(QtCore.QRect(10, 10, 211, 41))
+        font = QtGui.QFont()
+        font.setPointSize(17)
+        font.setBold(True)
+        font.setWeight(75)
+        self.hola.setFont(font)
+        #self.hola.setText("Hola de nuevo")
+        self.hola.setObjectName("hola")
+
+        self.hola_2 = BorderedTextLabel(self.centralwidget)
+        self.hola_2.setGeometry(QtCore.QRect(220, 10, 211, 41))
+        font = QtGui.QFont()
+        font.setPointSize(17)
+        font.setBold(True)
+        font.setWeight(75)
+        self.hola_2.setFont(font)
+        self.hola_2.setText("")
+        self.hola_2.setAlignment(Qt.AlignLeft) 
+        self.hola_2.setObjectName("hola_2")
+
+
         self.c = concesionario(self.centralwidget)
 
         self.aniadirVen = QtWidgets.QPushButton(self.centralwidget)
@@ -319,7 +342,7 @@ class Ui_MainWindow8(object):
 
         #check box del modo oscuro, igual que el de ventanaAdmin
         self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkBox.setGeometry(QtCore.QRect(10, 10, 141, 61))
+        self.checkBox.setGeometry(QtCore.QRect(10, 30, 141, 61))
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
         
@@ -386,6 +409,7 @@ class Ui_MainWindow8(object):
         self.aniadirVen.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.aniadirVen.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
         self.aniadirVen.clicked.connect(lambda: self.LineaID.setText("Se asigna automaticamente"))
+        self.aniadirVen.clicked.connect(lambda: self.LineaID.setReadOnly(True))
 
 
         self.eliminarVen.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
@@ -393,6 +417,7 @@ class Ui_MainWindow8(object):
         self.ModificarVen.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.ModificarVen.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
         self.ModificarVen.clicked.connect(lambda: self.LineaID.setText(""))
+        self.ModificarVen.clicked.connect(lambda: self.LineaID.setReadOnly(False))
 
         self.BuscarVen.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
 

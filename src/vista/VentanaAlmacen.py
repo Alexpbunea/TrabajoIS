@@ -40,6 +40,27 @@ class Ui_MainWindow9(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
+        self.hola = BorderedTextLabel(self.centralwidget)
+        self.hola.setGeometry(QtCore.QRect(10, 10, 211, 41))
+        font = QtGui.QFont()
+        font.setPointSize(17)
+        font.setBold(True)
+        font.setWeight(75)
+        self.hola.setFont(font)
+        #self.hola.setText("Hola de nuevo")
+        self.hola.setObjectName("hola")
+
+        self.hola_2 = BorderedTextLabel(self.centralwidget)
+        self.hola_2.setGeometry(QtCore.QRect(220, 10, 211, 41))
+        font = QtGui.QFont()
+        font.setPointSize(17)
+        font.setBold(True)
+        font.setWeight(75)
+        self.hola_2.setFont(font)
+        self.hola_2.setText("")
+        self.hola_2.setAlignment(Qt.AlignLeft) 
+        self.hola_2.setObjectName("hola_2")
+
         self.c = concesionario(self.centralwidget)
 
         self.aniadirPieza = QtWidgets.QPushButton(self.centralwidget)
@@ -227,7 +248,7 @@ class Ui_MainWindow9(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkBox.setGeometry(QtCore.QRect(10, 10, 141, 61))
+        self.checkBox.setGeometry(QtCore.QRect(10, 30, 141, 61))
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
 
@@ -369,11 +390,14 @@ class Ui_MainWindow9(object):
         
         
 
-    def mostrarAlmacenes(self):
+    def mostrarAlmacenes(self, dondeEstoy=None):
         self.model.removeRows(0, self.model.rowCount())
 
         a = self.coordinador.obtenerPiezas()
-        #print(a)
+        
+        if dondeEstoy is not None:
+            a = [pieza for pieza in a if pieza['Concesionario'] == dondeEstoy]
+
         columnas = ["Pieza", "Cantidad", "Precio", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:

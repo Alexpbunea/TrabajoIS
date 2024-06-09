@@ -117,7 +117,7 @@ CREATE TABLE pago (
 
 /*
 CREATE TABLE notificaciones(
-	IDnotificacion INT PRIMARY KEY,
+	IDnotificacion INT,
     IDcliente varchar(9) NOT NULL,
     Tipo varchar(30) NOT NULL,
     Estado varchar(40) NOT NULL,

@@ -40,6 +40,27 @@ class Ui_MainWindow10(object):
         self.label.setScaledContents(False)
         self.label.setObjectName("label")
 
+        self.hola = BorderedTextLabel(self.centralwidget)
+        self.hola.setGeometry(QtCore.QRect(10, 10, 211, 41))
+        font = QtGui.QFont()
+        font.setPointSize(17)
+        font.setBold(True)
+        font.setWeight(75)
+        self.hola.setFont(font)
+        #self.hola.setText("Hola de nuevo")
+        self.hola.setObjectName("hola")
+
+        self.hola_2 = BorderedTextLabel(self.centralwidget)
+        self.hola_2.setGeometry(QtCore.QRect(220, 10, 211, 41))
+        font = QtGui.QFont()
+        font.setPointSize(17)
+        font.setBold(True)
+        font.setWeight(75)
+        self.hola_2.setFont(font)
+        self.hola_2.setText("")
+        self.hola_2.setAlignment(Qt.AlignLeft) 
+        self.hola_2.setObjectName("hola_2")
+
         self.c = concesionario(self.centralwidget)
 
         self.aniadirMaquinaria = QtWidgets.QPushButton(self.centralwidget)
@@ -227,7 +248,7 @@ class Ui_MainWindow10(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkBox.setGeometry(QtCore.QRect(10, 10, 141, 61))
+        self.checkBox.setGeometry(QtCore.QRect(10, 30, 141, 61))
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
 
@@ -297,12 +318,17 @@ class Ui_MainWindow10(object):
         
         self.aniadirMaquinaria.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.aniadirMaquinaria.clicked.connect(lambda: actualizarBotonFrame("Añadir", self.botonAniadirModificar))
+        self.aniadirMaquinaria.clicked.connect(lambda: self.LineaID.setText("Se asigna automaticamente"))
+        self.aniadirMaquinaria.clicked.connect(lambda: self.LineaID.setReadOnly(True))
 
         self.eliminarMaquinaria.clicked.connect(lambda: frame2_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         
 
         self.ModificarMaquinaria.clicked.connect(lambda: toggle_frame_visibility(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
         self.ModificarMaquinaria.clicked.connect(lambda: actualizarBotonFrame("Modificar", self.botonAniadirModificar))
+        self.ModificarMaquinaria.clicked.connect(lambda: self.LineaID.setText(""))
+        self.ModificarMaquinaria.clicked.connect(lambda: self.LineaID.setReadOnly(False))
+
 
         self.BuscarMaquinaria.clicked.connect(lambda: tablaYbusquedaVisibilidad(self.frameAniaidir, self.frame2, self.tableView, self.searchBar, self.ayuda))
 
@@ -378,9 +404,8 @@ class Ui_MainWindow10(object):
 
         if dondeEstoy is not None:
             a = [taller for taller in a if taller['Concesionario'] == dondeEstoy]
-        if quienSoy in ['dad']:
-            pass
-        print(a)
+        
+        
         columnas = ["IDmaquinaria", "Maquinaria", "Cantidad", "Concesionario"]
         self.model.setHorizontalHeaderLabels(columnas)
         for fila in a:

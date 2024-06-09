@@ -131,7 +131,7 @@ class Logica:
                     print(f"Bienvenido/a cliente --> {cliente.getNombre()}, {cliente.getConcesionario()}, {cliente.getIDcliente()}")
                     return ('cliente',cliente.getNombre(), cliente.getConcesionario(), cliente.getIDcliente())
 
-            for trab in trabajadores:
+            for trab in trabajadores:                
                 if trab.getIDtrabajador() == mi_trabajador.getIDtrabajador() and self.verificar_contrasenia(mi_trabajador.getContrasenia(), trab.getContrasenia()):
                     print(f"Bienvenido/a trabajador/a --> {trab.getNombre()}")
                     return (trab.getRol(),trab.getNombre(), trab.getConcesionario())
@@ -611,6 +611,8 @@ class Logica:
                 
                 if not IDvehiculo:
                     return ("Error", "Falta el ID")
+                elif IDvehiculo <= 0:
+                    return ("Error", "IDvehiculo menor a 0")
 
                 #Mayusculas
                 try:
@@ -1260,26 +1262,29 @@ class Logica:
             mi_vehiculo_dao = VehiculoDao()
             vehiculos = mi_vehiculo_dao.getVehiculos()
             
+            if queHago == "Comprar":
+                for veh in vehiculos:
+                    if mi_vehiculo.getIDvehiculo() == veh.getIDvehiculo():
+                        print(f"Notificando al personal sobre tu compra --> {veh.getMarca()}, {veh.getModelo()}")
+                        print(mi_vehiculo.getIDvehiculo())
+                        mi_notificacion.setID(veh.getIDvehiculo())
+                    else:
+                        return ("Error", "El ID introducido no es correcto")
+            elif queHago == "Reparar":
+                mi_notificacion.setID(0) 
 
-            for veh in vehiculos:
-                if mi_vehiculo.getIDvehiculo() == veh.getIDvehiculo():
-                    print(f"Notificando al personal sobre tu compra --> {veh.getMarca()}, {veh.getModelo()}")
-                    print(mi_vehiculo.getIDvehiculo())
-                    mi_notificacion.setID(veh.getIDvehiculo())
+            if quienSoy is not None:
+                mi_notificacion.setIDcliente(quienSoy)
 
-                    if quienSoy is not None:
-                        mi_notificacion.setIDcliente(quienSoy)
-
-                    if queHago == "Comprar":
-                        mi_notificacion.setTipo("Venta")
-                    elif queHago == "Reparar":
-                        mi_notificacion.setTipo("Reparacion")
-                    mi_notificacion.setEstado("En proceso")
-                    mi_notificacion.setConcesionario(dondeEstoy)
-                    mi_notificacion_dao.insertNotificacion(mi_notificacion)
-
-                    return ("Correcto", "Notificando al personal")
-            return ("Error", "El ID introducido no es correcto")
+            if queHago == "Comprar":
+                mi_notificacion.setTipo("Venta")
+            elif queHago == "Reparar":
+                mi_notificacion.setTipo("Reparacion")
+            mi_notificacion.setEstado("En proceso")
+            mi_notificacion.setConcesionario(dondeEstoy)
+            mi_notificacion_dao.insertNotificacion(mi_notificacion)
+            return ("Correcto", "Notificando al personal")
+            
         except Exception as e:
             messagebox.showwarning("Advertencia", f"Error al buscar vehiculos ---> {e}")
             return ("Error", "Envio de notificacion fallido")
