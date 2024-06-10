@@ -292,7 +292,7 @@ class Ui_MainWindowClientes(object):
             self.LineaID.setText("")
 
         elif reparaVehiculo.IDvehiculo != "":
-            a = self.coordinador.registrarNotificacionCompra(compraVehiculo, "Reparar", dondeEstoy, quienSoy)
+            a = self.coordinador.registrarNotificacionCompra(reparaVehiculo, "Reparar", dondeEstoy, quienSoy)
             if a[0] == "Error":
                 actualizarTextoIncorrecto2(self.Incorrecto2, self.rojo, a[1])
                 show_incorrecto_for_5_seconds(self.Incorrecto2)

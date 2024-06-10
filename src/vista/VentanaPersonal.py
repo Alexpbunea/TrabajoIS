@@ -335,9 +335,11 @@ class Ui_MainWindow_Personal(object):
             self.frameAniaidir.setVisible(False)
         c = self.tableView.isVisible()
         self.tableView.setVisible(not c)
+        self.searchBar.setVisible(not c)
     def funcionVisible2(self):
         if self.tableView.isVisible():
             self.tableView.setVisible(False)
+            self.searchBar.setVisible(False)
         c = self.frameAniaidir.isVisible()
         self.frameAniaidir.setVisible(not c)
 

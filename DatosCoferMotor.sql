@@ -4,10 +4,16 @@ SHOW TABLES;
 #insert into plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario)
 #VALUES ("71479447R", 1234, "Nain", "Miguel", "Sanchez", 1200, "administrador", "Cofermotor1"); 
 #select * FROM plantillatrabajadores;
-SELECT * FROM plantillatrabajadores;	
+#SELECT * FROM notificaciones;	
 #SELECT * FROM concesionario;
 #DROP TABLE plantillatrabajadores;
 #DESCRIBE vehiculos;
+#ALTER TABLE vehiculos
+#MODIFY IDvehiculo VARCHAR(30);
+
+DELETE FROM notificaciones
+WHERE IDnotificacion = 'valor_especifico';
+
 
 #DROP TABLE vehiculos;
 #ALTER TABLE clientes MODIFY COLUMN Contrasenia VARCHAR(65) NOT NULL;
@@ -41,7 +47,7 @@ CREATE TABLE clientes (
 */
 /*
 CREATE TABLE vehiculos (
-    IDvehiculo VARCHAR(18) PRIMARY KEY NOT NULL,
+    IDvehiculo VARCHAR(30) PRIMARY KEY NOT NULL,
     Marca VARCHAR(20) NOT NULL,
     Modelo VARCHAR(30) NOT NULL,
     Año INT NOT NULL,
@@ -96,7 +102,7 @@ CREATE TABLE plantillaTrabajadores (
     Apellido1 VARCHAR(20) NOT NULL,
     Apellido2 VARCHAR(20) NOT NULL,
     Sueldo DECIMAL(10, 2) NOT NULL,
-    Rol VARCHAR(20) NOT NULL CHECK (Rol IN ('administrador', 'jefeZona', 'jefeDepartamento', 'personal')),
+    Rol VARCHAR(20) NOT NULL,
     Concesionario VARCHAR(20) NOT NULL,
     CONSTRAINT TrabajadorConcesionario FOREIGN KEY (Concesionario) REFERENCES concesionario(Nombre) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -118,7 +124,7 @@ CREATE TABLE pago (
 
 /*
 CREATE TABLE notificaciones(
-	IDnotificacion INT,
+	IDnotificacion varchar(30),
     IDcliente varchar(9) NOT NULL,
     Tipo varchar(30) NOT NULL,
     Estado varchar(40) NOT NULL,
