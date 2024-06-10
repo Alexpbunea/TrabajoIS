@@ -177,7 +177,7 @@ class Ui_MainWindow9(object):
         self.frame2 = 2
         self.frame2 = QtWidgets.QFrame(self.centralwidget)
         self.frame2.setEnabled(True)
-        self.frame2.setGeometry(QtCore.QRect(460, 30, 301, 300))
+        self.frame2.setGeometry(QtCore.QRect(460, 30, 301, 400))
         self.frame2.setStyleSheet("background-color: #282e2a;\n"
 "border-radius: 20px;")
         self.frame2.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -185,7 +185,7 @@ class Ui_MainWindow9(object):
         self.frame2.setObjectName("frame2")
         
         self.botonEliminar = QtWidgets.QPushButton(self.frame2)
-        self.botonEliminar.setGeometry(QtCore.QRect(100, 250, 100, 30))
+        self.botonEliminar.setGeometry(QtCore.QRect(100, 350, 100, 30))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
@@ -214,9 +214,28 @@ class Ui_MainWindow9(object):
         self.LineaNombre2.setText("")
         self.LineaNombre2.setObjectName("LineaNombre2")
 
+        self.concesionario2 = QtWidgets.QLabel(self.frame2)
+        self.concesionario2.setGeometry(QtCore.QRect(40, 160, 220, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.concesionario2.setFont(font)
+        
+
+        self.Lineaconcesionario2 = QtWidgets.QLineEdit(self.frame2)
+        self.Lineaconcesionario2.setGeometry(QtCore.QRect(40, 230, 220, 31))
+        self.Lineaconcesionario2.setStyleSheet("background-color:white;\n"
+"\n"
+"border: 2px solid gray;\n"
+"border-radius: 10px; /* Ajusta el radio según tus preferencias */\n"
+"padding: 5px; /* Opcional: ajusta el espaciado interior */\n"
+"\n"
+"")
+        self.Lineaconcesionario2.setText("OPCIONAL: si no se pone, se eliminan todas")
+        self.Lineaconcesionario2.setObjectName("Lineaconcesionario2")
+
         self.Incorrecto2 = QtWidgets.QLabel(self.frame2)
         self.Incorrecto2.setEnabled(True)
-        self.Incorrecto2.setGeometry(QtCore.QRect(10, 220, 281, 21))
+        self.Incorrecto2.setGeometry(QtCore.QRect(10, 320, 281, 21))
         self.Incorrecto2.setObjectName("Incorrecto2")
         self.Incorrecto2.setVisible(False)
         
@@ -261,7 +280,7 @@ class Ui_MainWindow9(object):
         #se lo paso a modoclos
         self.lista = [self.aniadirPieza, self.eliminarPieza, self.BuscarPieza, self.ModificarPieza, self.botonEliminar, self.Nombre2, self.botonAniadirModificar]
         self.listaFrames = [self.frameAniaidir, self.frame2]
-        self.listaTexto = [self.Nombre, self.Cantidad, self.precio, self.concesionario, self.Nombre2]
+        self.listaTexto = [self.Nombre, self.Cantidad, self.precio, self.concesionario, self.Nombre2, self.concesionario2]
 
 
         #Nombres de cada texto (para el modo oscuro/claro)
@@ -270,6 +289,7 @@ class Ui_MainWindow9(object):
         self.precio.setObjectName("Precio pieza")
         self.concesionario.setObjectName("Concesionario")
         self.Nombre2.setObjectName("Nombre pieza")
+        self.concesionario2.setObjectName("Concesionario")
 
         #muestra una pequenia ayuda al poner el raton sobre el boton
         self.aniadirPieza.setToolTip("Añadir pieza")
@@ -335,7 +355,7 @@ class Ui_MainWindow9(object):
 
     
     #FUNCIONES QUE TIENEN ALGUNA FUNCIONALIDAD COMO LEER DATOS, PASARLOS A COORDINADOR, ETC
-    def obtener_datos_ingresados(self):
+    def obtener_datos_ingresados(self, dondeEstoy = None):
         anadirModificar = AlmacenVO(
             Pieza=self.LineaNombre.text(),
             Cantidad=self.LineaCantidad.text(),
@@ -344,7 +364,8 @@ class Ui_MainWindow9(object):
         )
 
         eliminar = AlmacenVO(
-             Pieza=self.LineaNombre2.text()
+             Pieza=self.LineaNombre2.text(),
+             Concesionario=self.Lineaconcesionario2.text()
         )
         
         
@@ -370,10 +391,13 @@ class Ui_MainWindow9(object):
             self.LineaNombre.setText("")
             self.LineaCantidad.setText("")
             self.LineaPrecio.setText("")
-            self.LineaConc.setText("")
+            if dondeEstoy is None:
+                self.LineaConc.setText("")
 
 
         if eliminar.Pieza != "":
+            if eliminar.Concesionario == "OPCIONAL: si no se pone, se eliminan todas":
+                eliminar.Concesionario = ""
             a = self.coordinador.registrarPieza(eliminar, "eliminar")
             #print(a)
             if a[0] == "Error":

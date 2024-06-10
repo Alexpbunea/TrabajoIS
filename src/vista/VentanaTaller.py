@@ -372,7 +372,7 @@ class Ui_MainWindow10(object):
                     actualizarTextoIncorrecto2(self.Incorrecto, self.verde, self.completado)
                     show_incorrecto_for_5_seconds(self.Incorrecto) 
             
-            self.LineaID.setText("")
+            #self.LineaID.setText("")
             self.LineaCantidad.setText("")
             self.LineaNombre.setText("")
             if dondeEstoy is None:

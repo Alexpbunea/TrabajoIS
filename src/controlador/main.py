@@ -51,6 +51,10 @@ def mostrar_ventana(ventanaInicial, ventanaFinal):
 def atras2(ventanaInicial, ventanaFinal):
     ventanaInicial.hide()
     ventanaFinal.show()
+
+def resetear_campos_inicio_sesion():
+    ui_ventana2_ui.LineaDni.setText("")
+    ui_ventana2_ui.LineaContra.setText("")
     
 def funcionA(ventana, ventana2, boton, boton2):
     if ventana2.c.text() != "":
@@ -74,7 +78,7 @@ def comprobarSesion():
         ui_ventana_Clientes.hola_2.setText(a[1])
         ui_ventana_Clientes.concesionario.setText(a[2])
         ui_ventana_Clientes.BuscarVeh.clicked.connect(lambda: ui_ventana_Clientes.mostrarVehiculos(a[2]))
-
+        ui_ventana_Clientes.atras.clicked.connect(lambda: atras2(ventanaParaClientes, ventanaIniciarSesion))
         ui_ventana_Clientes.botonComprarVeh.clicked.connect(lambda: ui_ventana_Clientes.obtener_datos_ingresados(a[2], a[3]))
         ui_ventana_Clientes.botonReparar.clicked.connect(lambda: ui_ventana_Clientes.obtener_datos_ingresados(a[2], a[3]))
         
@@ -88,6 +92,7 @@ def comprobarSesion():
             mostrar_ventana(ventanaIniciarSesion, ventanaAdmin)
             ui_ventana3_ui.hola_2.setText(a[1])
             ui_ventana3_ui.c.setText(a[2])
+            ui_ventana3_ui.atras.clicked.connect(lambda: atras2(ventanaAdmin, ventanaIniciarSesion))
             ui_ventana3_ui.Concesionario.clicked.connect(lambda: mostrar_ventana(ventanaAdmin, ventanaConcesionario))
             
             ui_ventana4_ui.atras.clicked.connect(lambda: atras2(ventanaConcesionario, ventanaAdmin))
@@ -142,6 +147,7 @@ def comprobarSesion():
             mostrar_ventana(ventanaIniciarSesion, ventanaJefeZona)
             ui_ventana_jefeZona.hola_2.setText(a[1])
             ui_ventana_jefeZona.c.setText(a[2])
+            ui_ventana_jefeZona.atras.clicked.connect(lambda: atras2(ventanaJefeZona, ventanaIniciarSesion))
 
             ui_ventana_jefeZona.Trabajador.clicked.connect(lambda: mostrar_ventana(ventanaJefeZona, ventanaTrabajadores))
             funcionA(ui_ventana5_ui, ui_ventana_jefeZona, 'aniadirTra', 'ModificarTra')
@@ -207,6 +213,8 @@ def comprobarSesion():
             ui_ventana9_ui.c.setText(a[2])
             ui_ventana9_ui.LineaConc.setText(a[2])
             ui_ventana9_ui.LineaConc.setReadOnly(True)
+            ui_ventana9_ui.Lineaconcesionario2.setText(a[2])
+            ui_ventana9_ui.Lineaconcesionario2.setReadOnly(True)
             ui_ventana9_ui.atras.clicked.connect(lambda: atras2(ventanaAlmacen, ventanaIniciarSesion))
             ui_ventana9_ui.botonAniadirModificar.clicked.connect(lambda: ui_ventana9_ui.obtener_datos_ingresados(a[2]))
             ui_ventana9_ui.botonEliminar.clicked.connect(lambda: ui_ventana9_ui.obtener_datos_ingresados(a[2]))
@@ -245,7 +253,7 @@ def comprobarSesion():
             ui_ventana_personal.Notificaciones.clicked.connect(lambda: ui_ventana_personal.mostrarNotificaciones(a[2]))
             ui_ventana_personal.taller.clicked.connect(lambda: ui_ventana_personal.mostrarTaller(a[2]))
             ui_ventana_personal.Almacen.clicked.connect(lambda: ui_ventana_personal.mostrarAlmacenes(a[2]))
-
+            ui_ventana_personal.atras.clicked.connect(lambda: atras2(ventanaPersonal, ventanaIniciarSesion))
             ui_ventana_personal.vender.clicked.connect(lambda: ui_ventana_personal.LineaConc.setText(a[2]))
             ui_ventana_personal.botonAniadirModificar.clicked.connect(lambda: ui_ventana_personal.obtener_datos_ingresados(a[2], a[0]))
 

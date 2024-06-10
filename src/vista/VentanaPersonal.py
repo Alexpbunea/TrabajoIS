@@ -276,13 +276,13 @@ class Ui_MainWindow_Personal(object):
 
         # Creación del QTableView para mostrar las columnas de la base de datos
         self.tableView = QtWidgets.QTableView(self.centralwidget)
-        self.tableView.setGeometry(QtCore.QRect(305, 235, 630, 250))
+        self.tableView.setGeometry(QtCore.QRect(420, 235, 400, 250))
         self.tableView.setObjectName("tableView")
 
 
         # Barra de búsqueda
         self.searchBar = QtWidgets.QLineEdit(self.centralwidget)
-        self.searchBar.setGeometry(QtCore.QRect(305, 200, 220, 31))
+        self.searchBar.setGeometry(QtCore.QRect(420, 200, 220, 31))
         self.searchBar.setPlaceholderText("Buscar...")
         self.searchBar.setStyleSheet("background-color:white;\n"
                                      "border: 2px solid gray;\n"

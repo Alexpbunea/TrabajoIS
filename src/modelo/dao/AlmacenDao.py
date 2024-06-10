@@ -14,8 +14,9 @@ from src.modelo.dao.AlmacenInterface import AlmacenInterface
 class AlmacenDao(AlmacenInterface, Conexion):
     SQL_SELECT = "SELECT Pieza, Cantidad, PrecioPieza, Concesionario FROM almacen"
     SQL_INSERT = "INSERT INTO almacen (Pieza, Cantidad, PrecioPieza, Concesionario) VALUES (?, ?, ?, ?)"
-    SQL_UPDATE = "UPDATE almacen SET Cantidad=?, PrecioPieza=?, Concesionario=? WHERE Pieza=?"
+    SQL_UPDATE = "UPDATE almacen SET Cantidad=?, PrecioPieza=?, Concesionario=? WHERE Pieza=? AND Concesionario=?"
     SQL_DELETE = "DELETE FROM almacen WHERE Pieza=?"
+    SQL_DELETE2 = "DELETE FROM almacen WHERE Pieza=? AND Concesionario=?"
 
     def getAlmacenes(self) -> List[Almacen]:
         conexion = self.getConnection()
@@ -82,7 +83,9 @@ class AlmacenDao(AlmacenInterface, Conexion):
             else:
                 print("La base de datos no está disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_UPDATE, (almacen.getCantidad(), almacen.getPrecioPieza(), almacen.getConcesionario(), almacen.getPieza()))
+            
+            cursor.execute(self.SQL_UPDATE, (almacen.getCantidad(), almacen.getPrecioPieza(), almacen.getConcesionario(), almacen.getPieza(), almacen.getConcesionario()))
+            
             rows = cursor.rowcount
 
         except Error as e:
@@ -95,7 +98,7 @@ class AlmacenDao(AlmacenInterface, Conexion):
         conexion = self.close(conn)
         return rows
 
-    def deleteAlmacen(self, pieza: str) -> int:
+    def deleteAlmacen(self, pieza: str, concesionario = None) -> int:
         conexion = self.getConnection()
         conn = None
         cursor = None
@@ -107,7 +110,10 @@ class AlmacenDao(AlmacenInterface, Conexion):
             else:
                 print("La base de datos no está disponible")
             cursor = conn.cursor()
-            cursor.execute(self.SQL_DELETE, (pieza,))
+            if concesionario is None:
+                cursor.execute(self.SQL_DELETE, (pieza,))
+            else:
+                cursor.execute(self.SQL_DELETE2, (pieza, concesionario))
             rows = cursor.rowcount
 
         except Error as e:

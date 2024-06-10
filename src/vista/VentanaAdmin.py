@@ -94,6 +94,8 @@ class Ui_MainWindow3(object):
         self.pago.setObjectName("Pagos")
         self.pago.setToolTip("Añade, elimina, modifica o busca pagos")
 
+
+        #self.notificaciones = 
         #self.combo_box = QtWidgets.QComboBox(self.centralwidget)
         #self.combo_box.setGeometry(1040, 10, 180, 30)
         #self.combo_box.setStyleSheet("background-color: transparent; border: 2px solid white; color: white; border-radius: 10px;")

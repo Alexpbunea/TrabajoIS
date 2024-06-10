@@ -4,7 +4,7 @@ SHOW TABLES;
 #insert into plantillatrabajadores(IDtrabajador, Contrasenia, Nombre, Apellido1, Apellido2, Sueldo, Rol, Concesionario)
 #VALUES ("71479447R", 1234, "Nain", "Miguel", "Sanchez", 1200, "administrador", "Cofermotor1"); 
 #select * FROM plantillatrabajadores;
-SELECT * FROM clientes;	
+SELECT * FROM plantillatrabajadores;	
 #SELECT * FROM concesionario;
 #DROP TABLE plantillatrabajadores;
 #DESCRIBE vehiculos;
@@ -68,9 +68,10 @@ CREATE TABLE ventas (
 );
 */
 #DROP TABLE almacen
+#ALTER TABLE almacen DROP PRIMARY KEY;
 /*
 CREATE TABLE almacen (
-    Pieza varchar(150) PRIMARY KEY,
+    Pieza varchar(150),
     Cantidad int NOT NULL,
     PrecioPieza DECIMAL(10,2) NOT NULL,
     Concesionario VARCHAR(20) NOT NULL,

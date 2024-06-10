@@ -8,7 +8,8 @@ Created on Thu Apr 25 13:40:11 2024
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
-import bcrypt
+import re #funcion para comrpobar el formato de contrasenia
+import bcrypt #funcion para encriptar contrasenia
 
 from src.controlador.Coordinador import Coordinador
 
@@ -63,6 +64,21 @@ class Logica:
 
         # Comparar la letra proporcionada con la letra calculada
         return letra == letra_correcta
+
+
+    def comprobarFormatoContrasenia(self, contrasenia):
+        if len(contrasenia) < 8:
+            return ("Error", "La longitud de la contraseña debe ser 8 o mas")
+        if not re.search(r"[A-Z]", contrasenia):
+            return ("Error", "Falta mayuscula en la contra")
+        if not re.search(r"[a-z]", contrasenia):
+            return ("Error",  "Falta minuscula en la contra")
+        if not re.search(r"[0-9]", contrasenia):
+            return ("Error", "La contra debe tener al menos un digito")
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", contrasenia):
+            return ("Error", "Falta caracter especial en la contra")
+        
+        return ("Correcto", "Formato contraseña correcto")
 
     #ENCRIPTAR Y DEENCRIPTAR CONTRASENIA
     def encriptar_contrasenia(self, contrasenia) -> str:
@@ -279,7 +295,11 @@ class Logica:
                     print("El IDtrabajador es incorrecto, compruebalo")
                     return ("Error", "El IDtrabajador es incorrecto")
                 
+                a = self.comprobarFormatoContrasenia(contrasenia)
+                if a[0] == "Error":
+                    return a
                 
+
                 try:
                     #Encripto la contrasenia
                     contrasenia2 = self.encriptar_contrasenia(contrasenia)
@@ -420,6 +440,10 @@ class Logica:
                     print("El IDcliente es incorrecto, compruebalo")
                     return ("Error", "El IDcliente es incorrecto")
                 
+                a = self.comprobarFormatoContrasenia(contrasenia)
+                if a[0] == "Error":
+                    return a
+
                 try:
                     #Encripto la contrasenia
                     contrasenia2 = self.encriptar_contrasenia(contrasenia)
@@ -490,6 +514,11 @@ class Logica:
                 email = mi_cliente.getEmail()
                 concesionario = mi_cliente.getConcesionario()
                 
+
+                a = self.comprobarFormatoContrasenia(contrasenia)
+                if a[0] == "Error":
+                    return a
+
                 try:
                 #Encripto la contrasenia
                      # Encripto la contrasenia solo si ha cambiado
@@ -611,9 +640,10 @@ class Logica:
                 
                 if not IDvehiculo:
                     return ("Error", "Falta el ID")
-                elif IDvehiculo <= 0:
+                elif int(IDvehiculo) <= 0:
                     return ("Error", "IDvehiculo menor a 0")
 
+            
                 #Mayusculas
                 try:
                     mi_vehiculo.setMarca(self.mayuscula(marca))
@@ -622,15 +652,12 @@ class Logica:
                 except:
                     return ("Error", "Verifica marca y modelo")
 
-                print("Hola0")
                 a = comprobarCombustible(combustible)
                 if a[0] == "Error":
-                    print("Hola1")
                     return a
                 
                 a = comprobarKilometros(kilometros)
                 if a[0] == "Error":
-                    print("Hola2")
                     return a
 
                 #pasamos a int los necesarios
@@ -893,6 +920,7 @@ class Logica:
     def validar_registro_piezas(self, mi_almacen: AlmacenVO, queHago):
         
         mi_almacen_dao = AlmacenDao()
+        almacen = mi_almacen_dao.getAlmacenes()
 
         if queHago == "aniadir" or queHago == "modificar":
             try:
@@ -908,10 +936,9 @@ class Logica:
                 elif int(cantidad) < 0:
                     return ("Error", "Cantidad menor a 0")
                 
-                if not precio_pieza:
-                    return ("Error", "Falta el precio")
-                elif int(precio_pieza) < 0:
-                    return ("Error", "Precio negativo")
+                if precio_pieza != "": #SIGNIFICA QUE VAS A ANIADIR PIEZAS YA EXISTENTES
+                    if int(precio_pieza) < 0:
+                        return ("Error", "Precio negativo")
 
 
                 # Comprobando el formato del nombre del concesionario
@@ -930,24 +957,47 @@ class Logica:
                 if not conc:
                     return ("Error", "El concesionario no existe")
 
+                
                 # Realizar la inserción o modificación de la venta según el caso
                 if queHago == "aniadir":
+                    #compruebo que si la pieza existe y si existe sumo la cantidad a la actual en el concesionario en especifico
+                    for a in almacen:
+                        if a.getPieza() == pieza and a.getConcesionario() == mi_almacen.getConcesionario():
+                            numero = int(cantidad) + int(a.getCantidad())
+                            a.setCantidad(numero)
+                            a.setPrecioPieza(a.getPrecioPieza())
+                            a.setConcesionario(mi_almacen.getConcesionario())
+                            mi_almacen_dao.updateAlmacen(a)
+                            return ("Correcto", "Has introducido bien los datos")
+        
                     mi_almacen_dao.insertAlmacen(mi_almacen)
                     return ("Correcto", "Has introducido bien los datos")
                 
                 elif queHago == "modificar":
-                    almacen = mi_almacen_dao.getAlmacenes()
-
+                    
+                    encontrado = False
+                    concesionario = mi_almacen.getConcesionario()
                     for a in almacen:
                         if a.getPieza() == pieza:
-                            a.setCantidad(mi_almacen.getCantidad())
-                            a.setPrecioPieza(mi_almacen.getPrecioPieza())
-                            a.setConcesionario(mi_almacen.getConcesionario())
-                            mi_almacen_dao.updateAlmacen(a)
-                            print(f"Modificado correctamente la pieza --> {pieza}")
-                            return ("Correcto", "Pieza modificado correctamente")
-                    
-                    return ("Error", "La pieza no está registrada")
+                            if concesionario == "":
+                                a.setCantidad(mi_almacen.getCantidad())
+                                a.setPrecioPieza(mi_almacen.getPrecioPieza())
+                                a.setConcesionario(mi_almacen.getConcesionario())
+                                mi_almacen_dao.updateAlmacen(a)
+                                print(f"Modificado correctamente la pieza --> {pieza}")
+                                encontrado = True
+                            elif a.getConcesionario() == concesionario:
+                                a.setCantidad(mi_almacen.getCantidad())
+                                a.setPrecioPieza(mi_almacen.getPrecioPieza())
+                                a.setConcesionario(mi_almacen.getConcesionario())
+                                mi_almacen_dao.updateAlmacen(a)
+                                print(f"Modificado correctamente la pieza --> {pieza}")
+                                encontrado = True
+
+                    if encontrado:
+                        return ("Correcto", "La pieza se ha modificado correctamente")
+                    else:
+                        return ("Error", "La pieza no está registrada")
 
             except Exception as e:
                 messagebox.showwarning("Advertencia", f"Error al insertar o modificar una pieza: {str(e)}")
@@ -956,15 +1006,25 @@ class Logica:
         elif queHago == "eliminar":
             try:
                 pieza = mi_almacen.getPieza()
+                concesionario = mi_almacen.getConcesionario()
                 almacen = mi_almacen_dao.getAlmacenes()
+                encontrado = False
 
                 for a in almacen:
                     if a.getPieza() == pieza:
-                        print(f"Eliminando venta --> {a.getPieza()}")
-                        mi_almacen_dao.deleteAlmacen(pieza)
-                        return ("Correcto", "Has introducido bien los datos")
-                    
-                return ("Error", "Esa pieza no está registrada")
+                        if concesionario == "":
+                            print(f"Eliminando pieza en todos los concesionarios --> {a.getPieza()}")
+                            mi_almacen_dao.deleteAlmacen(pieza)
+                            encontrado = True
+                        elif a.getConcesionario() == concesionario:
+                            print(f"Eliminando pieza en el concesionario {concesionario} --> {a.getPieza()}")
+                            mi_almacen_dao.deleteAlmacen(pieza, concesionario)
+                            encontrado = True
+
+                if encontrado:
+                    return ("Correcto", "La pieza se ha eliminado correctamente")
+                else:
+                    return ("Error", "Esa pieza no está registrada en el concesionario especificado")
             except Exception as e:
                 messagebox.showwarning("Advertencia", f"Error al eliminar la pieza: {str(e)}")
                 return ("Error", "Error al eliminar la pieza")
@@ -1152,6 +1212,7 @@ class Logica:
     def validar_registro_maquinaria(self, mi_taller: Taller, queHago):
         
         mi_taller_dao = TallerDao()
+        taller = mi_taller_dao.getTalleres()
 
         if queHago == "aniadir" or queHago == "modificar":
             try:
@@ -1198,8 +1259,6 @@ class Logica:
                     return ("Correcto", "Has introducido bien los datos")
                 
                 elif queHago == "modificar":
-                    taller = mi_taller_dao.getTalleres()
-                    
                     for a in taller:
                         if a.getIDmaquinaria() == int(IDmaquinaria):
                             a.setCantidad(mi_taller.getCantidad())
