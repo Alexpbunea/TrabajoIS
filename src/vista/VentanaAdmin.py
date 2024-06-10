@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from src.vista.funciones import *
+from src.modelo.conexion.conexionJava import *
 
 class Ui_MainWindow3(object):
     def __init__(self, coord=None):
@@ -54,20 +55,27 @@ class Ui_MainWindow3(object):
 
         self.c = concesionario(self.centralwidget)
 
+        self.copiaSeguridad = QtWidgets.QPushButton(self.centralwidget)
+        self.copiaSeguridad.setGeometry(QtCore.QRect(1180, 50, 50, 50))
+        self.copiaSeguridad.setObjectName("Copia de seguridad")
+        self.copiaSeguridad.setToolTip("Copia de seguridad")
+        self.copiaSeguridad.setText("Copia")
+
+
         self.Trabajador = QtWidgets.QPushButton(self.centralwidget)
         self.Trabajador.setGeometry(QtCore.QRect(400, 650, 151, 41))
         self.Trabajador.setObjectName("Trabajador")
-        self.Trabajador.setToolTip("Añade, elimina o modifica trabajadores")
+        self.Trabajador.setToolTip("Añade, elimina, modifica o busca trabajadores")
 
         self.Taller = QtWidgets.QPushButton(self.centralwidget)
         self.Taller.setGeometry(QtCore.QRect(580, 650, 151, 41))
         self.Taller.setObjectName("Taller")
-        self.Taller.setToolTip("Añade, elimina o modifica piezas en un taller")
+        self.Taller.setToolTip("Añade, elimina modifica o busca maquinaria en un taller")
 
         self.Cliente = QtWidgets.QPushButton(self.centralwidget)
         self.Cliente.setGeometry(QtCore.QRect(210, 650, 151, 41))
         self.Cliente.setObjectName("Cliente")
-        self.Cliente.setToolTip("Añade, elimina o modifica clientes")
+        self.Cliente.setToolTip("Añade, elimina, modifica o busca clientes")
 
         self.Concesionario = QtWidgets.QPushButton(self.centralwidget)
         self.Concesionario.setGeometry(QtCore.QRect(20, 650, 151, 41))
@@ -77,7 +85,7 @@ class Ui_MainWindow3(object):
         self.Almacen = QtWidgets.QPushButton(self.centralwidget)
         self.Almacen.setGeometry(QtCore.QRect(760, 650, 151, 41))
         self.Almacen.setObjectName("Almacen")
-        self.Almacen.setToolTip("Almacen")
+        self.Almacen.setToolTip("Añade, elimina, modifica o busca piezas en un almacen")
 
         self.vehiculos = QtWidgets.QPushButton(self.centralwidget)
         self.vehiculos.setGeometry(QtCore.QRect(940, 650, 151, 41))
@@ -109,18 +117,28 @@ class Ui_MainWindow3(object):
         self.atras = setAtras(self.centralwidget)
         
         
-        self.lista = [self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen, self.vehiculos, self.ventas, self.pago]
+        self.lista = [self.Concesionario, self.Cliente, self.Trabajador, self.Taller, self.Almacen, self.vehiculos, self.ventas, self.pago, self.copiaSeguridad]
         
         
         self.checkBox.stateChanged.connect(lambda: modoClOs(self.checkBox, self.imagen, self.lista))
         modoClOs(self.checkBox, self.imagen, self.lista)
         
+        self.copiaSeguridad.clicked.connect(lambda: self.copia())
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     
 
+    def copia(self):
+        root = tk.Tk()
+        root.title("Copia de Seguridad")
+        root.geometry("400x200")
+
+        boton_copia = tk.Button(root, text="Realizar Copia de Seguridad", command=realizar_copia_seguridad)
+        boton_copia.pack(pady=20)
+
+        root.mainloop()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
